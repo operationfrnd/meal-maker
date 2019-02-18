@@ -38,5 +38,14 @@ const saveIngredient = (ingredientItem) => {
     }
   });
 }
-// saveRecipe(123, 4565);
-module.exports = { saveRecipe, dislikeRecipe, saveIngredient };
+
+const selectAll = () => {
+  connection.query('SELECT * FROMT ingredient', (err, results) => {
+    if (err) {
+      console.log('error in retrieving all ingredients');
+    } else {
+      console.log('success in retrieving all ingredients');
+    }
+  });
+}
+module.exports = { saveRecipe, dislikeRecipe, saveIngredient, selectAll };
