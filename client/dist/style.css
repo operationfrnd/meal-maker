@@ -1,0 +1,138 @@
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body {
+  font-family: 'Jeju Gothic', sans-serif;
+  margin: 0px;
+  color: #292929;
+  background-color: #F3F3F3;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: #C0163A;
+  margin-right: 5px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, .25);
+  background-color: rgba(255, 255, 255, .5);
+  padding: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  height: 300px;
+  line-height: 50px;
+}
+
+.card-kor {
+  font-size: 3em;
+  margin-top: 30px;
+}
+
+.card-rom {
+  font-style: italic;
+  margin: 15px;
+  color: rgba(0, 0, 0, .5);
+  font-size: 1.2em;
+}
+
+.card-eng {
+  margin: 15px;
+  font-size: 1.5em;
+}
+
+.logo {
+  font-size: 1.9em;
+  margin-right: auto;
+  margin-left: 10px;
+  color: #f3f3f3;
+}
+.main {
+  margin: 20px;
+}
+
+.nav {
+  background-color: #033578;
+  margin: 0px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #F3F3F3;
+}
+
+.nav-selected {
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
+.nav-unselected {
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
+
+.phrases {
+  margin: 20px;
+}
+
+.phrase-table {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.5rem;
+  line-height: 1.5;
+  flex: 1 1 auto;
+  border: 1px solid #d0d0d0;
+}
+
+.phrase-header {
+  display: none;
+  font-weight: 700;
+  font-size: 1.1em;
+  background-color: #f2f2f2;
+}
+
+.phrase-header > .phrase-data {
+  white-space: normal;
+}
+
+.phrase-row {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.phrase-row:nth-of-type(even) {
+  background-color: #f2f2f2;
+}
+
+.phrase-row:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.phrase-row:hover {
+  color: #C0163A;
+}
+
+.phrase-data {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0.5em;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0px;
+  white-space: nowrap;
+  border-bottom: 1px solid #d0d0d0;
+}

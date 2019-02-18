@@ -3,5 +3,5 @@ bower_components/
 *.log
 .vscode/
 build/
-dist/
+dist/bundle.js
 helpers/keys.js
