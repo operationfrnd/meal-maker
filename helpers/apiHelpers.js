@@ -23,4 +23,15 @@ const recFoodNutrApi = function (ingredients, callback) {
   });
 }
 
+const mealDBApi = function (callback) {
+  axios({
+    method: 'get',
+    url: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
+  }).then((ingredients) => {
+    callback(null, ingredients);
+  }).catch((err) => {
+    callback(err, null);
+  })
+}
+
 module.exports.recFoodNutrApi = recFoodNutrApi;

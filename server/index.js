@@ -38,6 +38,10 @@ app.get('/food', (req, res) => {
   });
 });
 
+app.get('/ingredients', (req, res) => {
+  
+});
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
