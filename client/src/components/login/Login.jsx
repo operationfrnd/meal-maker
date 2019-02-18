@@ -13,10 +13,8 @@ class Login extends React.Component {
     };
   }
 
-
   render() {
 
-    // const { phrase, selectPhrase } = this.props;
     return (
       <div>
         <div className="credentials">
@@ -28,11 +26,16 @@ class Login extends React.Component {
         <div className="title">
           <h2>Recipe of the day</h2>
         </div>
-        <div className="vidPlayer">
-          <h2>Recipe of the day</h2>
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td className="vidPlayer"><VideoPlayer video=""></VideoPlayer> </td>
+              <td className="instructions"><RecipeInstructions instructions=""></RecipeInstructions></td>
+            </tr>   
+          </tbody>
+        </table>
       </div>
-    )
+    );
   }
 }
 export default Login;
