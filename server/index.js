@@ -7,8 +7,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const axios = require('axios');
 const fs = require('fs');
+const helper = require('../helpers/apiHelpers');
+const db = require('../helpers/dbHelpers');
 const _ = require('lodash');
 
 const app = express();
@@ -22,8 +23,31 @@ app.use(express.static(__dirname + '../client/'));
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
+    console.log(JSON.parse(res2));
     res.send(res2);
   });
+});
+
+// get recipies depending upon passed in ingredients //
+app.get('/food', (req, res) => {
+  helper.recFoodNutrApi(req.query.ingredients, (err, recipes) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    res.status(200).send(recipes);
+  });
+});
+
+app.get('/ingredients', (req, res) => {
+  helper.mealDBApi((err, ingredients) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    _.forEach(ingredients, (ingredient, index) => {
+      db.saveIngredient(ingredient);
+    });
+    res.send(ingredients);
+  })
 });
 
 // Able to set port and still work //
