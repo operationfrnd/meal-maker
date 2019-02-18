@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/acreed1998/meal-maker.git"
+    "url": "git+https://github.com/operationfrnd/meal-maker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/acreed1998/meal-maker/issues"
+    "url": "https://github.com/operationfrnd/meal-maker/issues"
   },
-  "homepage": "https://github.com/acreed1998/meal-maker#readme",
+  "homepage": "https://github.com/operationfrnd/meal-maker#readme",
   "dependencies": {
     "lodash": "^4.17.11"
   }
