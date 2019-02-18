@@ -28,6 +28,15 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/food', (req, res) => {
+  console.log(req.query);
+  helper.recFoodNutrApi(req.query.ingredients, (err, recipes) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    res.status(200).send(recipes);
+  });
+});
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 

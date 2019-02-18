@@ -4,10 +4,23 @@
 // 3) Helper interacting with the MealDB api => retrieving a list of all ingredients available in the MealDB api (optional)
 
 const axios = require('axios');
+const key1 = require('./keys');
 
-const recFoodNutrApi = function (ingredients) {
-  ingredients = ingredients.join(", ");
-  console.log(ingredients);
+const recFoodNutrApi = function (ingredients, callback) {
+  if (!callback) {
+    return Error('Function requires callback!!!');
+  }
+  return axios({
+    method: 'get',
+    headers: {
+      'X-RapidAPI-Key': key1.apiKey1,
+    },
+    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
+  }).then((result) => {
+    return callback(null, result.data.results);
+  }).catch((err) => {
+    return callback(err, null);
+  });
 }
 
 module.exports.recFoodNutrApi = recFoodNutrApi;
