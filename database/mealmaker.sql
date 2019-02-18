@@ -24,7 +24,7 @@ CREATE TABLE Recipes (
 );
 -- ---
 -- INGREDIENTS TABLE populated to auto complete query by user
-CREATE TABLE Ingredients (
+CREATE TABLE Ingredient (
   id INTEGER AUTO_INCREMENT NOT NULL,
   ingredient VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
