@@ -23,7 +23,6 @@ app.use(express.static(__dirname + '../client/'));
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
-    console.log(JSON.parse(res2));
     res.send(res2);
   });
 });
@@ -34,26 +33,33 @@ app.get('/food', (req, res) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
+    // respond with an array of objects which contain recipie information
     res.status(200).send(recipes);
   });
 });
 
+// get all ingredients stored in the MealDB //
 app.get('/ingredients', (req, res) => {
   helper.mealDBApi((err, ingredients) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
+    // get all current ingredients stored in our own database
     db.selectAll((tableData) => {
-      _.forEach(tableData, (ingredient, index) => {
-        if (!_.includes(ingredients, ingredient.ingredient)) {
-          db.saveIngredient(ingredient.ingredient);
-        }
+      _.forEach(ingredients, (newIngredient, index) => {
+        // see if potential new ingredient already exists in database
+        const priorInstances = _.filter(tableData, (oldIngredient, index) => {
+          return oldIngredient.ingredient === newIngredient;
+        }).length;
+        // save if it doesn't
+        if (priorInstances === 0) {
+          db.saveIngredient(newIngredient);
+        } 
       });
     });
-    // _.forEach(ingredients, (ingredient, index) => {
-    // });
+    // send back ingredients regardless of whether or not they were new
     res.send(ingredients);
-  })
+  });
 });
 
 // Able to set port and still work //
