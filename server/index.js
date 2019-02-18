@@ -15,8 +15,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   console.log(req);
-  res.send("Done");
-})
+  axios.get('../data/example_rfn_data.json')
+    .then((result) => {
+      res.send(result);
+    }).catch((err) => {
+      res.send(err);
+    });
+});
 
 // Able to set port and still work //
 const port = process.env.PORT || 3000;
