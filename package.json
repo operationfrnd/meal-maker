@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/operationfrnd/meal-maker#readme",
   "dependencies": {
-    "lodash": "^4.17.11"
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "path": "^0.12.7"
   }
 }
