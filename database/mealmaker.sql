@@ -55,7 +55,8 @@ CREATE TABLE RecipeOfTheDay (
 );
 -- ---
 
--- RECIPE'S INGREDIENTS use to keep record for comparison         
+-- RECIPE'S INGREDIENTS use to keep record for comparison    
+-- One recipe id may have multiple idIngredients     
 CREATE TABLE recipesIngredients (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idRecipes INTEGER NOT NULL,
