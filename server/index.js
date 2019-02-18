@@ -21,10 +21,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   console.log(req);
-  axios.get('../data/example_rfn_data.json')
+  axios.get('../client/src/example_rfn_data.json')
     .then((result) => {
+      console.log(result);
       res.send(result);
     }).catch((err) => {
+      console.error(err);
       res.send(err);
     });
 });
