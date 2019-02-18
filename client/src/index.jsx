@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import Login from './components/Login.jsx';
+import Login from './components/login/login.jsx/index.js';
 import Recipe from './components/Recipe.jsx';
 import sampledata from './example_rfn_data';
 
