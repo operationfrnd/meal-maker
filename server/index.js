@@ -41,8 +41,7 @@ app.get('/ingredients', (req, res) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
-    console.log(ingredients);
-    res.send('done');
+    res.send(ingredients);
   })
 });
 
