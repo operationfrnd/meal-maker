@@ -43,9 +43,15 @@ app.get('/ingredients', (req, res) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
-    _.forEach(ingredients, (ingredient, index) => {
-      db.saveIngredient(ingredient);
+    db.selectAll((tableData) => {
+      _.forEach(tableData, (ingredient, index) => {
+        if (!_.includes(ingredients, ingredient.ingredient)) {
+          db.saveIngredient(ingredient.ingredient);
+        }
+      });
     });
+    // _.forEach(ingredients, (ingredient, index) => {
+    // });
     res.send(ingredients);
   })
 });

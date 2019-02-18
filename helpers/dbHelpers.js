@@ -39,12 +39,13 @@ const saveIngredient = (ingredientItem) => {
   });
 }
 
-const selectAll = () => {
-  connection.query('SELECT * FROMT ingredient', (err, results) => {
+const selectAll = (callback) => {
+  connection.query('SELECT * FROM Ingredient', (err, results) => {
     if (err) {
       console.log('error in retrieving all ingredients');
     } else {
       console.log('success in retrieving all ingredients');
+      callback(results);
     }
   });
 }
