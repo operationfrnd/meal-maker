@@ -8,8 +8,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
-const _ = require('lodash');
-
 const helper = require('../helpers/apiHelpers');
 
 const app = express();
@@ -39,7 +37,13 @@ app.get('/food', (req, res) => {
 });
 
 app.get('/ingredients', (req, res) => {
-  
+  helper.mealDBApi((err, ingredients) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    console.log(ingredients);
+    res.send('done');
+  })
 });
 
 // Able to set port and still work //

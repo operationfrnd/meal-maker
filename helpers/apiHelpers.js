@@ -4,6 +4,9 @@
 // 3) Helper interacting with the MealDB api => retrieving a list of all ingredients available in the MealDB api (optional)
 
 const axios = require('axios');
+const _ = require('lodash');
+
+
 const key1 = require('./keys');
 
 const recFoodNutrApi = function (ingredients, callback) {
@@ -21,17 +24,21 @@ const recFoodNutrApi = function (ingredients, callback) {
   }).catch((err) => {
     return callback(err, null);
   });
-}
+};
 
 const mealDBApi = function (callback) {
-  axios({
+  return axios({
     method: 'get',
     url: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
   }).then((ingredients) => {
-    callback(null, ingredients);
+    const arrayOfIngredients = _.sortBy(_.map(ingredients.data.meals, (ingredient, index) => {
+      return ingredient.strIngredient;
+    }));
+    return callback(null, arrayOfIngredients);
   }).catch((err) => {
-    callback(err, null);
+    return callback(err, null);
   })
-}
+};
 
 module.exports.recFoodNutrApi = recFoodNutrApi;
+module.exports.mealDBApi = mealDBApi;
