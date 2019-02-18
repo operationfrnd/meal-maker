@@ -8,6 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const axios = require('axios');
+const fs = require('fs');
 const _ = require('lodash');
 
 const app = express();
@@ -20,19 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
 app.get('/', (req, res) => {
-  console.log(req);
-  axios.get('../client/src/example_rfn_data.json')
-    .then((result) => {
-      console.log(result);
-      res.send(result);
-    }).catch((err) => {
-      console.error(err);
-      res.send(err);
-    });
+  fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
+    res.send(res2);
+  });
 });
 
 // Able to set port and still work //
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // Listen and console log current port //
 app.listen(port, () => {
