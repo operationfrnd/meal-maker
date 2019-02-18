@@ -6,13 +6,14 @@
 const axios = require('axios');
 const _ = require('lodash');
 
-
+// where api key was imported from, might need to make your own file
 const key1 = require('./keys');
 
 const recFoodNutrApi = function (ingredients, callback) {
   if (!callback) {
     return Error('Function requires callback!!!');
   }
+  // get 20 recipies based upon input ingredients
   return axios({
     method: 'get',
     headers: {
@@ -20,6 +21,7 @@ const recFoodNutrApi = function (ingredients, callback) {
     },
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
   }).then((result) => {
+    // return recipies array
     return callback(null, result.data.results);
   }).catch((err) => {
     return callback(err, null);
@@ -27,13 +29,16 @@ const recFoodNutrApi = function (ingredients, callback) {
 };
 
 const mealDBApi = function (callback) {
+  // get all ingredients
   return axios({
     method: 'get',
     url: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
   }).then((ingredients) => {
+    // sort ingredients alphabetically
     const arrayOfIngredients = _.sortBy(_.map(ingredients.data.meals, (ingredient, index) => {
       return ingredient.strIngredient;
     }));
+    // return the callback on ingredients
     return callback(null, arrayOfIngredients);
   }).catch((err) => {
     console.log(err);
