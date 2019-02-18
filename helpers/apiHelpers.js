@@ -36,8 +36,10 @@ const mealDBApi = function (callback) {
     }));
     return callback(null, arrayOfIngredients);
   }).catch((err) => {
+    console.log(err);
     return callback(err, null);
-  })
+  });
+  
 };
 
 module.exports.recFoodNutrApi = recFoodNutrApi;

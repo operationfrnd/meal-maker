@@ -11,8 +11,8 @@ var mysql = require('mysql');
 
 const connection = mysql.createConnection({
   user: 'root',
-  database: 'chat',
-  password: '',
+  database: 'mealmaker',
+  password: 'password',
 });
 
 connection.connect(function (err) {

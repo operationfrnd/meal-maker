@@ -9,6 +9,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const helper = require('../helpers/apiHelpers');
+const db = require('../helpers/dbHelpers');
+const _ = require('lodash');
 
 const app = express();
 
@@ -41,6 +43,9 @@ app.get('/ingredients', (req, res) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
+    _.forEach(ingredients, (ingredient, index) => {
+      db.saveIngredient(ingredient);
+    });
     res.send(ingredients);
   })
 });
