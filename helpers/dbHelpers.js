@@ -27,5 +27,16 @@ const dislikeRecipe = (userId, recipeId) => {
     }
   });
 }
+
+const saveIngredient = (ingredientItem) => {
+  let q = [ingredientItem];
+  connection.query('INSERT INTO ingredient (ingredient) VALUES (?)', q, (err, results) => {
+    if (err) {
+      console.log('error in saving ingredient to db');
+    } else {
+      console.log('saved ingredient to db');
+    }
+  });
+}
 // saveRecipe(123, 4565);
-module.exports = { saveRecipe, dislikeRecipe };
+module.exports = { saveRecipe, dislikeRecipe, saveIngredient };
