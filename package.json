@@ -1,0 +1,22 @@
+{
+  "name": "meal-maker",
+  "version": "1.0.0",
+  "description": "Make meals",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/operationfrnd/meal-maker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/operationfrnd/meal-maker/issues"
+  },
+  "homepage": "https://github.com/operationfrnd/meal-maker#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
