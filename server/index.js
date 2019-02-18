@@ -10,6 +10,8 @@ const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
 
+const helper = require('../helpers/apiHelpers');
+
 const app = express();
 
 // Probably not needed //
@@ -21,6 +23,7 @@ app.use(express.static(__dirname + '../client/'));
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
+    console.log(JSON.parse(res2));
     res.send(res2);
   });
 });

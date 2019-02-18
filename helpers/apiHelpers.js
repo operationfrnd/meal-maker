@@ -4,3 +4,10 @@
 // 3) Helper interacting with the MealDB api => retrieving a list of all ingredients available in the MealDB api (optional)
 
 const axios = require('axios');
+
+const recFoodNutrApi = function (ingredients) {
+  ingredients = ingredients.join(", ");
+  console.log(ingredients);
+}
+
+module.exports.recFoodNutrApi = recFoodNutrApi;
