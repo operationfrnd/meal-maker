@@ -6,7 +6,12 @@
 
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
-const saveRecipe = (userId, recipeId) => {
+
+const saveRecipe = (recipeName, idOriginalDB) => {
+
+};
+
+const saveLikedRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
@@ -15,7 +20,7 @@ const saveRecipe = (userId, recipeId) => {
       console.log('successfully saved recipe to user');
     }
   });
-}
+};
 
 const dislikeRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
@@ -26,7 +31,7 @@ const dislikeRecipe = (userId, recipeId) => {
       console.log('successfully saved DISliked recipe to user');
     }
   });
-}
+};
 
 const saveIngredient = (ingredientItem) => {
   let q = [ingredientItem];
@@ -37,7 +42,7 @@ const saveIngredient = (ingredientItem) => {
       console.log('saved ingredient to db');
     }
   });
-}
+};
 
 const selectAll = (callback) => {
   connection.query('SELECT * FROM Ingredient', (err, results) => {
@@ -48,5 +53,6 @@ const selectAll = (callback) => {
       callback(results);
     }
   });
-}
-module.exports = { saveRecipe, dislikeRecipe, saveIngredient, selectAll };
+};
+
+module.exports = { saveRecipe, saveLikedRecipe, dislikeRecipe, saveIngredient, selectAll };

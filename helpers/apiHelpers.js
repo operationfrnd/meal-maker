@@ -58,6 +58,7 @@ const rfnRandomRecipe = function (callback) {
       }
       // store video info and then preform the callback
       receipeInfo.videoInfo = video;
+      receipeInfo.date = new Date().getDate();
       return callback(null, receipeInfo);
     });
   }).catch((err) => {
