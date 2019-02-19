@@ -69,6 +69,15 @@ app.get('/random', (req, res) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
+    db.selectAllRecipeOfTheDay((err, pastRecipes) => {
+      if (err) {
+        return res.status(500).send('Something Went Wrong!');
+      }
+      // if (pastRecipes.length === 0) {
+      //   console.log(recipe);
+      //   db.saveRecipeOfTheDay(recipe.videoInfo.id.videoId, null, recipe.date);
+      // }
+    })
     db.selectAllRecipes((err, recipes) => {
       if (err) {
         return res.status(500).send('Something Went Wrong!');

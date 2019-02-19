@@ -51,7 +51,7 @@ const saveLikedRecipe = (userId, recipeId) => {
   });
 };
 
-const selectAllRecipeOfTheDay = (recipeName, callback) => {
+const selectAllRecipeOfTheDay = (callback) => {
   connection.query('SELECT * FROM RecipeOfTheDay', (err, recipes) => {
     if (err) {
       callback(err, null);
