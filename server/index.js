@@ -156,6 +156,10 @@ app.get('/search', (req, res) => {
   });
 });
 
+app.post('/signup', (req, res) => {
+  
+})
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
