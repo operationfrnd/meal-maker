@@ -64,11 +64,11 @@ app.get('/ingredients', (req, res) => {
 
 app.get('/search', (req, res) => {
   console.log(req.query);
-  helper.youTubeApi(req.query.q, (err, searchResults) => {
+  helper.youTubeApi(req.query.q, (err, searchResult) => {
     if (err) {
       return res.status(500).send("Something went wrong!");
     }
-    res.status(200).send(searchResults);
+    res.status(200).send(searchResult);
   });
 });
 

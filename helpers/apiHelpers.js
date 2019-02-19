@@ -52,8 +52,8 @@ const youTubeApi = function(query, callback) {
     method: 'get',
     url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${keys.apiKey2}&q=${query}&maxResults=5`,
   }).then((searchResults) => {
-    console.log(searchResults);
-    callback(null, searchResults);
+    console.log(searchResults.data.items);
+    callback(null, searchResults.data.items[0]);
   }).catch((err) => {
     callback(err, null);
   });
