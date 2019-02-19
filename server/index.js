@@ -157,8 +157,10 @@ app.get('/search', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log(req.body);
-  db.selectAllUsers((err, users) => {
+  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+    return res.status(500).send('Invalid username or password!');
+  }
+  return db.selectAllUsers((err, users) => {
     if (err) {
       console.error(err);
     }
@@ -166,11 +168,12 @@ app.post('/signup', (req, res) => {
       return user.username === req.body.username;
     }).length;
     if (sameNameCounter === 0) {
-      db
+      db.saveUser(req.body.username, helper.hasher(req.body.password));
+      return res.status(204).send('New User Created');
+    } else {
+      return res.status(500).send('User already exists');
     }
   })
-  helper.hasher(req.body.password);
-  res.send(helper.hasher(req.body.password));
 })
 
 // Able to set port and still work //
