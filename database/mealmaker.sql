@@ -52,6 +52,7 @@ CREATE TABLE RecipeOfTheDay (
   id INTEGER AUTO_INCREMENT NOT NULL,
   name VARCHAR(255) NOT NULL,
   link VARCHAR(255) NOT NULL,
+  instructions TEXT NOT NULL,
   idRecipe INTEGER NOT NULL,
   date INTEGER NOT NULL,
   PRIMARY KEY (id)
@@ -62,8 +63,8 @@ CREATE TABLE RecipeOfTheDay (
 -- One recipe id may have multiple idIngredients     
 CREATE TABLE recipesIngredients (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  idRecipes INTEGER NOT NULL,
-  idIngredients INTEGER NOT NULL,
+  idRecipe INTEGER NOT NULL,
+  ingredients TEXT NOT NULL,
   PRIMARY KEY (id)
 );
 -- ---
