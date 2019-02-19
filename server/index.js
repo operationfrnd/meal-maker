@@ -103,7 +103,7 @@ app.post('/random', (req, res) => {
                 }
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
-                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
+                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
               });
             })
           } else {
@@ -116,6 +116,7 @@ app.post('/random', (req, res) => {
   });
 });
 
+// get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
   db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
     if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
