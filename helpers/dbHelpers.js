@@ -8,7 +8,14 @@
 const connection = require('../database/index.js').connection;
 
 const saveRecipe = (recipeName, idOriginalDB) => {
-
+  let q = [recipeName, idOriginalDB]; 
+  connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition) VALUES (?, ?)', q, (err, results) => {
+    if (err) {
+      console.log('could not save recipe');
+    } else {
+      console.log('saved recipe successfully');
+    }
+  });
 };
 
 const saveLikedRecipe = (userId, recipeId) => {
