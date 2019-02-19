@@ -51,13 +51,19 @@ const saveLikedRecipe = (userId, recipeId) => {
   });
 };
 
-const checkForPastRecipeOfTheDay = (recipeName, callback) => {
-
+const selectAllRecipeOfTheDay = (recipeName, callback) => {
+  connection.query('SELECT * FROM RecipeOfTheDay', (err, recipes) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, recipes);
+    }
+  })
 };
 
 const saveRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
   let q = [videoLink, ourDbRecipeId, currentDate];
-  connection.query('INSERT INTO RecipeOfTheDay (link, idRecipe, date) VALUES (?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO RecipeOfTheDay (link, idRecipe, date) VALUES (?, ?, ?)', q, (err, results) => {
     if (err) {
       console.log('could not save recipe of the day to database');
     } else {
@@ -109,4 +115,4 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, checkForPastRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };
