@@ -62,6 +62,7 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+// get a random recipe
 app.get('/random', (req, res) => {
   helper.rfnRandomRecipe((err, recipe) => {
     if (err) {
