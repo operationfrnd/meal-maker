@@ -64,7 +64,7 @@ app.get('/ingredients', (req, res) => {
 });
 
 // get a random recipe
-app.get('/random', (req, res) => {
+app.post('/random', (req, res) => {
   // First get a random recipe //
   return helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
@@ -114,6 +114,10 @@ app.get('/random', (req, res) => {
       }
     })
   });
+});
+
+app.get('/random', (req, res) => {
+
 });
 
 // get a single youtube video from a search query
