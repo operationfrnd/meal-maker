@@ -45,10 +45,10 @@ class App extends React.Component {
 
         <div className="main">
         <div className="videoPlayer">
-          <VideoPlayer video={this.state.recipeOfTheDay} />
+          <VideoPlayer recipe={this.state.recipeOfTheDay} />
         </div>
         <div className="recipeInstructions">
-        <RecipeInstructions data={this.state.recipeOfTheDay}/>
+          <RecipeInstructions data={this.state.recipeOfTheDay}/>
         </div>
         </div>
       </div>
