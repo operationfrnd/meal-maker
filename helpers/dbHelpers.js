@@ -52,6 +52,16 @@ const saveRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
   });
 };
 
+const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
+  connection.query(`UPDATE RecipeOfTheDay SET link = '${videoLink}', idRecipe = ${ourDbRecipeId} WHERE date = ${currentDate}`, (err, results) => {
+    if (err) {
+      console.log('could not update recipe of the day', err);
+    } else {
+      console.log('successfully updated recipe of the day');
+    }
+  });
+};
+
 const dislikeRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
@@ -85,4 +95,4 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectAllRecipes, saveRecipe, saveLikedRecipe, dislikeRecipe, saveIngredient, selectAllIngredients };
+module.exports = { selectAllRecipes, saveRecipe, saveLikedRecipe, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };
