@@ -5,16 +5,18 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Login from './components/login/login.jsx';
 import Recipe from './components/Recipe.jsx';
-import sampledata from './example_rfn_data';
+import sampleData from './example_rfn_data';
 import Credentials from './components/login/Credentials.jsx';
 import RecipeInstructions from './components/login/RecipeInstructions.jsx';
 import VideoPlayer from './components/login/VideoPlayer.jsx';
+import randomRecipe from '../example_random.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       recipes: [],
+      recipeOfTheDay: randomRecipe// recipe of the day video
     };
   }
 
@@ -31,6 +33,18 @@ class App extends React.Component {
       })
   }
 
+  getRandomRecipe() {
+    return axios.get('/recipeoftheday') // sends get request to server for random recipe
+      .then((recipe) => {
+        this.setState({
+          recipeOfTheDay: recipe
+        });
+      })
+      .catch((err) => {
+        console.log(`there was an error retriving random recipe : ${err}`);
+      });
+  }
+
   // 
 
   render() {
@@ -42,7 +56,12 @@ class App extends React.Component {
         </div>
 
         <div className="main">
-        
+        <div className="videoPlayer">
+          <VideoPlayer recipe={this.state.recipeOfTheDay} />
+        </div>
+        <div className="recipeInstructions">
+        <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
+        </div>
         </div>
       </div>
     );
