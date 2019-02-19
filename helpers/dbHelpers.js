@@ -6,6 +6,7 @@
 
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
+
 const saveRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
