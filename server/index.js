@@ -64,8 +64,13 @@ app.get('/ingredients', (req, res) => {
 
 app.get('/search', (req, res) => {
   console.log(req.query);
-  res.send('done');
-})
+  helper.youTubeApi(req.query.q, (err, searchResults) => {
+    if (err) {
+      return res.status(500).send("Something went wrong!");
+    }
+    res.status(200).send(searchResults);
+  });
+});
 
 // Able to set port and still work //
 const port = process.env.PORT || 3001;

@@ -48,11 +48,17 @@ const mealDBApi = function (callback) {
 };
 
 const youTubeApi = function(query, callback) {
-  axios({
+  return axios({
     method: 'get',
     url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${keys.apiKey2}&q=${query}&maxResults=5`,
-  })
+  }).then((searchResults) => {
+    console.log(searchResults);
+    callback(null, searchResults);
+  }).catch((err) => {
+    callback(err, null);
+  });
 };
 
 module.exports.recFoodNutrApi = recFoodNutrApi;
 module.exports.mealDBApi = mealDBApi;
+module.exports.youTubeApi = youTubeApi;
