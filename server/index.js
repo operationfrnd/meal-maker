@@ -176,6 +176,23 @@ app.post('/signup', (req, res) => {
   })
 })
 
+app.get('/login', (req, res) => {
+  db.selectAllUsers((err, users) => {
+    const user = _.filter(users, (storedUser) => {
+      return storedUser.username === req.body.username;
+    })[0];
+    if (user) {
+      if (user.password === helper.hasher(req.body.password)) {
+        res.status(200).send('login successful');
+      } else {
+        res.status(500).send('password incorrect');
+      }
+    } else {
+      res.status(500).send('No User Found');
+    }
+  })
+});
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
