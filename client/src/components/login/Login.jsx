@@ -8,8 +8,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: 'off', // initial state of display is off 
-      what: 'Reveal Translation' // which means the 'Reveal Translation' text is displayed
+      // display: 'off', // initial state of display is off 
+      // what: 'Reveal Translation' // which means the 'Reveal Translation' text is displayed
     };
   }
 

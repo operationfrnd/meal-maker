@@ -1,4 +1,4 @@
-{
+const exampleData = {
   "results": [
     {
       "vegetarian": true,
