@@ -103,9 +103,14 @@ app.post('/random', (req, res) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
+                const ingredients = randomRecipe.ingredients.split("\n");
                 // Save the recipe of the day
-                res.status(200).send(randomRecipe);
-                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
+                res.status(204).send(randomRecipe);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
+                _.forEach(ingredients, (ingredient) => {
+                  db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
+                });
+                return 'Finished';
               });
             })
           } else {
@@ -118,8 +123,27 @@ app.post('/random', (req, res) => {
   });
 });
 
-app.get('/random', (req, res) => {
-
+// get the current recipe of the day and update if necessary
+app.get('/recipeoftheday', (req, res) => {
+  db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
+    if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
+      axios.post('/random').then((res) =>{
+        res.status(204).send(res.data);
+      });
+    } else {
+      const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
+      db.getRecipeIngredients(recipeOfTheDay.id, (err, ingredients) => {
+        if (err) {
+          res.status(500).send('Something went wrong!');
+        }
+        ingredients = _.map(ingredients, (ingredient) => {
+          return ingredient.ingredients;
+        });
+        recipeOfTheDay.ingredients = ingredients.join('\n');
+        res.status(200).send(recipeOfTheDay);
+      });
+    }
+  });
 });
 
 // get a single youtube video from a search query
