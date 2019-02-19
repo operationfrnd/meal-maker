@@ -101,9 +101,14 @@ app.post('/random', (req, res) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
+                const ingredients = randomRecipe.ingredients.split("\n");
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
-                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
+                _.forEach(ingredients, (ingredient) => {
+                  db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
+                });
+                return 'Finished';
               });
             })
           } else {

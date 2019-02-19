@@ -64,7 +64,7 @@ CREATE TABLE RecipeOfTheDay (
 CREATE TABLE recipesIngredients (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idRecipes INTEGER NOT NULL,
-  idIngredients INTEGER NOT NULL,
+  idIngredients TEXT NOT NULL,
   PRIMARY KEY (id)
 );
 -- ---
