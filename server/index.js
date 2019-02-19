@@ -102,7 +102,7 @@ app.post('/random', (req, res) => {
                   return res.status(500).send('Something Went Wrong!');
                 }
                 // Save the recipe of the day
-                res.status(200).send(randomRecipe);
+                res.status(204).send(randomRecipe);
                 return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
               });
             })
@@ -119,7 +119,9 @@ app.post('/random', (req, res) => {
 app.get('/recipeoftheday', (req, res) => {
   db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
     if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
-      axios.post('/random');
+      axios.post('/random').then((res) =>{
+        res.status(204).send(res.data);
+      });
     } else {
       res.status(200).send(oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1]);
     }
