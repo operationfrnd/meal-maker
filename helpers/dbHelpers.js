@@ -19,13 +19,13 @@ const selectAllRecipes = (callback) => {
   });
 }
 
-const saveRecipe = (recipeName, idOriginalDB) => {
+const saveRecipe = (recipeName, idOriginalDB, callback) => {
   let q = [recipeName, idOriginalDB]; 
   connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition) VALUES (?, ?)', q, (err, results) => {
     if (err) {
-      console.log('could not save recipe');
+      callback(err, null);
     } else {
-      console.log('saved recipe successfully');
+      callback(null, results);
     }
   });
 };
