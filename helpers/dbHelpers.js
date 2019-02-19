@@ -41,6 +41,17 @@ const saveLikedRecipe = (userId, recipeId) => {
   });
 };
 
+const saveRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
+  let q = [videoLink, ourDbRecipeId, currentDate];
+  connection.query('INSERT INTO RecipeOfTheDay (link, idRecipe, date) VALUES (?, ?)', q, (err, results) => {
+    if (err) {
+      console.log('could not save recipe of the day to database');
+    } else {
+      console.log('successfully saved recipe of the day to the database');
+    }
+  });
+};
+
 const dislikeRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
