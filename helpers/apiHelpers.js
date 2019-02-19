@@ -7,7 +7,7 @@ const axios = require('axios');
 const _ = require('lodash');
 
 // where api key was imported from, might need to make your own file
-const key1 = require('./keys');
+const keys = require('./keys');
 
 const recFoodNutrApi = function (ingredients, callback) {
   if (!callback) {
@@ -17,7 +17,7 @@ const recFoodNutrApi = function (ingredients, callback) {
   return axios({
     method: 'get',
     headers: {
-      'X-RapidAPI-Key': key1.apiKey1,
+      'X-RapidAPI-Key': keys.apiKey1,
     },
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
   }).then((result) => {

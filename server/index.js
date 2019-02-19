@@ -62,6 +62,11 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+app.get('/search', (req, res) => {
+  console.log(req.query);
+  res.send('done');
+})
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
