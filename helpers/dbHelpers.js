@@ -7,13 +7,35 @@
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
 
-const saveRecipe = (recipeName, idOriginalDB) => {
+const selectSingleRecipe = (idOriginalDB, callback) => {
+  connection.query(`SELECT * FROM Recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, recipe);
+    }
+  });
+};
+
+const selectAllRecipes = (callback) => {
+  connection.query('SELECT * FROM Recipes', (err, results) => {
+    if (err) {
+      console.log('error in retrieving all ingredients');
+      callback(err, null);
+    } else {
+      console.log('success in retrieving all ingredients');
+      callback(null, results);
+    }
+  });
+}
+
+const saveRecipe = (recipeName, idOriginalDB, callback) => {
   let q = [recipeName, idOriginalDB]; 
   connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition) VALUES (?, ?)', q, (err, results) => {
     if (err) {
-      console.log('could not save recipe');
+      callback(err, null);
     } else {
-      console.log('saved recipe successfully');
+      callback(null, results);
     }
   });
 };
@@ -25,6 +47,37 @@ const saveLikedRecipe = (userId, recipeId) => {
       console.log('could not save user recipe to database');
     } else {
       console.log('successfully saved recipe to user');
+    }
+  });
+};
+
+const selectAllRecipeOfTheDay = (callback) => {
+  connection.query('SELECT * FROM RecipeOfTheDay', (err, recipes) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, recipes);
+    }
+  })
+};
+
+const saveRecipeOfTheDay = (revcipeName, videoLink, ourDbRecipeId, currentDate) => {
+  let q = [revcipeName, videoLink, ourDbRecipeId, currentDate];
+  connection.query('INSERT INTO RecipeOfTheDay (name, link, idRecipe, date) VALUES (?, ?, ?, ?)', q, (err, results) => {
+    if (err) {
+      console.log('could not save recipe of the day to database');
+    } else {
+      console.log('successfully saved recipe of the day to the database');
+    }
+  });
+};
+
+const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
+  connection.query(`UPDATE RecipeOfTheDay SET link = '${videoLink}', idRecipe = ${ourDbRecipeId} WHERE date = ${currentDate}`, (err, results) => {
+    if (err) {
+      console.log('could not update recipe of the day', err);
+    } else {
+      console.log('successfully updated recipe of the day');
     }
   });
 };
@@ -51,7 +104,7 @@ const saveIngredient = (ingredientItem) => {
   });
 };
 
-const selectAll = (callback) => {
+const selectAllIngredients = (callback) => {
   connection.query('SELECT * FROM Ingredient', (err, results) => {
     if (err) {
       console.log('error in retrieving all ingredients');
@@ -62,4 +115,4 @@ const selectAll = (callback) => {
   });
 };
 
-module.exports = { saveRecipe, saveLikedRecipe, dislikeRecipe, saveIngredient, selectAll };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };

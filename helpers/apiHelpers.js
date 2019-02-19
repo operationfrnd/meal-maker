@@ -41,6 +41,8 @@ const rfnRandomRecipe = function (callback) {
     const receipeInfo = {};
     // get recipe name/title
     receipeInfo.name = recipe.data.recipes[0].title;
+    //get recipe id as it is in the rfn api
+    receipeInfo.recipeId = recipe.data.recipes[0].id;
     // get recipe cooktime
     receipeInfo.cookTime = recipe.data.recipes[0].readyInMinutes;
     // get recipe instructions
@@ -56,7 +58,7 @@ const rfnRandomRecipe = function (callback) {
       if (anError) {
         return callback(anError, null);
       }
-      // store video info and then preform the callback
+      // store video info and current date then preform the callback
       receipeInfo.videoInfo = video;
       receipeInfo.date = new Date().getDate();
       return callback(null, receipeInfo);

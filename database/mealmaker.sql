@@ -50,8 +50,10 @@ CREATE TABLE Saved (
 -- RECIPE OF THE DAY, holds recipes so there are no repeats for recipe of the day
 CREATE TABLE RecipeOfTheDay (
   id INTEGER AUTO_INCREMENT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   link VARCHAR(255) NOT NULL,
   idRecipe INTEGER NOT NULL,
+  date INTEGER NOT NULL,
   PRIMARY KEY (id)
 );
 -- ---

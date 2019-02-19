@@ -4,6 +4,7 @@
 // 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper 
 // 3) Request handler for a GET request from client on main page endpoint => compare current date & Ingredients table update date from DB
 
+const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -45,7 +46,7 @@ app.get('/ingredients', (req, res) => {
       res.status(500).send('Something went wrong!');
     }
     // get all current ingredients stored in our own database
-    db.selectAll((tableData) => {
+    db.selectAllIngredients((tableData) => {
       _.forEach(ingredients, (newIngredient, index) => {
         // see if potential new ingredient already exists in database
         const priorInstances = _.filter(tableData, (oldIngredient, index) => {
@@ -63,14 +64,60 @@ app.get('/ingredients', (req, res) => {
 });
 
 // get a random recipe
-app.get('/random', (req, res) => {
-  helper.rfnRandomRecipe((err, recipe) => {
+app.post('/random', (req, res) => {
+  // First get a random recipe //
+  return helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
-    
-    res.status(200).send(recipe);
+    // Get all past recipe of the days //
+    return db.selectAllRecipeOfTheDay((err, pastRecipeOfTheDays) => {
+      if (err) {
+        return res.status(500).send('Something Went Wrong!');
+      }
+      // See if recipe has already been a recipe of the day //
+      const duplicateCount = _.filter(pastRecipeOfTheDays, (recipe) => {
+        return recipe.name === randomRecipe.name;
+      }).length;
+      if (duplicateCount === 0) {
+        // Get all recipes currently inside of our database //
+        return db.selectAllRecipes((err, currentRecipes) => {
+          if (err) {
+            return res.status(500).send('Something Went Wrong!');
+          }
+          // See if we have an old recipe that is the same as the random recipe
+          const oldRecipe = _.filter(currentRecipes, (recipe) => {
+            return recipe.recipe === randomRecipe.name;
+          })[0];
+          // Save the random recipe if we don't have it already //
+          if (!oldRecipe) {
+            // Save the recipe
+            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, (err) => {
+              if (err) {
+                return res.status(500).send('Something Went Wrong!');
+              }
+              // Get the recently saved recipe
+              return db.selectSingleRecipe(randomRecipe.recipeId, (err, singleRecipeArray) => {
+                if (err) {
+                  return res.status(500).send('Something Went Wrong!');
+                }
+                // Save the recipe of the day
+                res.status(200).send(randomRecipe);
+                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
+              });
+            })
+          } else {
+            // Save the recipe of the day //
+            return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
+          }
+        });
+      }
+    })
   });
+});
+
+app.get('/random', (req, res) => {
+
 });
 
 // get a single youtube video from a search query
