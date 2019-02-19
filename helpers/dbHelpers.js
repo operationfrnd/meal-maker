@@ -136,4 +136,14 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients };
+const selectAllUsers = (callback) => {
+  connection.query('SELECT * FROM Users', (err, users) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, users);
+    }
+  })
+}
+
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers };

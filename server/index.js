@@ -157,7 +157,20 @@ app.get('/search', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  
+  console.log(req.body);
+  db.selectAllUsers((err, users) => {
+    if (err) {
+      console.error(err);
+    }
+    const sameNameCounter = _.filter(users, (user) => {
+      return user.username === req.body.username;
+    }).length;
+    if (sameNameCounter === 0) {
+      db
+    }
+  })
+  helper.hasher(req.body.password);
+  res.send(helper.hasher(req.body.password));
 })
 
 // Able to set port and still work //
