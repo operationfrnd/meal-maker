@@ -2326,3 +2326,5 @@ const exampleData = {
   "totalResults": 2230,
   "processingTimeMs": 723
 }
+
+export default exampleData;
