@@ -7,6 +7,18 @@
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
 
+const selectAllRecipes = (callback) => {
+  connection.query('SELECT * FROM Recipes', (err, results) => {
+    if (err) {
+      console.log('error in retrieving all ingredients');
+      callback(err, null);
+    } else {
+      console.log('success in retrieving all ingredients');
+      callback(null, results);
+    }
+  });
+}
+
 const saveRecipe = (recipeName, idOriginalDB) => {
   let q = [recipeName, idOriginalDB]; 
   connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition) VALUES (?, ?)', q, (err, results) => {
@@ -51,7 +63,7 @@ const saveIngredient = (ingredientItem) => {
   });
 };
 
-const selectAll = (callback) => {
+const selectAllIngredients = (callback) => {
   connection.query('SELECT * FROM Ingredient', (err, results) => {
     if (err) {
       console.log('error in retrieving all ingredients');
@@ -62,4 +74,4 @@ const selectAll = (callback) => {
   });
 };
 
-module.exports = { saveRecipe, saveLikedRecipe, dislikeRecipe, saveIngredient, selectAll };
+module.exports = { selectAllRecipes, saveRecipe, saveLikedRecipe, dislikeRecipe, saveIngredient, selectAllIngredients };

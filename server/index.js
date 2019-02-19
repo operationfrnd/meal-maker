@@ -45,7 +45,7 @@ app.get('/ingredients', (req, res) => {
       res.status(500).send('Something went wrong!');
     }
     // get all current ingredients stored in our own database
-    db.selectAll((tableData) => {
+    db.selectAllIngredients((tableData) => {
       _.forEach(ingredients, (newIngredient, index) => {
         // see if potential new ingredient already exists in database
         const priorInstances = _.filter(tableData, (oldIngredient, index) => {
@@ -68,7 +68,7 @@ app.get('/random', (req, res) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
-    
+
     res.status(200).send(recipe);
   });
 });
