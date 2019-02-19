@@ -23,7 +23,6 @@ app.use(express.static(__dirname + '../client/'));
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
-    console.log(JSON.parse(res2));
     res.send(res2);
   });
 });
@@ -34,20 +33,55 @@ app.get('/food', (req, res) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
+    // respond with an array of objects which contain recipie information
     res.status(200).send(recipes);
   });
 });
 
+// get all ingredients stored in the MealDB //
 app.get('/ingredients', (req, res) => {
-  helper.mealDBApi((err, ingredients) => {
+  helper.mealDBIngredientSearch((err, ingredients) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
-    _.forEach(ingredients, (ingredient, index) => {
-      db.saveIngredient(ingredient);
+    // get all current ingredients stored in our own database
+    db.selectAll((tableData) => {
+      _.forEach(ingredients, (newIngredient, index) => {
+        // see if potential new ingredient already exists in database
+        const priorInstances = _.filter(tableData, (oldIngredient, index) => {
+          return oldIngredient.ingredient === newIngredient;
+        }).length;
+        // save if it doesn't
+        if (priorInstances === 0) {
+          db.saveIngredient(newIngredient);
+        } 
+      });
     });
+    // send back ingredients regardless of whether or not they were new
     res.send(ingredients);
-  })
+  });
+});
+
+// get a random recipe
+app.get('/random', (req, res) => {
+  helper.rfnRandomRecipe((err, recipe) => {
+    if (err) {
+      return res.status(500).send('Something Went Wrong!');
+    }
+    
+    res.status(200).send(recipe);
+  });
+});
+
+// get a single youtube video from a search query
+app.get('/search', (req, res) => {
+  helper.youTubeApi(req.query.q, (err, searchResult) => {
+    if (err) {
+      return res.status(500).send("Something went wrong!");
+    }
+    // send back the video inforamtion
+    res.status(200).send(searchResult);
+  });
 });
 
 // Able to set port and still work //
