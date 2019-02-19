@@ -68,8 +68,18 @@ app.get('/random', (req, res) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
-
-    res.status(200).send(recipe);
+    db.selectAllRecipes((err, recipes) => {
+      if (err) {
+        return res.status(500).send('Something Went Wrong!');
+      }
+      const priorInstances = _.filter(recipes, (savedRecipe, index) => {
+        return savedRecipe.recipe === recipe.name;
+      }).length;
+      if (priorInstances === 0) {
+        db.saveRecipe(recipe.name, recipe.recipeId);
+      }
+      return res.status(200).send(recipe);
+    });
   });
 });
 
