@@ -7,7 +7,7 @@
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
 
-const saveRecipe = (userId, recipeId) => {
+const saveLikedRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
@@ -50,4 +50,4 @@ const selectAll = (callback) => {
     }
   });
 }
-module.exports = { saveRecipe, dislikeRecipe, saveIngredient, selectAll };
+module.exports = { saveLikedRecipe, dislikeRecipe, saveIngredient, selectAll };
