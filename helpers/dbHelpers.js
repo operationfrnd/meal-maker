@@ -106,7 +106,7 @@ const saveIngredient = (ingredientItem) => {
 
 const saveRecipeIngredient = (recipeId, ingredientId) => {
   let q = [recipeId, ingredientId];
-  connection.query('INSERT INTO recipesIngredients (idRecipes, idIngredients) VALUES (?)', q, (err, results) => {
+  connection.query('INSERT INTO recipesIngredients (idRecipes, ingredients) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       console.log('error in saving id pairs to db');
     } else {
@@ -114,6 +114,16 @@ const saveRecipeIngredient = (recipeId, ingredientId) => {
     }
   });
 }
+
+const getRecipeIngredients = (recipeId, callback) => {
+  connection.query(`SELECT * FROM recipesIngredients WHERE idRecipe = ${recipeId}`, (err, ingredients) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, ingredients);
+    }
+  });
+};
 
 const selectAllIngredients = (callback) => {
   connection.query('SELECT * FROM Ingredient', (err, results) => {
@@ -126,4 +136,4 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, selectAllIngredients };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients };
