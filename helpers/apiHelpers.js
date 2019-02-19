@@ -29,6 +29,7 @@ const recFoodNutrApi = function (ingredients, callback) {
 };
 
 const rfnRandomRecipe = function (callback) {
+  // get request for random recipe
   axios({
     method: 'get',
     headers: {
@@ -36,25 +37,31 @@ const rfnRandomRecipe = function (callback) {
     },
     url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&limitLicense=false',
   }).then((recipe) => {
+    // create object for storing vital recipe information
     const receipeInfo = {};
+    // get recipe name/title
     receipeInfo.name = recipe.data.recipes[0].title;
+    // get recipe cooktime
     receipeInfo.cookTime = recipe.data.recipes[0].readyInMinutes;
+    // get recipe instructions
     receipeInfo.instructions = _.map(recipe.data.recipes[0].analyzedInstructions[0].steps, (step, stepNumber) => {
       return step.step;
     }).join("\n");
+    // get recipe ingredients
     receipeInfo.ingredients = _.map(recipe.data.recipes[0].extendedIngredients, (ingredient, index) => {
       return ingredient.originalString;
     }).join("\n");
+    // do a quick search to get a youtube video on preparation of the dish
     youTubeApi(`cook ${receipeInfo.name}`, (anError, video) => {
       if (anError) {
-        return anError;
-        callback(anError, null);
+        return callback(anError, null);
       }
+      // store video info and then preform the callback
       receipeInfo.videoInfo = video;
-      callback(null, receipeInfo);
+      return callback(null, receipeInfo);
     });
   }).catch((err) => {
-    console.error(err);
+    callback(err, null);
   })
 }
 
