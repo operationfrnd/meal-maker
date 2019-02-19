@@ -106,7 +106,7 @@ const saveIngredient = (ingredientItem) => {
 
 const saveRecipeIngredient = (recipeId, ingredientId) => {
   let q = [recipeId, ingredientId];
-  connection.query('INSERT INTO recipesIngredients (idRecipes, ingredients) VALUES (?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO recipesIngredients (idRecipe, ingredients) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       console.log('error in saving id pairs to db');
     } else {

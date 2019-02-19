@@ -129,7 +129,17 @@ app.get('/recipeoftheday', (req, res) => {
         res.status(204).send(res.data);
       });
     } else {
-      res.status(200).send(oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1]);
+      const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
+      db.getRecipeIngredients(recipeOfTheDay.id, (err, ingredients) => {
+        if (err) {
+          res.status(500).send('Something went wrong!');
+        }
+        ingredients = _.map(ingredients, (ingredient) => {
+          return ingredient.ingredients;
+        });
+        recipeOfTheDay.ingredients = ingredients.join('\n');
+        res.status(200).send(recipeOfTheDay);
+      });
     }
   });
 });
