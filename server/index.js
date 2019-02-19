@@ -65,36 +65,23 @@ app.get('/ingredients', (req, res) => {
 
 // get a random recipe
 app.get('/random', (req, res) => {
-  helper.rfnRandomRecipe((err, recipe) => {
+  helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
-      return res.status(500).send('Something Went Wrong!');
+      console.error(err);
     }
-    db.selectAllRecipeOfTheDay((err, pastRecipes) => {
+    db.selectAllRecipeOfTheDay((err, pastRecipeOfTheDays) => {
       if (err) {
-        return res.status(500).send('Something Went Wrong!');
+        console.error(err);
       }
-      // if (pastRecipes.length === 0) {
-      //   console.log(recipe);
-      //   db.saveRecipeOfTheDay(recipe.videoInfo.id.videoId, null, recipe.date);
-      // }
-    })
-    db.selectAllRecipes((err, recipes) => {
-      if (err) {
-        return res.status(500).send('Something Went Wrong!');
-      }
-      const priorInstances = _.filter(recipes, (savedRecipe, index) => {
-        return savedRecipe.recipe === recipe.name;
+      const duplicateCount = _.filter(pastRecipeOfTheDays, (recipe) => {
+        
       }).length;
-      if (priorInstances === 0) {
-        return db.saveRecipe(recipe.name, recipe.recipeId, (err, response) => {
-          if (err) {
-            return res.status(500).send('Something Went Wrong!');
-          }
-          return res.status(200).send(recipe);
-        });
+      if (pastRecipeOfTheDays.length === 0) {
+
+      } else {
+
       }
-      return res.status(200).send(recipe);
-    });
+    })
   });
 });
 
