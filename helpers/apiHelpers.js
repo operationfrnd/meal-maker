@@ -28,6 +28,36 @@ const recFoodNutrApi = function (ingredients, callback) {
   });
 };
 
+const rfnRandomRecipe = function (callback) {
+  axios({
+    method: 'get',
+    headers: {
+      'X-RapidAPI-Key': keys.apiKey1,
+    },
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&limitLicense=false',
+  }).then((recipe) => {
+    const receipeInfo = {};
+    receipeInfo.name = recipe.data.recipes[0].title;
+    receipeInfo.cookTime = recipe.data.recipes[0].readyInMinutes;
+    receipeInfo.instructions = _.map(recipe.data.recipes[0].analyzedInstructions[0].steps, (step, stepNumber) => {
+      return step.step;
+    }).join("\n");
+    receipeInfo.ingredients = _.map(recipe.data.recipes[0].extendedIngredients, (ingredient, index) => {
+      return ingredient.originalString;
+    }).join("\n");
+    youTubeApi(`cook ${receipeInfo.name}`, (anError, video) => {
+      if (anError) {
+        return anError;
+        callback(anError, null);
+      }
+      receipeInfo.videoInfo = video;
+      callback(null, receipeInfo);
+    });
+  }).catch((err) => {
+    console.error(err);
+  })
+}
+
 const mealDBIngredientSearch = function (callback) {
   // get all ingredients
   return axios({
@@ -46,10 +76,6 @@ const mealDBIngredientSearch = function (callback) {
   });
 };
 
-const mealDBRandomRecipe = function () {
-  
-}
-
 const youTubeApi = function(query, callback) {
   // search for videos based on the query
   return axios({
@@ -66,3 +92,4 @@ const youTubeApi = function(query, callback) {
 module.exports.recFoodNutrApi = recFoodNutrApi;
 module.exports.mealDBIngredientSearch = mealDBIngredientSearch;
 module.exports.youTubeApi = youTubeApi;
+module.exports.rfnRandomRecipe = rfnRandomRecipe;

@@ -63,7 +63,12 @@ app.get('/ingredients', (req, res) => {
 });
 
 app.get('/random', (req, res) => {
-
+  helper.rfnRandomRecipe((err, recipe) => {
+    if (err) {
+      res.status(500).send('Something Went Wrong!');
+    }
+    res.status(200).send(recipe);
+  });
 });
 
 // get a single youtube video from a search query
