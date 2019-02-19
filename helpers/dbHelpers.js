@@ -51,6 +51,10 @@ const saveLikedRecipe = (userId, recipeId) => {
   });
 };
 
+const checkForPastRecipeOfTheDay = (recipeName, callback) => {
+
+};
+
 const saveRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
   let q = [videoLink, ourDbRecipeId, currentDate];
   connection.query('INSERT INTO RecipeOfTheDay (link, idRecipe, date) VALUES (?, ?)', q, (err, results) => {
@@ -105,4 +109,4 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, checkForPastRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };

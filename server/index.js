@@ -79,9 +79,9 @@ app.get('/random', (req, res) => {
       if (priorInstances === 0) {
         return db.saveRecipe(recipe.name, recipe.recipeId, (err, response) => {
           if (err) {
-            return res.status.send('Something Went Wrong!');
+            return res.status(500).send('Something Went Wrong!');
           }
-          
+          return res.status(200).send(recipe);
         });
       }
       return res.status(200).send(recipe);
