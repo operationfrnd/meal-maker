@@ -15,10 +15,12 @@ const _ = require('lodash');
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '/../client/dist')));
+
 // Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '../client/'));
+
 // Needed for React at Some Point // 
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
