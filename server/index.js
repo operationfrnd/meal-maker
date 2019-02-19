@@ -65,21 +65,52 @@ app.get('/ingredients', (req, res) => {
 
 // get a random recipe
 app.get('/random', (req, res) => {
-  helper.rfnRandomRecipe((err, randomRecipe) => {
+  // First get a random recipe //
+  return helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
-      console.error(err);
+      return res.status(500).send('Something Went Wrong!');
     }
-    db.selectAllRecipeOfTheDay((err, pastRecipeOfTheDays) => {
+    // Get all past recipe of the days //
+    return db.selectAllRecipeOfTheDay((err, pastRecipeOfTheDays) => {
       if (err) {
-        console.error(err);
+        return res.status(500).send('Something Went Wrong!');
       }
+      // See if recipe has already been a recipe of the day //
       const duplicateCount = _.filter(pastRecipeOfTheDays, (recipe) => {
-        
+        return recipe.name === randomRecipe.name;
       }).length;
-      if (pastRecipeOfTheDays.length === 0) {
-
-      } else {
-
+      if (duplicateCount === 0) {
+        // Get all recipes currently inside of our database //
+        return db.selectAllRecipes((err, currentRecipes) => {
+          if (err) {
+            return res.status(500).send('Something Went Wrong!');
+          }
+          // See if we have an old recipe that is the same as the random recipe
+          const oldRecipe = _.filter(currentRecipes, (recipe) => {
+            return recipe.recipe === randomRecipe.name;
+          })[0];
+          // Save the random recipe if we don't have it already //
+          if (!oldRecipe) {
+            // Save the recipe
+            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, (err) => {
+              if (err) {
+                return res.status(500).send('Something Went Wrong!');
+              }
+              // Get the recently saved recipe
+              return db.selectSingleRecipe(randomRecipe.recipeId, (err, singleRecipeArray) => {
+                if (err) {
+                  return res.status(500).send('Something Went Wrong!');
+                }
+                // Save the recipe of the day
+                res.status(200).send(randomRecipe);
+                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
+              });
+            })
+          } else {
+            // Save the recipe of the day //
+            return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
+          }
+        });
       }
     })
   });

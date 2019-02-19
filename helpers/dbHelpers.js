@@ -61,9 +61,9 @@ const selectAllRecipeOfTheDay = (callback) => {
   })
 };
 
-const saveRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
-  let q = [videoLink, ourDbRecipeId, currentDate];
-  connection.query('INSERT INTO RecipeOfTheDay (link, idRecipe, date) VALUES (?, ?, ?)', q, (err, results) => {
+const saveRecipeOfTheDay = (revcipeName, videoLink, ourDbRecipeId, currentDate) => {
+  let q = [revcipeName, videoLink, ourDbRecipeId, currentDate];
+  connection.query('INSERT INTO RecipeOfTheDay (name, link, idRecipe, date) VALUES (?, ?, ?, ?)', q, (err, results) => {
     if (err) {
       console.log('could not save recipe of the day to database');
     } else {
