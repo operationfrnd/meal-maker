@@ -39,3 +39,5 @@ const random = {
   },
   "date": 19
 }
+
+export default random;

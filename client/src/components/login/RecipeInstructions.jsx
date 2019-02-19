@@ -1,14 +1,13 @@
 // component with a list of instructions for the recipe of the day which can be scrolled
 import React from 'react';
-import VideoPlayer from './VideoPlayer.jsx';
-// import exampleData from '../../example_rfn_data.js';
 
-var RecipeInstructions = (props) => (
+var RecipeInstructions = ({ recipe }) => (
   <div className="instructions-list">
-
-
+    <b>Cook Time:</b> {recipe.cookTime} <br/>
+    <b>Ingredients:</b> {recipe.ingredients} <br/>
+    <b>Instructions:</b> {recipe.instructions} <br/>
   </div >
 );
 
 
-export default VideoPlayer;
+export default RecipeInstructions;
