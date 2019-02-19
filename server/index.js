@@ -40,7 +40,7 @@ app.get('/food', (req, res) => {
 
 // get all ingredients stored in the MealDB //
 app.get('/ingredients', (req, res) => {
-  helper.mealDBApi((err, ingredients) => {
+  helper.mealDBIngredientSearch((err, ingredients) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
@@ -60,6 +60,10 @@ app.get('/ingredients', (req, res) => {
     // send back ingredients regardless of whether or not they were new
     res.send(ingredients);
   });
+});
+
+app.get('/random', (req, res) => {
+
 });
 
 // get a single youtube video from a search query

@@ -28,7 +28,7 @@ const recFoodNutrApi = function (ingredients, callback) {
   });
 };
 
-const mealDBApi = function (callback) {
+const mealDBIngredientSearch = function (callback) {
   // get all ingredients
   return axios({
     method: 'get',
@@ -44,8 +44,11 @@ const mealDBApi = function (callback) {
     console.log(err);
     return callback(err, null);
   });
-  
 };
+
+const mealDBRandomRecipe = function () {
+  
+}
 
 const youTubeApi = function(query, callback) {
   // search for videos based on the query
@@ -61,5 +64,5 @@ const youTubeApi = function(query, callback) {
 };
 
 module.exports.recFoodNutrApi = recFoodNutrApi;
-module.exports.mealDBApi = mealDBApi;
+module.exports.mealDBIngredientSearch = mealDBIngredientSearch;
 module.exports.youTubeApi = youTubeApi;
