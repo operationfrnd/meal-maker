@@ -62,12 +62,13 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+// get a single youtube video from a search query
 app.get('/search', (req, res) => {
-  console.log(req.query);
   helper.youTubeApi(req.query.q, (err, searchResult) => {
     if (err) {
       return res.status(500).send("Something went wrong!");
     }
+    // send back the video inforamtion
     res.status(200).send(searchResult);
   });
 });

@@ -48,11 +48,12 @@ const mealDBApi = function (callback) {
 };
 
 const youTubeApi = function(query, callback) {
+  // search for videos based on the query
   return axios({
     method: 'get',
     url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${keys.apiKey2}&q=${query}&maxResults=5`,
   }).then((searchResults) => {
-    console.log(searchResults.data.items);
+    // preform a callback with the first object full of video data from the search results
     callback(null, searchResults.data.items[0]);
   }).catch((err) => {
     callback(err, null);
