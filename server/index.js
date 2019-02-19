@@ -116,8 +116,14 @@ app.post('/random', (req, res) => {
   });
 });
 
-app.get('/random', (req, res) => {
-
+app.get('/recipeoftheday', (req, res) => {
+  db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
+    if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
+      axios.post('/random');
+    } else {
+      res.status(200).send(oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1]);
+    }
+  });
 });
 
 // get a single youtube video from a search query
