@@ -5,3 +5,4 @@ bower_components/
 build/
 client/dist/bundle.js
 .env 
+database/index.js
