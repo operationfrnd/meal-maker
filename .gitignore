@@ -6,4 +6,5 @@ build/
 dist/bundle.js
 helpers/keys.js
 package-lock.json
-.env
+
+.env 
