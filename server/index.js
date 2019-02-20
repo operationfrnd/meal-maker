@@ -231,20 +231,26 @@ app.post('/disliked', (req, res) => {
 });
 
 app.get('/saved', (req, res) => {
-
+  db.selectLikedRecipes(req.userId, (err, ids) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    res.status(200).send(ids);
+  });
 });
 
 app.post('/saved', (req, res) => {
   db.selectLikedRecipes(req.userId, (err, ids) => {
-    previousInstances = _.filter(ids, (ids) => {
-      console.log(ids);
-    });
-    db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
-      if (err) {
-        return res.status(500).send('Something Went Wrong!');
-      }
-      return res.status(204).send('Saved Recipe To The Saved Table');
-    });
+    const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
+    if (previousInstances.length === 0) {
+      return db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
+        if (err) {
+          return res.status(500).send('Something Went Wrong!');
+        }
+        return res.status(204).send('Saved Recipe To The Saved Table');
+      });
+    }
+    return res.status(500).send('Recipe Already Saved');
   });
 });
 
