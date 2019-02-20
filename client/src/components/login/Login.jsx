@@ -3,6 +3,9 @@
 // 2) a recipe of the day video player component
 // 3) a recipe instructions component (with a scrolling list of instructions)
 import React from 'react';
+import Credentials from './Credentials.jsx';
+import RecipeInstructions from './RecipeInstructions.jsx';
+import VideoPlayer from './VideoPlayer.jsx';
 
 class Login extends React.Component {
   constructor(props) {
@@ -29,8 +32,8 @@ class Login extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td className="vidPlayer"><VideoPlayer video=""></VideoPlayer> </td>
-              <td className="instructions"><RecipeInstructions instructions=""></RecipeInstructions></td>
+              <td className="vidPlayer"><VideoPlayer recipe={this.props.recipe}></VideoPlayer> </td>
+              <td className="instructions"><RecipeInstructions recipe={this.props.recipe}></RecipeInstructions></td>
             </tr>   
           </tbody>
         </table>

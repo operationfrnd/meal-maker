@@ -43,8 +43,8 @@ class Credentials extends React.Component {
       <form>
       <input type="text" name="username" placeholder="Username"/>
       <input type="text" name="password" placeholder="Password" />
-        <buttom type="submit" value="Login" />
-        <button type="submit" value="Sign Up" />
+        <input type="submit" value="Login" />
+        <input type="submit" value="Sign Up" />
       </form>
     );
   }
