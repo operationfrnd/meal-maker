@@ -5,7 +5,7 @@
 import React from 'react';
 import Credentials from './Credentials.jsx';
 import RecipeInstructions from './RecipeInstructions.jsx';
-import VideoPlayer from './VideoPlayer.jsx';
+import VideoPlayer from '../VideoPlayer.jsx';
 
 class Login extends React.Component {
   constructor(props) {
