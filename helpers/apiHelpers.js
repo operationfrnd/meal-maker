@@ -8,7 +8,8 @@ const axios = require('axios');
 const _ = require('lodash');
 
 // where api key was imported from, might need to make your own file
-const keys = require('./keys');
+// const keys = require('./keys');
+// make .env files locally to assign api keys (see .env.example)
 
 const recFoodNutrApi = function (ingredients, callback) {
   if (!callback) {
