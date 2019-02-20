@@ -17,11 +17,13 @@ class Login extends React.Component {
   }
 
   render() {
-
+    console.log('login')
+    console.log(this.props);
+    const { recipe } = this.props;
     return (
       <div>
         <div className="credentials">
-          <Credentials ></Credentials>
+          <Credentials />
         </div>
         <div className="appName">
           <h1>Meal Maker</h1>
@@ -32,9 +34,9 @@ class Login extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td className="vidPlayer"><VideoPlayer recipe={this.props.recipe}></VideoPlayer> </td>
-              <td className="instructions"><RecipeInstructions recipe={this.props.recipe}></RecipeInstructions></td>
-            </tr>   
+              <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
+              <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
+            </tr>
           </tbody>
         </table>
       </div>

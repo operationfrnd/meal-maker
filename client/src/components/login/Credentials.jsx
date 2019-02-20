@@ -29,9 +29,6 @@ class Credentials extends React.Component {
   }
 
   render() {
-
-
-
     // <div className="Login">
     //   <form onSubmit={this.handleSubmit}>
     //     Username: <input type="text" name="username"> </input>
@@ -42,19 +39,19 @@ class Credentials extends React.Component {
     // </div>
 
     return (
-      // <form>
-      // <input type="text" name="username" placeholder="Username"/>
-      // <input type="text" name="password" placeholder="Password" />
-      // </form>
-      //   <button type="submit" value="Login" onClick={this.onclick.bind(this)}/>
-      //   <button type="submit" value="Sign Up" />
+    // <form>
+    // <input type="text" name="username" placeholder="Username"/>
+    // <input type="text" name="password" placeholder="Password" />
+    // </form>
+    //   <button type="submit" value="Login" onClick={this.onclick.bind(this)}/>
+    //   <button type="submit" value="Sign Up" />
 
       <div>
-      <input type="text" name="username" placeholder="Username" />
-      <input type="text" name="password" placeholder="Password" />
-      <button type="submit" value="login" onClick={this.onClick.bind(this)}>Login</button>
-      <button type="submit" value="signUp" onClick={this.onClick.bind(this)}>Sign Up</button>
-      </div >
+        <input type="text" name="username" placeholder="Username" />
+        <input type="text" name="password" placeholder="Password" />
+        <button type="submit" value="login" onClick={this.onClick.bind(this)}>Login</button>
+        <button type="submit" value="signUp" onClick={this.onClick.bind(this)}>Sign Up</button>
+      </div>
     );
   }
 }
