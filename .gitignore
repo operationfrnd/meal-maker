@@ -3,8 +3,6 @@ bower_components/
 *.log
 .vscode/
 build/
-dist/bundle.js
+client/dist/bundle.js
 helpers/keys.js
-package-lock.json
-
 .env 

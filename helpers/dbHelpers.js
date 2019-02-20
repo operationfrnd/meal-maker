@@ -61,9 +61,9 @@ const selectAllRecipeOfTheDay = (callback) => {
   })
 };
 
-const saveRecipeOfTheDay = (revcipeName, videoLink, ourDbRecipeId, currentDate) => {
-  let q = [revcipeName, videoLink, ourDbRecipeId, currentDate];
-  connection.query('INSERT INTO RecipeOfTheDay (name, link, idRecipe, date) VALUES (?, ?, ?, ?)', q, (err, results) => {
+const saveRecipeOfTheDay = (revcipeName, videoLink, recipeInstructions, ourDbRecipeId, currentDate) => {
+  let q = [revcipeName, videoLink, recipeInstructions, ourDbRecipeId, currentDate];
+  connection.query('INSERT INTO RecipeOfTheDay (name, link, instructions, idRecipe, date) VALUES (?, ?, ?, ?, ?)', q, (err, results) => {
     if (err) {
       console.log('could not save recipe of the day to database');
     } else {
@@ -104,6 +104,27 @@ const saveIngredient = (ingredientItem) => {
   });
 };
 
+const saveRecipeIngredient = (recipeId, ingredientId) => {
+  let q = [recipeId, ingredientId];
+  connection.query('INSERT INTO recipesIngredients (idRecipe, ingredients) VALUES (?, ?)', q, (err, results) => {
+    if (err) {
+      console.log('error in saving id pairs to db');
+    } else {
+      console.log('saved id pairs to db');
+    }
+  });
+}
+
+const getRecipeIngredients = (recipeId, callback) => {
+  connection.query(`SELECT * FROM recipesIngredients WHERE idRecipe = ${recipeId}`, (err, ingredients) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, ingredients);
+    }
+  });
+};
+
 const selectAllIngredients = (callback) => {
   connection.query('SELECT * FROM Ingredient', (err, results) => {
     if (err) {
@@ -115,4 +136,25 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, selectAllIngredients };
+const selectAllUsers = (callback) => {
+  connection.query('SELECT * FROM Users', (err, users) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, users);
+    }
+  })
+};
+
+const saveUser = (username, password) => {
+  const q = [username, password];
+  connection.query('INSERT INTO Users (username, password) VALUES (?, ?)', q, (err) => {
+    if (err) {
+      console.log('could not insert new user into Users table');
+    } else {
+      console.log('successfully added new user to Users table');
+    }
+  });
+};
+
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };

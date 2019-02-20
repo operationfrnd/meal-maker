@@ -15,10 +15,11 @@ const _ = require('lodash');
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '/../client/dist')));
+
 // Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '../client/'));
 // Needed for React at Some Point // 
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
@@ -101,9 +102,14 @@ app.post('/random', (req, res) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
+                const ingredients = randomRecipe.ingredients.split("\n");
                 // Save the recipe of the day
-                res.status(200).send(randomRecipe);
-                return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, singleRecipeArray[0].id, randomRecipe.date);
+                res.status(204).send(randomRecipe);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
+                _.forEach(ingredients, (ingredient) => {
+                  db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
+                });
+                return 'Finished';
               });
             })
           } else {
@@ -116,8 +122,27 @@ app.post('/random', (req, res) => {
   });
 });
 
-app.get('/random', (req, res) => {
-
+// get the current recipe of the day and update if necessary
+app.get('/recipeoftheday', (req, res) => {
+  db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
+    if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
+      axios.post('/random').then((res) =>{
+        res.status(204).send(res.data);
+      });
+    } else {
+      const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
+      db.getRecipeIngredients(recipeOfTheDay.id, (err, ingredients) => {
+        if (err) {
+          res.status(500).send('Something went wrong!');
+        }
+        ingredients = _.map(ingredients, (ingredient) => {
+          return ingredient.ingredients;
+        });
+        recipeOfTheDay.ingredients = ingredients.join('\n');
+        res.status(200).send(recipeOfTheDay);
+      });
+    }
+  });
 });
 
 // get a single youtube video from a search query
@@ -129,6 +154,43 @@ app.get('/search', (req, res) => {
     // send back the video inforamtion
     res.status(200).send(searchResult);
   });
+});
+
+app.post('/signup', (req, res) => {
+  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+    return res.status(500).send('Invalid username or password!');
+  }
+  return db.selectAllUsers((err, users) => {
+    if (err) {
+      console.error(err);
+    }
+    const sameNameCounter = _.filter(users, (user) => {
+      return user.username === req.body.username;
+    }).length;
+    if (sameNameCounter === 0) {
+      db.saveUser(req.body.username, helper.hasher(req.body.password));
+      return res.status(204).send('New User Created');
+    } else {
+      return res.status(500).send('User already exists');
+    }
+  })
+})
+
+app.get('/login', (req, res) => {
+  db.selectAllUsers((err, users) => {
+    const user = _.filter(users, (storedUser) => {
+      return storedUser.username === req.body.username;
+    })[0];
+    if (user) {
+      if (user.password === helper.hasher(req.body.password)) {
+        res.status(200).send('login successful');
+      } else {
+        res.status(500).send('password incorrect');
+      }
+    } else {
+      res.status(500).send('No User Found');
+    }
+  })
 });
 
 // Able to set port and still work //

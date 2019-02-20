@@ -3,6 +3,7 @@
 // 2) Helper interacting with the Youtube api => retrieving a video (top result) based on a search with a name of receipe
 // 3) Helper interacting with the MealDB api => retrieving a list of all ingredients available in the MealDB api (optional)
 
+const hash = require('hash-sum');
 const axios = require('axios');
 const _ = require('lodash');
 
@@ -99,7 +100,12 @@ const youTubeApi = function(query, callback) {
   });
 };
 
+const hasher = function(password) {
+  return hash(password);
+}
+
 module.exports.recFoodNutrApi = recFoodNutrApi;
 module.exports.mealDBIngredientSearch = mealDBIngredientSearch;
 module.exports.youTubeApi = youTubeApi;
 module.exports.rfnRandomRecipe = rfnRandomRecipe;
+module.exports.hasher = hasher;
