@@ -158,7 +158,7 @@ app.get('/search', (req, res) => {
 
 app.post('/signup', (req, res) => {
   if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
-    return res.status(500).send('Invalid username or password!');
+    return res.status(500).redirect('/restrictedhome');
   }
   return db.selectAllUsers((err, users) => {
     if (err) {
@@ -169,9 +169,9 @@ app.post('/signup', (req, res) => {
     }).length;
     if (sameNameCounter === 0) {
       db.saveUser(req.body.username, helper.hasher(req.body.password));
-      return res.status(204).send('New User Created');
+      return res.status(204).redirect('/home');
     } else {
-      return res.status(500).send('User already exists');
+      return res.status(500).redirect('/restrictedhome');
     }
   })
 })
@@ -183,12 +183,12 @@ app.get('/login', (req, res) => {
     })[0];
     if (user) {
       if (user.password === helper.hasher(req.body.password)) {
-        res.status(200).send('login successful');
+        res.status(200).redirect('/home');
       } else {
-        res.status(500).send('password incorrect');
+        res.status(500).redirect('/restrictedhome');
       }
     } else {
-      res.status(500).send('No User Found');
+      res.status(500).redirect('/restrictedhome');
     }
   })
 });
