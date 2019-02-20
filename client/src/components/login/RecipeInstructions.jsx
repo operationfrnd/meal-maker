@@ -3,15 +3,16 @@ import React from 'react';
 
 const RecipeInstructions = ({ recipe }) => (
   <div className="instructions-list">
-    <h3>{recipe.name} Name</h3>
+    <h3>{recipe.name}</h3>
     <b>Cook Time:</b>
-    {' '}
     {recipe.cooktime}
     <br />
-    <b>Ingredients:</b> {recipe.ingredients} 
+    <b>Ingredients:</b>
+    {recipe.ingredients}
     <br />
-    <b>Instructions:</b> {recipe.instructions} 
+    <b>Instructions:</b>
+    {recipe.instructions}
     <br />
-  </div >
+  </div>
 );
 export default RecipeInstructions;
