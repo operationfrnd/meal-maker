@@ -21,15 +21,21 @@ class App extends React.Component {
       savedRecipes: []
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
+    this.getRecipes = this.getRecipes.bind(this);
+    this.getSavedRecipes = this.getSavedRecipes.bind(this);
   }
 
   componentDidMount(){
-    this.getRandomRecipe()
+    this.getRandomRecipe();
+    // this.getSavedRecipes();
   }
 
   // function to retrieve recipes to display 
   getRecipes() {
-    return axios.get('/api/recipes') // sends a GET request to serve at endpoint '/api/recipes'
+    return axios.get('/food', {
+      params: {
+        ingredients: ''
+      }}) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
         // console.log(results);
         this.setState({ // change the state

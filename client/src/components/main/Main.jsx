@@ -34,7 +34,7 @@ class Main extends React.Component {
           <Search ingredientList={this.state.ingredients}></Search>
         </div>
         <div className="recipe-list">
-          <RecipeList recipes={this.props.recipes}></RecipeList>
+          <RecipeList recipe={this.props.recipes}></RecipeList>
         </div>
         <div className="saved-recipes">
           <SavedRecipes savedRecipes={this.props.savedRecipes}></SavedRecipes>

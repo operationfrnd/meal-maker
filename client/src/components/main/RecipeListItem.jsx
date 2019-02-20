@@ -15,7 +15,7 @@ var RecipeListItem = ({ recipe }) => {
   <div className="recipe-list-item">
     <b>Recipe Name:</b> {recipe.name} <br />
     <b>Cook Time:</b> {recipe.cookTime} <br />
-    <b>Uses:</b> {recipe.ingredients.usedIngredients} <br />
+    {/* <b>Uses:</b> {recipe.ingredients.usedIngredients} <br /> */}
     <b>Match Percentage:</b> {recipe.percentage}%
   </div >
 )};
