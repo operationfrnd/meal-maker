@@ -10,11 +10,11 @@
 // 2) a recipe of the day video player component
 // 3) a recipe instructions component (with a scrolling list of instructions)
 import React from 'react';
-import VideoPlayer from '../VideoPlayer';
-import RecipeList from './RecipeList';
-import SavedRecipes from './SavedRecipes';
-import Search from './Search';
-import RecipeInstructions from '../login/RecipeInstructions';
+import VideoPlayer from '../VideoPlayer.jsx';
+import RecipeList from './RecipeList.jsx';
+import SavedRecipes from './SavedRecipes.jsx';
+import Search from './Search.jsx';
+import RecipeInstructions from '../login/RecipeInstructions.jsx';
 
 class Main extends React.Component {
   constructor(props) {

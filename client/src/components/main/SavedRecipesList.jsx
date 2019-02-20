@@ -3,7 +3,7 @@
 // a list of items
 
 import React from 'react';
-import SavedRecipesListItem from './SavedRecipesListItem';
+import SavedRecipesListItem from './SavedRecipesListItem.jsx';
 
 const SavedRecipesList = ({savedRecipes}) => (
   <div className="recipe-list">

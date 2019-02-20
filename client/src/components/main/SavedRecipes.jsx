@@ -1,6 +1,6 @@
 // a drawer (with a saved recipes list component and a saved recipe list item component)
 import React from 'react';
-import SavedRecipesList from './SavedRecipesList';
+import SavedRecipesList from './SavedRecipesList.jsx';
 
 const SavedRecipes = ({ savedRecipes }) => (
 

@@ -4,12 +4,9 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 const Search = () => {
-
-  render() {
-    return (
-      <h2>Search</h2> 
-    )
-  }
-}
+  return (
+    <h2>Search</h2>
+  );
+};
 
 export default Search;
