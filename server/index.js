@@ -230,6 +230,14 @@ app.post('/disliked', (req, res) => {
 
 });
 
+app.get('/saved', (req, res) => {
+
+});
+
+app.post('/saved', (req, res) => {
+
+});
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
