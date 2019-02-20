@@ -8,8 +8,9 @@ import Recipe from './components/Recipe.jsx';
 import sampleData from './example_rfn_data';
 import Credentials from './components/login/Credentials.jsx';
 import RecipeInstructions from './components/login/RecipeInstructions.jsx';
-import VideoPlayer from './components/login/VideoPlayer.jsx';
+import VideoPlayer from './components/VideoPlayer.jsx';
 import randomRecipe from '../example_random.js';
+import Main from './components/main/Main.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -50,21 +51,34 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="nav">
-          <span className="logo">Meal Maker</span>
-          <Credentials /> 
+        <div>
+          <Login recipe={this.state.recipeOfTheDay}></Login>
         </div>
-
-        <div className="main">
-        <div className="videoPlayer">
-          <VideoPlayer recipe={this.state.recipeOfTheDay} />
-        </div>
-        <div className="recipeInstructions">
-        <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
-        </div>
+        <div>
+          <Main recipe={this.state.recipeOfTheDay}></Main>
         </div>
       </div>
-    );
+    )
+
+
+
+
+      // <div>
+      //   <div className="nav">
+      //     <span className="logo">Meal Maker</span>
+      //     <Credentials /> 
+      //   </div>
+
+      //   <div className="main">
+      //   <div className="videoPlayer">
+      //     <VideoPlayer recipe={this.state.recipeOfTheDay} />
+      //   </div>
+      //   <div className="recipeInstructions">
+      //   <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
+      //   </div>
+      //   </div>
+      // </div>
+    // );
   }
 
 }

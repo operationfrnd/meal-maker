@@ -3,7 +3,7 @@
 // 1) Request handler for a GET request from client with ingredients as params => will call Nutrition helper then send back results to client
 // 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper 
 // 3) Request handler for a GET request from client on main page endpoint => compare current date & Ingredients table update date from DB
-
+require('dotenv').config(); 
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,7 +20,6 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // Needed for React at Some Point // 
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
@@ -34,10 +33,37 @@ app.get('/', (req, res) => {
 app.get('/food', (req, res) => {
   helper.recFoodNutrApi(req.query.ingredients, (err, recipes) => {
     if (err) {
-      res.status(500).send('Something went wrong!');
+      console.log(err);
+      return res.status(500).send('Something went wrong!');
     }
     // respond with an array of objects which contain recipie information
-    res.status(200).send(recipes);
+    console.log(recipes);
+    db.selectAllRecipes((err, savedRecipes) => {
+      if (err) {
+        return console.log(error);
+      }
+      _.forEach(recipes, (recipe) => {
+        const previousInstances = _.filter(savedRecipes, (savedRecipe) => {
+          return savedRecipe.recipe === recipe.name;
+        }).length;
+        if (previousInstances === 0) {
+          db.saveRecipe(recipe.name, recipe.recipeId, (err) => {
+            if (err) {
+              console.log(err);
+            }
+            db.selectSingleRecipe(recipe.recipeId, (err, singleRecipeArray) => {
+              if (err) {
+                console.log(err);
+              }
+              _.forEach(recipe.ingredients.allIngredients, (ingredient) => {
+                db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
+              });
+            });
+          });
+        }
+      });
+    })
+    return res.status(200).send(recipes);
   });
 });
 
@@ -155,6 +181,43 @@ app.get('/search', (req, res) => {
     // send back the video inforamtion
     res.status(200).send(searchResult);
   });
+});
+
+app.post('/signup', (req, res) => {
+  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+    return res.status(500).redirect('/restrictedhome');
+  }
+  return db.selectAllUsers((err, users) => {
+    if (err) {
+      console.error(err);
+    }
+    const sameNameCounter = _.filter(users, (user) => {
+      return user.username === req.body.username;
+    }).length;
+    if (sameNameCounter === 0) {
+      db.saveUser(req.body.username, helper.hasher(req.body.password));
+      return res.status(204).redirect('/home');
+    } else {
+      return res.status(500).redirect('/restrictedhome');
+    }
+  })
+})
+
+app.get('/login', (req, res) => {
+  db.selectAllUsers((err, users) => {
+    const user = _.filter(users, (storedUser) => {
+      return storedUser.username === req.body.username;
+    })[0];
+    if (user) {
+      if (user.password === helper.hasher(req.body.password)) {
+        res.status(200).redirect('/home');
+      } else {
+        res.status(500).redirect('/restrictedhome');
+      }
+    } else {
+      res.status(500).redirect('/restrictedhome');
+    }
+  })
 });
 
 // Able to set port and still work //
