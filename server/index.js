@@ -232,7 +232,18 @@ app.get('/disliked', (req, res) => {
 });
 
 app.post('/disliked', (req, res) => {
-
+  db.selectDislikedRecipes(req.userId, (err, ids) => {
+    const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
+    if (previousInstances.length === 0) {
+      return db.dislikeRecipe(req.userId, req.recipeId, (err) => {
+        if (err) {
+          return res.status(500).send('Something Went Wrong!');
+        }
+        return res.status(204).send('Saved Recipe To The Saved Table');
+      });
+    }
+    return res.status(500).send('Recipe Already Saved');
+  });
 });
 
 app.get('/saved', (req, res) => {
