@@ -21,7 +21,7 @@ const recFoodNutrApi = function (ingredients, callback) {
     headers: {
       'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY,
     },
-    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
+    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&ranking=1&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=10`
   }).then((result) => {
     // return sorted and reversed recipies array
     const recipes = _.sortBy(_.map(result.data.results, (recipe) => {
@@ -47,7 +47,9 @@ const recFoodNutrApi = function (ingredients, callback) {
       _.forEach(recipeInfo.ingredients, (ingredients, key) => {
         if (key !== 'unusedIngredients') {
           _.forEach(ingredients, (ingredient) => {
-            recipeInfo.ingredients.allIngredients.push(ingredient);
+            if (!_.includes(recipeInfo.ingredients.allIngredients, ingredient)) {
+              recipeInfo.ingredients.allIngredients.push(ingredient);
+            }
           });
         }
       });
