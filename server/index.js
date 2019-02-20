@@ -96,12 +96,7 @@ app.get('/single', (req, res) => {
     if (err) {
       return res.status(500).send('Something went wrong!');
     }
-    return db.getRecipeIngredients(singleRecipeArray[0].id, (err, ingredients) => {
-      if (err) {
-        return res.status(500).send('Something went wrong!');
-      }
-      return 
-    });
+    
   });
 });
 
