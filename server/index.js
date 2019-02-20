@@ -33,10 +33,11 @@ app.get('/', (req, res) => {
 app.get('/food', (req, res) => {
   helper.recFoodNutrApi(req.query.ingredients, (err, recipes) => {
     if (err) {
-      res.status(500).send('Something went wrong!');
+      console.log(err);
+      return res.status(500).send('Something went wrong!');
     }
     // respond with an array of objects which contain recipie information
-    res.status(200).send(recipes);
+    return res.status(200).send(recipes);
   });
 });
 

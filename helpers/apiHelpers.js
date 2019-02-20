@@ -21,10 +21,32 @@ const recFoodNutrApi = function (ingredients, callback) {
     headers: {
       'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY,
     },
-    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
+    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=10`
   }).then((result) => {
     // return recipies array
-    return callback(null, result.data.results);
+    const recipes = _.map(result.data.results, (recipe) => {
+      const recipeInfo = {};
+      recipeInfo.name = recipe.title;
+      recipeInfo.recipeId = recipe.id;
+      recipeInfo.cookTime = recipe.readyInMinutes;
+      console.log(recipe.analyzedInstructions[0].steps);
+      recipeInfo.instructions = _.map(recipe.analyzedInstructions[0].steps, (instruction) => {
+        return instruction.step;
+      });
+      recipeInfo.ingredients = {};
+      recipeInfo.ingredients.missedIngredients = _.map(recipe.missedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      recipeInfo.ingredients.usedIngredients = _.map(recipe.usedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      recipeInfo.ingredients.unusedIngredients = _.map(recipe.unusedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      return recipeInfo;
+    });
+    console.log(recipes);
+    return callback(null, recipes);
   }).catch((err) => {
     return callback(err, null);
   });
