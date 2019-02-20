@@ -29,7 +29,6 @@ const recFoodNutrApi = function (ingredients, callback) {
       recipeInfo.name = recipe.title;
       recipeInfo.recipeId = recipe.id;
       recipeInfo.cookTime = recipe.readyInMinutes;
-      console.log(recipe.analyzedInstructions[0].steps);
       recipeInfo.instructions = _.map(recipe.analyzedInstructions[0].steps, (instruction) => {
         return instruction.step;
       });
@@ -43,9 +42,16 @@ const recFoodNutrApi = function (ingredients, callback) {
       recipeInfo.ingredients.unusedIngredients = _.map(recipe.unusedIngredients, (ingredient) => {
         return ingredient.originalString;
       });
+      recipeInfo.ingredients.allIngredients = [];
+      _.forEach(recipeInfo.ingredients, (ingredients, key) => {
+        if (key !== 'unusedIngredients') {
+          _.forEach(ingredients, (ingredient) => {
+            recipeInfo.ingredients.allIngredients.push(ingredient);
+          });
+        }
+      });
       return recipeInfo;
     });
-    console.log(recipes);
     return callback(null, recipes);
   }).catch((err) => {
     return callback(err, null);

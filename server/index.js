@@ -37,6 +37,7 @@ app.get('/food', (req, res) => {
       return res.status(500).send('Something went wrong!');
     }
     // respond with an array of objects which contain recipie information
+    console.log(recipes);
     return res.status(200).send(recipes);
   });
 });
