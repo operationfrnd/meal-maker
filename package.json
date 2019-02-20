@@ -35,11 +35,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
     "hash-sum": "^1.0.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
@@ -48,7 +46,6 @@
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "sequelize": "^4.42.0"
+    "react-dom": "^15.6.1"
   }
 }

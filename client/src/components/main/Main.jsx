@@ -13,6 +13,7 @@ import VideoPlayer from '../VideoPlayer.jsx';
 import RecipeList from './RecipeList.jsx';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
+import RecipeInstructions from '../login/RecipeInstructions.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -24,26 +25,34 @@ class Main extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <div className="logo">
           <img></img>
         </div>
-        <div className="search">
+        <h2>Hello Main</h2>
+        {/* <div className="search">
           <Search ></Search>
-        </div>
+        </div> */}
         <div className="recipe-list">
-          <RecipeList ></RecipeList>
+          <RecipeList recipes={this.props.recipes}></RecipeList>
         </div>
         <div className="saved-recipes">
-          <SavedRecipes ></SavedRecipes>
+          <SavedRecipes savedRecipes={this.props.savedRecipes}></SavedRecipes>
         </div>
-        <div className="vid-player">
-          <VideoPlayer ></VideoPlayer>
+        <div className="recipe-of-the-day-container">
+          <table>
+            <tbody>
+              <tr>
+                <td className="vidPlayer"><VideoPlayer recipe={this.props.recipe}></VideoPlayer> </td>
+                <td className="instructions"><RecipeInstructions recipe={this.props.recipe}></RecipeInstructions></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     );
   }
 }
+
 export default Main;

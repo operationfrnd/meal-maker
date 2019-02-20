@@ -8,15 +8,17 @@ import Recipe from './components/Recipe.jsx';
 import sampleData from './example_rfn_data';
 import Credentials from './components/login/Credentials.jsx';
 import RecipeInstructions from './components/login/RecipeInstructions.jsx';
-import VideoPlayer from './components/login/VideoPlayer.jsx';
+import VideoPlayer from './components/VideoPlayer.jsx';
 import randomRecipe from '../example_random.js';
+import Main from './components/main/Main.jsx'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       recipes: [],
-      recipeOfTheDay: randomRecipe// recipe of the day video
+      recipeOfTheDay: randomRecipe, // recipe of the day video
+      savedRecipes: []
     };
   }
 
@@ -45,13 +47,32 @@ class App extends React.Component {
       });
   }
 
+  getSavedRecipes() {
+    return axios.get('/saverecipes') // sends get request to server for saved recipes
+      .then((recipes) => {
+        this.setState({
+          savedRecipes: recipes
+        });
+      })
+      .catch((err) => {
+        console.log(`there was an error retriving saved recipes : ${err}`);
+      });
+  }
+
   // 
 
   render() {
     return (
-
       <div>
-        <Login recipe={this.state.recipeOfTheDay}></Login>
+        <div>
+          <Login recipe={this.state.recipeOfTheDay}></Login>
+        </div>
+        <div>
+          <Main recipes={this.state.recipes}
+                recipe={this.state.recipeOfTheDay}
+                savedRecipes={this.state.savedRecipes}>
+          </Main>
+        </div>
       </div>
     )
 

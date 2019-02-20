@@ -7,21 +7,20 @@
 // 5) Function to save a receipe into the 'dislike' table (optional)
 
 
-var mysql = require('mysql');
+const mysql = require('mysql');
 
 const connection = mysql.createConnection({
   user: 'root',
   database: 'mealmaker',
-  password: 'password',
+  password: '',
 });
 
-connection.connect(function (err) {
+connection.connect((err) => {
   if (!err) {
     console.log('Houston, we have a db connection');
   } else {
-    console.log('There was a problem connecting to the db');
+    console.error('There was a problem connecting to the db. Error: ', err);
   }
 });
 
 module.exports.connection = connection;
-
