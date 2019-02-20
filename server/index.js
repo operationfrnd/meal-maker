@@ -235,7 +235,15 @@ app.get('/saved', (req, res) => {
 });
 
 app.post('/saved', (req, res) => {
-
+  db.selectLikedRecipes(req.userId, (err, recipes) => {
+    previousInstances = _.filter(recipes);
+    db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
+      if (err) {
+        return res.status(500).send('Something Went Wrong!');
+      }
+      return res.status(204).send('Saved Recipe To The Saved Table');
+    });
+  });
 });
 
 // Able to set port and still work //
