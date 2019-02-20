@@ -40,7 +40,7 @@ class Main extends React.Component {
           <SavedRecipes ></SavedRecipes>
         </div>
         <div className="vid-player">
-          <VideoPlayer ></VideoPlayer>
+          <VideoPlayer recipe={this.props.recipe} ></VideoPlayer>
         </div>
       </div>
     );
