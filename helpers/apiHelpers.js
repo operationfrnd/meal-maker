@@ -21,10 +21,43 @@ const recFoodNutrApi = function (ingredients, callback) {
     headers: {
       'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY,
     },
-    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
+    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&ranking=1&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=10`
   }).then((result) => {
-    // return recipies array
-    return callback(null, result.data.results);
+    // return sorted and reversed recipies array
+    const recipes = _.sortBy(_.map(result.data.results, (recipe) => {
+      // object to store recipe info
+      const recipeInfo = {};
+      recipeInfo.name = recipe.title;
+      recipeInfo.recipeId = recipe.id;
+      recipeInfo.cookTime = recipe.readyInMinutes;
+      recipeInfo.instructions = _.map(recipe.analyzedInstructions[0].steps, (instruction) => {
+        return instruction.step;
+      });
+      recipeInfo.ingredients = {};
+      recipeInfo.ingredients.missedIngredients = _.map(recipe.missedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      recipeInfo.ingredients.usedIngredients = _.map(recipe.usedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      recipeInfo.ingredients.unusedIngredients = _.map(recipe.unusedIngredients, (ingredient) => {
+        return ingredient.originalString;
+      });
+      recipeInfo.ingredients.allIngredients = [];
+      _.forEach(recipeInfo.ingredients, (ingredients, key) => {
+        if (key !== 'unusedIngredients') {
+          _.forEach(ingredients, (ingredient) => {
+            if (!_.includes(recipeInfo.ingredients.allIngredients, ingredient)) {
+              recipeInfo.ingredients.allIngredients.push(ingredient);
+            }
+          });
+        }
+      });
+      recipeInfo.percentage = recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100 
+      return recipeInfo;
+      // sort parameters and a reverse to have the highest at the front
+    }), ['percentage', 'name']).reverse();
+    return callback(null, recipes);
   }).catch((err) => {
     return callback(err, null);
   });

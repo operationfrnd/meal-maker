@@ -54,9 +54,9 @@ class App extends React.Component {
         <div>
           <Login recipe={this.state.recipeOfTheDay}></Login>
         </div>
-        {/* <div>
+        <div>
           <Main recipe={this.state.recipeOfTheDay}></Main>
-        </div> */}
+        </div>
       </div>
     )
 
