@@ -22,6 +22,11 @@ class Main extends React.Component {
     this.state = {
       ingredients: ['apples', 'bananas', 'bread', 'crab', 'eggs', 'brocoli'],
     };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    console.log('clicked');
   }
 
   render() {
@@ -37,7 +42,7 @@ class Main extends React.Component {
           <Search ingredientList={ingredients} />
         </div>
         <div className="recipe-list">
-          <RecipeList recipe={recipes} />
+          <RecipeList recipe={recipes} onClick={this.onClick} />
         </div>
         <div className="saved-recipes">
           <SavedRecipes savedRecipes={savedRecipes} />
