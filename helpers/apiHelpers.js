@@ -3,11 +3,13 @@
 // 2) Helper interacting with the Youtube api => retrieving a video (top result) based on a search with a name of receipe
 // 3) Helper interacting with the MealDB api => retrieving a list of all ingredients available in the MealDB api (optional)
 
+const hash = require('hash-sum');
 const axios = require('axios');
 const _ = require('lodash');
 
 // where api key was imported from, might need to make your own file
-const keys = require('./keys');
+// const keys = require('./keys');
+// make .env files locally to assign api keys (see .env.example)
 
 const recFoodNutrApi = function (ingredients, callback) {
   if (!callback) {
@@ -17,7 +19,7 @@ const recFoodNutrApi = function (ingredients, callback) {
   return axios({
     method: 'get',
     headers: {
-      'X-RapidAPI-Key': keys.apiKey1,
+      'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY,
     },
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=20`
   }).then((result) => {
@@ -33,7 +35,8 @@ const rfnRandomRecipe = function (callback) {
   axios({
     method: 'get',
     headers: {
-      'X-RapidAPI-Key': keys.apiKey1,
+      'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY
+      ,
     },
     url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&limitLicense=false',
   }).then((recipe) => {
@@ -90,7 +93,7 @@ const youTubeApi = function(query, callback) {
   // search for videos based on the query
   return axios({
     method: 'get',
-    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${keys.apiKey2}&q=${query}&maxResults=5`,
+    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}&q=${query}&maxResults=5`,
   }).then((searchResults) => {
     // preform a callback with the first object full of video data from the search results
     callback(null, searchResults.data.items[0]);
@@ -99,7 +102,12 @@ const youTubeApi = function(query, callback) {
   });
 };
 
+const hasher = function(password) {
+  return hash(password);
+}
+
 module.exports.recFoodNutrApi = recFoodNutrApi;
 module.exports.mealDBIngredientSearch = mealDBIngredientSearch;
 module.exports.youTubeApi = youTubeApi;
 module.exports.rfnRandomRecipe = rfnRandomRecipe;
+module.exports.hasher = hasher;
