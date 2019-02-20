@@ -136,4 +136,25 @@ const selectAllIngredients = (callback) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients };
+const selectAllUsers = (callback) => {
+  connection.query('SELECT * FROM Users', (err, users) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, users);
+    }
+  })
+};
+
+const saveUser = (username, password) => {
+  const q = [username, password];
+  connection.query('INSERT INTO Users (username, password) VALUES (?, ?)', q, (err) => {
+    if (err) {
+      console.log('could not insert new user into Users table');
+    } else {
+      console.log('successfully added new user to Users table');
+    }
+  });
+};
+
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };

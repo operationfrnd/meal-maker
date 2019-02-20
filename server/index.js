@@ -20,7 +20,6 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // Needed for React at Some Point // 
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
@@ -155,6 +154,43 @@ app.get('/search', (req, res) => {
     // send back the video inforamtion
     res.status(200).send(searchResult);
   });
+});
+
+app.post('/signup', (req, res) => {
+  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+    return res.status(500).send('Invalid username or password!');
+  }
+  return db.selectAllUsers((err, users) => {
+    if (err) {
+      console.error(err);
+    }
+    const sameNameCounter = _.filter(users, (user) => {
+      return user.username === req.body.username;
+    }).length;
+    if (sameNameCounter === 0) {
+      db.saveUser(req.body.username, helper.hasher(req.body.password));
+      return res.status(204).send('New User Created');
+    } else {
+      return res.status(500).send('User already exists');
+    }
+  })
+})
+
+app.get('/login', (req, res) => {
+  db.selectAllUsers((err, users) => {
+    const user = _.filter(users, (storedUser) => {
+      return storedUser.username === req.body.username;
+    })[0];
+    if (user) {
+      if (user.password === helper.hasher(req.body.password)) {
+        res.status(200).send('login successful');
+      } else {
+        res.status(500).send('password incorrect');
+      }
+    } else {
+      res.status(500).send('No User Found');
+    }
+  })
 });
 
 // Able to set port and still work //
