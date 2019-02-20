@@ -4,5 +4,4 @@ bower_components/
 .vscode/
 build/
 client/dist/bundle.js
-helpers/keys.js
 .env 
