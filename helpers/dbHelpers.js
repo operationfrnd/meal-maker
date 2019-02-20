@@ -40,13 +40,22 @@ const saveRecipe = (recipeName, idOriginalDB, callback) => {
   });
 };
 
-const saveLikedRecipe = (userId, recipeId) => {
+const selectLikedRecipes = (userId, callback) => {
+  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+    if (err) {
+      return callback(err, null);
+    }
+    return callback(null, recipes);
+  })
+}
+
+const saveLikedRecipe = (userId, recipeId, callback) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
-      console.log('could not save user recipe to database');
+      callback(err, null);
     } else {
-      console.log('successfully saved recipe to user');
+      callback(null, results);
     }
   });
 };
@@ -61,9 +70,9 @@ const selectAllRecipeOfTheDay = (callback) => {
   })
 };
 
-const saveRecipeOfTheDay = (revcipeName, videoLink, recipeInstructions, ourDbRecipeId, currentDate) => {
-  let q = [revcipeName, videoLink, recipeInstructions, ourDbRecipeId, currentDate];
-  connection.query('INSERT INTO RecipeOfTheDay (name, link, instructions, idRecipe, date) VALUES (?, ?, ?, ?, ?)', q, (err, results) => {
+const saveRecipeOfTheDay = (revcipeName, videoLink, recipeInstructions, ourDbRecipeId, cooktime, currentDate) => {
+  let q = [revcipeName, videoLink, recipeInstructions, ourDbRecipeId, cooktime, currentDate];
+  connection.query('INSERT INTO RecipeOfTheDay (name, link, instructions, idRecipe, cooktime, date) VALUES (?, ?, ?, ?, ?, ?)', q, (err, results) => {
     if (err) {
       console.log('could not save recipe of the day to database');
     } else {
@@ -157,4 +166,4 @@ const saveUser = (username, password) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };
