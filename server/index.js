@@ -51,7 +51,7 @@ app.get('/food', (req, res) => {
             if (err) {
               console.log(err);
             }
-            db.selectSingleRecipe(recipe.recipeId, (err, singleRecipeArray) => {
+            db.selectSingleRecipeById(recipe.recipeId, (err, singleRecipeArray) => {
               if (err) {
                 console.log(err);
               }
@@ -91,6 +91,20 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+app.get('/single', (req, res) => {
+  db.selectSingleRecipeByName(req.recipeName, (err, singleRecipeArray) => {
+    if (err) {
+      return res.status(500).send('Something went wrong!');
+    }
+    return db.getRecipeIngredients(singleRecipeArray[0].id, (err, ingredients) => {
+      if (err) {
+        return res.status(500).send('Something went wrong!');
+      }
+      return 
+    });
+  });
+});
+
 // get a random recipe
 app.post('/random', (req, res) => {
   // First get a random recipe //
@@ -125,7 +139,7 @@ app.post('/random', (req, res) => {
                 return res.status(500).send('Something Went Wrong!');
               }
               // Get the recently saved recipe
-              return db.selectSingleRecipe(randomRecipe.recipeId, (err, singleRecipeArray) => {
+              return db.selectSingleRecipeById(randomRecipe.recipeId, (err, singleRecipeArray) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
@@ -202,7 +216,7 @@ app.post('/signup', (req, res) => {
       return res.status(500).redirect('/restrictedhome');
     }
   })
-})
+});
 
 app.get('/login', (req, res) => {
   db.selectAllUsers((err, users) => {

@@ -7,8 +7,18 @@
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
 
-const selectSingleRecipe = (idOriginalDB, callback) => {
+const selectSingleRecipeById = (idOriginalDB, callback) => {
   connection.query(`SELECT * FROM Recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, recipe);
+    }
+  });
+};
+
+const selectSingleRecipeByName = (recipeName, callback) => {
+  connection.query(`SELECT * FROM Recipes WHERE recipe = ${recipeName}`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -176,5 +186,6 @@ const saveUser = (username, password) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser,
+module.exports = {
+  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser,
 };
