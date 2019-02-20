@@ -132,7 +132,7 @@ app.post('/random', (req, res) => {
                 const ingredients = randomRecipe.ingredients.split("\n");
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
-                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.date);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cookTime, randomRecipe.date);
                 _.forEach(ingredients, (ingredient) => {
                   db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
                 });
@@ -195,6 +195,7 @@ app.post('/signup', (req, res) => {
       return user.username === req.body.username;
     }).length;
     if (sameNameCounter === 0) {
+      process.env.LOCAL_USER = req.body.username;
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
     } else {
@@ -210,6 +211,7 @@ app.get('/login', (req, res) => {
     })[0];
     if (user) {
       if (user.password === helper.hasher(req.body.password)) {
+        process.env.LOCAL_USER = req.body.username;
         res.status(200).redirect('/home');
       } else {
         res.status(500).redirect('/restrictedhome');
@@ -218,6 +220,32 @@ app.get('/login', (req, res) => {
       res.status(500).redirect('/restrictedhome');
     }
   })
+});
+
+app.get('/disliked', (req, res) => {
+
+});
+
+app.post('/disliked', (req, res) => {
+
+});
+
+app.get('/saved', (req, res) => {
+
+});
+
+app.post('/saved', (req, res) => {
+  db.selectLikedRecipes(req.userId, (err, ids) => {
+    previousInstances = _.filter(ids, (ids) => {
+      console.log(ids);
+    });
+    db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
+      if (err) {
+        return res.status(500).send('Something Went Wrong!');
+      }
+      return res.status(204).send('Saved Recipe To The Saved Table');
+    });
+  });
 });
 
 // Able to set port and still work //
