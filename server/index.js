@@ -38,6 +38,31 @@ app.get('/food', (req, res) => {
     }
     // respond with an array of objects which contain recipie information
     console.log(recipes);
+    db.selectAllRecipes((err, savedRecipes) => {
+      if (err) {
+        return console.log(error);
+      }
+      _.forEach(recipes, (recipe) => {
+        const previousInstances = _.filter(savedRecipes, (savedRecipe) => {
+          return savedRecipe.recipe === recipe.name;
+        }).length;
+        if (previousInstances === 0) {
+          db.saveRecipe(recipe.name, recipe.recipeId, (err) => {
+            if (err) {
+              console.log(err);
+            }
+            db.selectSingleRecipe(recipe.recipeId, (err, singleRecipeArray) => {
+              if (err) {
+                console.log(err);
+              }
+              _.forEach(recipe.ingredients.allIngredients, (ingredient) => {
+                db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
+              });
+            });
+          });
+        }
+      });
+    })
     return res.status(200).send(recipes);
   });
 });
