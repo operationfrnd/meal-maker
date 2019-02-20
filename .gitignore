@@ -3,4 +3,5 @@ bower_components/
 *.log
 .vscode/
 build/
-.env
+client/dist/bundle.js
+.env 
