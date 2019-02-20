@@ -17,7 +17,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       recipes: [],
-      recipeOfTheDay: randomRecipe// recipe of the day video
+      recipeOfTheDay: randomRecipe, // recipe of the day video
+      savedRecipes: []
     };
   }
 
@@ -46,6 +47,18 @@ class App extends React.Component {
       });
   }
 
+  getSavedRecipes() {
+    return axios.get('/saverecipes') // sends get request to server for saved recipes
+      .then((recipes) => {
+        this.setState({
+          savedRecipes: recipes
+        });
+      })
+      .catch((err) => {
+        console.log(`there was an error retriving saved recipes : ${err}`);
+      });
+  }
+
   // 
 
   render() {
@@ -55,7 +68,10 @@ class App extends React.Component {
           <Login recipe={this.state.recipeOfTheDay}></Login>
         </div>
         <div>
-          <Main recipe={this.state.recipeOfTheDay}></Main>
+          <Main recipes={this.state.recipes}
+                recipe={this.state.recipeOfTheDay}
+                savedRecipes={this.state.savedRecipes}>
+          </Main>
         </div>
       </div>
     )

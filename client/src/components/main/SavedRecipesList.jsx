@@ -7,8 +7,8 @@ import SavedRecipesListItem from './SavedRecipesListItem.jsx';
 
 var SavedRecipesList = ({savedRecipes}) => (
   <div className="recipe-list">
-    {savedRecipes.map(recipe =>
-      <SavedRecipesListItem recipe={recipe} />
+    {savedRecipes.map(savedRecipe =>
+      <SavedRecipesListItem savedRecipe={savedRecipe} />
     )}
   </div>
 );

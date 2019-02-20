@@ -35,13 +35,12 @@ class Main extends React.Component {
           <Search ></Search>
         </div> */}
         <div className="recipe-list">
-          <RecipeList recipe={this.props.recipe}></RecipeList>
+          <RecipeList recipes={this.props.recipes}></RecipeList>
         </div>
-        {/* <div className="saved-recipes">
-          <SavedRecipes recipe={this.props.recipe}></SavedRecipes>
-        </div> */}
-        <div className="vid-player">
-          {/* <VideoPlayer recipe={this.props.recipe}></VideoPlayer> */}
+        <div className="saved-recipes">
+          <SavedRecipes savedRecipes={this.props.savedRecipes}></SavedRecipes>
+        </div>
+        <div className="recipe-of-the-day-container">
           <table>
             <tbody>
               <tr>
