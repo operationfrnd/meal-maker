@@ -19,6 +19,11 @@ class App extends React.Component {
       recipes: [],
       recipeOfTheDay: randomRecipe// recipe of the day video
     };
+    this.getRandomRecipe = this.getRandomRecipe.bind(this);
+  }
+
+  componentDidMount(){
+    this.getRandomRecipe()
   }
 
   // function to retrieve recipes to display 
@@ -37,8 +42,12 @@ class App extends React.Component {
   getRandomRecipe() {
     return axios.get('/recipeoftheday') // sends get request to server for random recipe
       .then((recipe) => {
+        // debugger;
+        // console.log(recipe, 'recipe');
+        // console.log(this);
         this.setState({
-          recipeOfTheDay: recipe
+          
+          recipeOfTheDay: recipe.data
         });
       })
       .catch((err) => {
@@ -49,6 +58,8 @@ class App extends React.Component {
   // 
 
   render() {
+    console.log(this);
+
     return (
       <div>
         <div>

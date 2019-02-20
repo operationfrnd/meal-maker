@@ -19,8 +19,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // display: 'off', // initial state of display is off 
-      // what: 'Reveal Translation' // which means the 'Reveal Translation' text is displayed
+      ingredients: ['apples', 'bananas', 'bread', 'crab', 'eggs', 'brocoli']
     };
   }
 
@@ -31,9 +30,9 @@ class Main extends React.Component {
           <img></img>
         </div>
         <h2>Hello Main</h2>
-        {/* <div className="search">
-          <Search ></Search>
-        </div> */}
+        <div className="search">
+          <Search ingredientList={this.state.ingredients}></Search>
+        </div>
         <div className="recipe-list">
           <RecipeList recipe={this.props.recipe}></RecipeList>
         </div>

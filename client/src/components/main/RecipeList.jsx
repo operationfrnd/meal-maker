@@ -3,14 +3,14 @@
 import React from 'react';
 import RecipeListItem from './RecipeListItem.jsx';
 
-var RecipeList = ({ recipes }) => {
+var RecipeList = ({ recipe }) => {
   const onClick = () => {
     console.log('clicked');
   }
   return (
   <div className="recipe-list">
-    {recipes.map((recipe) => <RecipeListItem recipe={recipe} key={recipe.recipeId} onClick={onClick.bind(this)} />)}
-    {/* <RecipeListItem recipe={recipe} /> */}
+    {/* {recipes.map((recipe) => <RecipeListItem recipe={recipe} key={recipe.recipeId} onClick={onClick.bind(this)} />)} */}
+    <RecipeListItem recipe={recipe} />
   </div >
 )};
 
