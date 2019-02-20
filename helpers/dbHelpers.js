@@ -91,13 +91,23 @@ const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
   });
 };
 
-const dislikeRecipe = (userId, recipeId) => {
+const selectDislikedRecipes = (userId, callback) => {
+  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, err);
+    }
+  });
+};
+
+const dislikeRecipe = (userId, recipeId, callback) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
-      console.log('could not save DISliked recipe to database');
+      callback(err, null);
     } else {
-      console.log('successfully saved DISliked recipe to user');
+      callback(null, results);
     }
   });
 };
@@ -166,4 +176,5 @@ const saveUser = (username, password) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };
+module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser,
+};

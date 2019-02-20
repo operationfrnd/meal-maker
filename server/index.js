@@ -223,7 +223,12 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/disliked', (req, res) => {
-
+  db.selectDislikedRecipes(req.userId, (err, ids) => {
+    if (err) {
+      res.status(500).send('Something went wrong!');
+    }
+    res.status(200).send(ids);
+  });
 });
 
 app.post('/disliked', (req, res) => {
