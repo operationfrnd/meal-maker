@@ -49,22 +49,31 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="nav">
-          <span className="logo">Meal Maker</span>
-          <Credentials /> 
-        </div>
 
-        <div className="main">
-        <div className="videoPlayer">
-          <VideoPlayer recipe={this.state.recipeOfTheDay} />
-        </div>
-        <div className="recipeInstructions">
-        <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
-        </div>
-        </div>
+      <div>
+        <Login recipe={this.state.recipeOfTheDay}></Login>
       </div>
-    );
+    )
+
+
+
+
+      // <div>
+      //   <div className="nav">
+      //     <span className="logo">Meal Maker</span>
+      //     <Credentials /> 
+      //   </div>
+
+      //   <div className="main">
+      //   <div className="videoPlayer">
+      //     <VideoPlayer recipe={this.state.recipeOfTheDay} />
+      //   </div>
+      //   <div className="recipeInstructions">
+      //   <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
+      //   </div>
+      //   </div>
+      // </div>
+    // );
   }
 
 }
