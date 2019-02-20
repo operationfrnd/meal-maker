@@ -235,8 +235,10 @@ app.get('/saved', (req, res) => {
 });
 
 app.post('/saved', (req, res) => {
-  db.selectLikedRecipes(req.userId, (err, recipes) => {
-    previousInstances = _.filter(recipes);
+  db.selectLikedRecipes(req.userId, (err, ids) => {
+    previousInstances = _.filter(ids, (ids) => {
+      console.log(ids);
+    });
     db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
       if (err) {
         return res.status(500).send('Something Went Wrong!');
