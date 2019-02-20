@@ -3,13 +3,12 @@
 // a list of items
 
 import React from 'react';
-import SavedRecipesListItem from './SavedRecipesListItem.jsx';
+import SavedRecipesListItem from './SavedRecipesListItem';
 
-var SavedRecipesList = ({savedRecipes}) => (
+const SavedRecipesList = ({savedRecipes}) => (
   <div className="recipe-list">
-    {savedRecipes.map(savedRecipe =>
-      <SavedRecipesListItem savedRecipe={savedRecipe} />
-    )}
+    {savedRecipes.map(savedRecipe => <SavedRecipesListItem savedRecipe={savedRecipe} />)
+    }
   </div>
 );
 export default SavedRecipesList;

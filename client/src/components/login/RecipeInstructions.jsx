@@ -1,13 +1,18 @@
 // component with a list of instructions for the recipe of the day which can be scrolled
 import React from 'react';
 
-var RecipeInstructions = ({ recipe }) => (
+const RecipeInstructions = ({ recipe }) => (
   <div className="instructions-list">
-    <b>Cook Time:</b> {recipe.cookTime} <br />
-    <b>Ingredients:</b> {recipe.ingredients} <br />
-    <b>Instructions:</b> {recipe.instructions} <br />
-  </div >
+    <h3>{recipe.name}</h3>
+    <b>Cook Time:</b>
+    {recipe.cooktime}
+    <br />
+    <b>Ingredients:</b>
+    {recipe.ingredients}
+    <br />
+    <b>Instructions:</b>
+    {recipe.instructions}
+    <br />
+  </div>
 );
-
-
 export default RecipeInstructions;
