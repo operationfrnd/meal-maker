@@ -20,10 +20,10 @@ const selectSingleRecipe = (idOriginalDB, callback) => {
 const selectAllRecipes = (callback) => {
   connection.query('SELECT * FROM Recipes', (err, results) => {
     if (err) {
-      console.log('error in retrieving all ingredients');
+      console.log('error in retrieving all recipes');
       callback(err, null);
     } else {
-      console.log('success in retrieving all ingredients');
+      console.log('success in retrieving all recipes');
       callback(null, results);
     }
   });
