@@ -40,6 +40,15 @@ const saveRecipe = (recipeName, idOriginalDB, callback) => {
   });
 };
 
+const selectLikeRecipes = (userId, callback) => {
+  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+    if (err) {
+      return callback(err, null);
+    }
+    return callback(null, recipes);
+  })
+}
+
 const saveLikedRecipe = (userId, recipeId) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
