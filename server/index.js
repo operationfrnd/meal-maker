@@ -195,6 +195,7 @@ app.post('/signup', (req, res) => {
       return user.username === req.body.username;
     }).length;
     if (sameNameCounter === 0) {
+      process.env.LOCAL_USER = req.body.username;
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
     } else {
@@ -210,6 +211,7 @@ app.get('/login', (req, res) => {
     })[0];
     if (user) {
       if (user.password === helper.hasher(req.body.password)) {
+        process.env.LOCAL_USER = req.body.username;
         res.status(200).redirect('/home');
       } else {
         res.status(500).redirect('/restrictedhome');
@@ -218,6 +220,14 @@ app.get('/login', (req, res) => {
       res.status(500).redirect('/restrictedhome');
     }
   })
+});
+
+app.get('/disliked', (req, res) => {
+
+});
+
+app.post('/disliked', (req, res) => {
+
 });
 
 // Able to set port and still work //
