@@ -11,18 +11,15 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: [],
     };
   }
 
-
-
   render() {
-    const { recipe, getRecipes } = this.props;
+    const { recipe, getRecipes, ingredients } = this.props;
     return (
       <div>
         <h2>Search</h2>
-        <AutoComplete ingredients={this.props.ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
+        <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         <div className="recipe-of-the-day-container">
           <table>
             <tbody>

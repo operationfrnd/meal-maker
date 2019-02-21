@@ -29,11 +29,12 @@ class AutoComplete extends React.Component {
 
 
   addIngredient(ingredient) {
-    const selectedIngredients = this.state.selectedIngredients;
+
+    const { selectedIngredients } = this.state;
     selectedIngredients.push(ingredient);
     this.setState({
-      selectedIngredients: selectedIngredients,
-    })
+      selectedIngredients,
+    });
   }
 
   suggestionSelected(value) {
@@ -57,13 +58,13 @@ class AutoComplete extends React.Component {
 
   render() {
     const { text, selectedIngredients } = this.state;
-    console.log(text, this)
+    const { getRecipes } = this.props;
     return (
       <div>
         <input value={text} onChange={this.onTextChange} type="text" />
         {this.renderSuggestions()}
         <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
-        <button className="search" type="button" onClick={() => this.props.getRecipes(selectedIngredients.join(', '))}>Search</button>
+        <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
       </div>
     );
   }
