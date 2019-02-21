@@ -19,6 +19,8 @@ class App extends React.Component {
       recipes: [],
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
+      ingredients: [],
+      show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
@@ -28,6 +30,7 @@ class App extends React.Component {
   componentDidMount() {
     this.getRandomRecipe();
     // this.getSavedRecipes();
+    this.grabIngredients();
   }
 
   // function to retrieve recipes to display
@@ -75,11 +78,26 @@ class App extends React.Component {
       });
   }
 
-  //
+  // gets all ingredients saved to db to for autocomplete component
+  grabIngredients() {
+    console.log('grabbing');
+    axios.get('/ingredients')
+      .then((allIngOptions) => {
+        console.log(Array.isArray(allIngOptions.data), 'Opt');
+        this.setState({
+          ingredients: allIngOptions.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error in getting all ingredients');
+      });
+  }
+
+
 
   render() {
     console.log(this);
-    const { recipeOfTheDay, savedRecipes, recipes } = this.state;
+    const { recipeOfTheDay, savedRecipes, recipes, ingredients } = this.state;
     return (
       <div>
         <div>
@@ -90,6 +108,7 @@ class App extends React.Component {
             recipes={recipes}
             recipe={recipeOfTheDay}
             savedRecipes={savedRecipes}
+            ingredients={ingredients}
           />
         </div>
       </div>
