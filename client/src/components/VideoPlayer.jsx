@@ -4,7 +4,6 @@ import React from 'react';
 const VideoPlayer = ({ recipe }) => (
   <div className="video-player">
     <div className="video-player-details">
-      {`${recipe.link}`}
       <h3>{recipe.name}</h3>
     </div>
     <div className="embed-responsive embed-responsive-16by9">
