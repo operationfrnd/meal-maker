@@ -12,7 +12,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
   user: 'root',
   database: 'mealmaker',
-  password: '',
+  password: 'password',
 });
 
 connection.connect((err) => {
