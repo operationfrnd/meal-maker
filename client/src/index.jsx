@@ -34,14 +34,14 @@ class App extends React.Component {
   }
 
   // function to retrieve recipes to display
-  getRecipes() {
+  getRecipes(ingredients) {
     return axios.get('/food', {
       params: {
-        ingredients: '',
+        ingredients: ingredients,
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
-        // console.log(results);
+        console.log('results recipes', results);
         this.setState({ // change the state
           recipes: results, // by making the data received back fron the server available
         });
@@ -109,6 +109,7 @@ class App extends React.Component {
             recipe={recipeOfTheDay}
             savedRecipes={savedRecipes}
             ingredients={ingredients}
+            getRecipes={this.getRecipes}
           />
         </div>
       </div>
