@@ -102,6 +102,20 @@ const rfnRandomRecipe = function (callback) {
   }).catch((err) => {
     callback(err, null);
   })
+};
+
+const rfnSingleRecipe = function(recipeId, callback) {
+  return axios({
+    method: 'get',
+    headers: {
+      'X-RapidAPI-Key': process.env.RECIPE_FOOD_NUTRITION_API_KEY,
+    },
+    url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`
+  }).then((recipe) => {
+    recipeInfo = {}
+  }).catch((err) => {
+    callback(err, null);
+  });
 }
 
 const mealDBIngredientSearch = function (callback) {

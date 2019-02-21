@@ -7,8 +7,18 @@
 // const axios = require('axios');
 const connection = require('../database/index.js').connection;
 
-const selectSingleRecipe = (idOriginalDB, callback) => {
+const selectSingleRecipeById = (idOriginalDB, callback) => {
   connection.query(`SELECT * FROM Recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, recipe);
+    }
+  });
+};
+
+const selectSingleRecipeByName = (recipeName, callback) => {
+  connection.query(`SELECT * FROM Recipes WHERE recipe = ${recipeName}`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -91,13 +101,23 @@ const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
   });
 };
 
-const dislikeRecipe = (userId, recipeId) => {
+const selectDislikedRecipes = (userId, callback) => {
+  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, err);
+    }
+  });
+};
+
+const dislikeRecipe = (userId, recipeId, callback) => {
   let q = [userId, recipeId];
   connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
-      console.log('could not save DISliked recipe to database');
+      callback(err, null);
     } else {
-      console.log('successfully saved DISliked recipe to user');
+      callback(null, results);
     }
   });
 };
@@ -166,4 +186,6 @@ const saveUser = (username, password) => {
   });
 };
 
-module.exports = { selectSingleRecipe, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser };
+module.exports = {
+  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser,
+};
