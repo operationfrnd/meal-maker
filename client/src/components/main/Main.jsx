@@ -20,46 +20,83 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: ['apples', 'bananas', 'bread', 'crab', 'eggs', 'brocoli'],
+      view: 'search',
     };
     this.onClick = this.onClick.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   onClick() {
     console.log('clicked');
   }
 
+  // function to change between search and saved view
+  changeView(option) {
+    this.setState({
+      view: option,
+    });
+  }
+
   render() {
-    const { recipe, recipes, savedRecipes } = this.props;
-    const { ingredients } = this.state;
+    const { recipe, recipes, savedRecipes, ingredients } = this.props;
+    // const { ingredients } = this.state;
     return (
       <div>
-        <div className="logo">
-          {/* <img></img> */}
+        <div className="nav">
+          <span className="logo">Meal Maker</span>
+          <span className={this.state.view === 'search'
+            ? 'nav-selected'
+            : 'nav-unselected'}
+            onClick={() => this.changeView('search')}>
+            Search
+          </span>
+          <span className={this.state.view === 'saved'
+            ? 'nav-selected'
+            : 'nav-unselected'}
+            onClick={() => this.changeView('saved')}>
+            Saved Recipes
+          </span>
         </div>
-        <h2>Hello Main</h2>
-        <div className="search">
-          <Search ingredientList={ingredients} />
-        </div>
-        <div className="recipe-list">
-          <RecipeList recipe={recipes} onClick={this.onClick} />
-        </div>
-        <div className="saved-recipes">
-          <SavedRecipes savedRecipes={savedRecipes} />
-        </div>
-        <div className="recipe-of-the-day-container">
-          <table>
-            <tbody>
-              <tr>
-                <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
-                <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div className="main">
+          {this.state.view === 'search'
+            ? <Search ingredients={ingredients} recipe={recipe} />
+            : <SavedRecipes savedRecipes={savedRecipes} />
+          }
         </div>
       </div>
-    );
+    )
   }
 }
+
+
+  //     <div>
+  //       <div className="logo">
+  //         {/* <img></img> */}
+  //       </div>
+  //       <h2>Hello Main</h2>
+  //       <div className="search">
+  //         <Search ingredients={ingredients} />
+  //       </div>
+  //       <div className="recipe-list">
+  //         <RecipeList recipe={recipes} onClick={this.onClick} />
+  //       </div>
+  //       <div className="saved-recipes">
+  //         <SavedRecipes savedRecipes={savedRecipes} />
+  //       </div>
+        // <div className="recipe-of-the-day-container">
+        //   <table>
+        //     <tbody>
+        //       <tr>
+        //         <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
+        //         <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
+        //       </tr>
+        //     </tbody>
+        //   </table>
+        // </div>
+  //     </div>
+  //   );
+  // }
+// }
 
 export default Main;
