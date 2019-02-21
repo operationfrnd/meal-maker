@@ -88,15 +88,18 @@ app.get('/ingredients', (req, res) => {
 });
 
 app.get('/single', (req, res) => {
+  // get a single recipe by its name
   db.selectSingleRecipeByName(req.body.recipeName, (err, singleRecipeArray) => {
     if (err) {
       console.log(err);
       return res.status(500).send('Something went wrong!');
     }
+    // get a recipe's info throuhg its id
     return helper.rfnSingleRecipe(singleRecipeArray[0].idRecipieFoodNutrition, (err, recipe) => {
       if (err) {
         res.status(500).send('Something went wrong!');
       }
+      // send back recipe info
       res.status(200).send(recipe);
     });
   });
@@ -230,7 +233,7 @@ app.get('/login', (req, res) => {
     } else {
       res.status(500).redirect('/restrictedhome');
     }
-  })
+  });
 });
 
 app.get('/disliked', (req, res) => {
