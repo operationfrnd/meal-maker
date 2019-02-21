@@ -9,10 +9,18 @@
 
 const mysql = require('mysql');
 
+// const connection = mysql.createConnection({
+//   user: 'root',
+//   database: 'mealmaker',
+//   password: '',
+// });
+
+
 const connection = mysql.createConnection({
-  user: 'root',
-  database: 'mealmaker',
-  password: 'password',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 connection.connect((err) => {
