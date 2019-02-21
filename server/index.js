@@ -1,17 +1,17 @@
 // main server file where server setup is done using Express and with request handler functions
 
 // 1) Request handler for a GET request from client with ingredients as params => will call Nutrition helper then send back results to client
-// 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper 
+// 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper
 // 3) Request handler for a GET request from client on main page endpoint => compare current date & Ingredients table update date from DB
-require('dotenv').config(); 
+require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const _ = require('lodash');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
-const _ = require('lodash');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// Needed for React at Some Point // 
+// Needed for React at Some Point //
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
 app.get('/', (req, res) => {
@@ -40,12 +40,10 @@ app.get('/food', (req, res) => {
     console.log(recipes);
     db.selectAllRecipes((err, savedRecipes) => {
       if (err) {
-        return console.log(error);
+        return console.log(err);
       }
       _.forEach(recipes, (recipe) => {
-        const previousInstances = _.filter(savedRecipes, (savedRecipe) => {
-          return savedRecipe.recipe === recipe.name;
-        }).length;
+        const previousInstances = _.filter(savedRecipes, savedRecipe => savedRecipe.recipe === recipe.name).length;
         if (previousInstances === 0) {
           db.saveRecipe(recipe.name, recipe.recipeId, (err) => {
             if (err) {
@@ -62,7 +60,7 @@ app.get('/food', (req, res) => {
           });
         }
       });
-    })
+    });
     return res.status(200).send(recipes);
   });
 });
@@ -75,15 +73,13 @@ app.get('/ingredients', (req, res) => {
     }
     // get all current ingredients stored in our own database
     db.selectAllIngredients((tableData) => {
-      _.forEach(ingredients, (newIngredient, index) => {
+      _.forEach(ingredients, (newIngredient) => {
         // see if potential new ingredient already exists in database
-        const priorInstances = _.filter(tableData, (oldIngredient, index) => {
-          return oldIngredient.ingredient === newIngredient;
-        }).length;
+        const priorInstances = _.filter(tableData, oldIngredient => oldIngredient.ingredient === newIngredient).length;
         // save if it doesn't
         if (priorInstances === 0) {
           db.saveIngredient(newIngredient);
-        } 
+        }
       });
     });
     // send back ingredients regardless of whether or not they were new
@@ -92,11 +88,17 @@ app.get('/ingredients', (req, res) => {
 });
 
 app.get('/single', (req, res) => {
-  db.selectSingleRecipeByName(req.recipeName, (err, singleRecipeArray) => {
+  db.selectSingleRecipeByName(req.body.recipeName, (err, singleRecipeArray) => {
     if (err) {
+      console.log(err);
       return res.status(500).send('Something went wrong!');
     }
-    
+    return helper.rfnSingleRecipe(singleRecipeArray[0].idRecipieFoodNutrition, (err, recipe) => {
+      if (err) {
+        res.status(500).send('Something went wrong!');
+      }
+      res.status(200).send(recipe);
+    });
   });
 });
 

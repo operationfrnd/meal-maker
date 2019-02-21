@@ -18,7 +18,7 @@ const selectSingleRecipeById = (idOriginalDB, callback) => {
 };
 
 const selectSingleRecipeByName = (recipeName, callback) => {
-  connection.query(`SELECT * FROM Recipes WHERE recipe = ${recipeName}`, (err, recipe) => {
+  connection.query(`SELECT * FROM Recipes WHERE recipe = '${recipeName}'`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
