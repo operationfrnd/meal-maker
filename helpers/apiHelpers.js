@@ -104,7 +104,8 @@ const rfnRandomRecipe = function (callback) {
   })
 };
 
-const rfnSingleRecipe = function(recipeId, callback) {
+const rfnSingleRecipe = function (recipeId, callback) {
+  // request recipe info by id
   return axios({
     method: 'get',
     headers: {
@@ -112,11 +113,29 @@ const rfnSingleRecipe = function(recipeId, callback) {
     },
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`
   }).then((recipe) => {
-    recipeInfo = {}
+    // object to be returned and that recipe info is stored within
+    recipeInfo = {};
+    recipeInfo.name = recipe.data.title;
+    recipeInfo.recipeId = recipe.data.id;
+    recipeInfo.cookTime = recipe.data.readyInMinutes;
+    recipeInfo.instructions = _.map(recipe.data.analyzedInstructions[0].steps, (step) => {
+      return step.step;
+    }).join('\n');
+    recipeInfo.ingredients = _.map(recipe.data.extendedIngredients, (ingredient) => {
+      return ingredient.originalString;
+    });
+    // get recipe video and return the recipe info
+    youTubeApi(`cook ${recipeInfo.name}`, (youtubeError, video) => {
+      if (youtubeError) {
+        return callback(anError, null);
+      }
+      recipeInfo.videoId = video.id.videoId;
+      return callback(null, recipeInfo);
+    });
   }).catch((err) => {
     callback(err, null);
   });
-}
+};
 
 const mealDBIngredientSearch = function (callback) {
   // get all ingredients
@@ -158,3 +177,4 @@ module.exports.mealDBIngredientSearch = mealDBIngredientSearch;
 module.exports.youTubeApi = youTubeApi;
 module.exports.rfnRandomRecipe = rfnRandomRecipe;
 module.exports.hasher = hasher;
+module.exports.rfnSingleRecipe = rfnSingleRecipe;
