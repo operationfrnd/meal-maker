@@ -3,17 +3,12 @@ import React from 'react';
 class AutoComplete extends React.Component {
   constructor(props) {
     super(props);
-    this.ingredients = [
-      'apple',
-      'beef',
-      'banana',
-      'chicken',
-      'sugar',
-      'eggs',
-    ];
+    const { ingredients } = this.props;
+    this.ingredients = ingredients;
     this.state = {
       suggestions: [],
       text: '',
+      // ingredientList: [],
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.suggestionSelected = this.suggestionSelected.bind(this);
@@ -24,7 +19,7 @@ class AutoComplete extends React.Component {
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, 'i');
-      suggestions = this.ingredients.sort().filter(v => regex.test(v));
+      suggestions = this.props.ingredients.sort().filter(v => regex.test(v));
     }
     this.setState({ suggestions, text: value });
   }
@@ -54,6 +49,7 @@ class AutoComplete extends React.Component {
       <div>
         <input value={text} onChange={this.onTextChange} type="text" />
         {this.renderSuggestions()}
+        <h4>please work</h4>
       </div>
     );
   }

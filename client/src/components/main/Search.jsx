@@ -6,15 +6,15 @@ import AutoComplete from './AutoComplete.jsx';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Search extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
       <div>
         <h2>Search</h2>
-        <AutoComplete />
+        <AutoComplete ingredients={this.props.ingredients}/>
         <h3>more stuff</h3>
       </div>
     );

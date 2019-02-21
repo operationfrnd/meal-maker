@@ -19,9 +19,9 @@ import RecipeInstructions from '../login/RecipeInstructions.jsx';
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ingredients: ['apples', 'bananas', 'bread', 'crab', 'eggs', 'brocoli'],
-    };
+    // this.state = {
+    //   ingredients: ['apples', 'bananas', 'bread', 'crab', 'eggs', 'brocoli'],
+    // };
     this.onClick = this.onClick.bind(this);
   }
 
@@ -30,8 +30,8 @@ class Main extends React.Component {
   }
 
   render() {
-    const { recipe, recipes, savedRecipes } = this.props;
-    const { ingredients } = this.state;
+    const { recipe, recipes, savedRecipes, ingredients } = this.props;
+    // const { ingredients } = this.state;
     return (
       <div>
         <div className="logo">
@@ -39,7 +39,7 @@ class Main extends React.Component {
         </div>
         <h2>Hello Main</h2>
         <div className="search">
-          <Search ingredientList={ingredients} />
+          <Search ingredients={ingredients} />
         </div>
         <div className="recipe-list">
           <RecipeList recipe={recipes} onClick={this.onClick} />
