@@ -49,7 +49,6 @@ class AutoComplete extends React.Component {
       <div>
         <input value={text} onChange={this.onTextChange} type="text" />
         {this.renderSuggestions()}
-        <h4>please work</h4>
       </div>
     );
   }

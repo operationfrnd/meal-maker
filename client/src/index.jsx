@@ -20,6 +20,7 @@ class App extends React.Component {
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
       ingredients: [],
+      show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
@@ -91,6 +92,8 @@ class App extends React.Component {
         console.log('error in getting all ingredients');
       });
   }
+
+
 
   render() {
     console.log(this);
