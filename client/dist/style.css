@@ -136,3 +136,18 @@ button {
   white-space: nowrap;
   border-bottom: 1px solid #d0d0d0;
 }
+
+.Search-Comp {
+  
+}
+
+.auto-complete {
+  width: 100%;
+  border:1px solid gray;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
+  background-color: lightsalmon;
+}
+
+.auto-complete input {
+  width: 100%;
+}

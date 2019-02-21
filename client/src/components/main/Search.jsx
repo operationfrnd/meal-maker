@@ -17,8 +17,10 @@ class Search extends React.Component {
     return (
       <div>
         <h2>Search</h2>
-        <AutoComplete ingredients={this.props.ingredients}/>
-        <button className="showMore" type="button">Add</button>
+        <div className="Search-Comp">
+          <AutoComplete ingredients={this.props.ingredients} />
+          <button className="showMore" type="button">Add</button>
+        </div>
         <div className="recipe-of-the-day-container">
           <table>
             <tbody>

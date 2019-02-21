@@ -1,4 +1,5 @@
 import React from 'react';
+// import './AutoComplete.css';
 
 class AutoComplete extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class AutoComplete extends React.Component {
   render() {
     const { text } = this.state;
     return (
-      <div>
+      <div className="auto-complete">
         <input value={text} onChange={this.onTextChange} type="text" />
         {this.renderSuggestions()}
       </div>
