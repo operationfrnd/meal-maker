@@ -18,7 +18,7 @@ const selectSingleRecipeById = (idOriginalDB, callback) => {
 };
 
 const selectSingleRecipeByName = (recipeName, callback) => {
-  connection.query(`SELECT * FROM Recipes WHERE recipe = ${recipeName}`, (err, recipe) => {
+  connection.query(`SELECT * FROM Recipes WHERE recipe = '${recipeName}'`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -175,9 +175,9 @@ const selectAllUsers = (callback) => {
   })
 };
 
-const saveUser = (username, password) => {
-  const q = [username, password];
-  connection.query('INSERT INTO Users (username, password) VALUES (?, ?)', q, (err) => {
+const saveUser = (username, password, loggedin) => {
+  const q = [username, password, loggedin];
+  connection.query('INSERT INTO Users (username, password) VALUES (?, ?, ?)', q, (err) => {
     if (err) {
       console.log('could not insert new user into Users table');
     } else {
@@ -186,6 +186,26 @@ const saveUser = (username, password) => {
   });
 };
 
+const logoutUser = (username) => {
+  connection.query(`UPDATE Users SET loggedIn = 'false' WHERE username = ${username}`, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Successfully logged out user');
+    }
+  });
+};
+
+const loginUser = (username) => {
+  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = ${username}`, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Successfully logged out user');
+    }
+  });
+};
+
 module.exports = {
-  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser,
+  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
 };
