@@ -9,6 +9,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
@@ -17,11 +20,39 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// Probably not needed //
+const sess = {
+  secret: 'THESECRETTOANYGOODMEAL',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+};
+
+if (app.get('env') === 'production') {
+  sess.cookie.secure = true; // serve secure cookies, requires https
+}
+
+const strategy = new Auth0Strategy(
+  {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL:
+      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+  },
+  (accessToken, refreshToken, extraParams, profile, done) => {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+    return done(null, profile);
+  },
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// Needed for React at Some Point //
-// app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
+app.use(session(sess));
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
