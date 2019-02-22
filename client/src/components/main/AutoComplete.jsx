@@ -34,6 +34,7 @@ class AutoComplete extends React.Component {
     selectedIngredients.push(ingredient);
     this.setState({
       selectedIngredients,
+      text: '',
     });
   }
 
@@ -65,6 +66,13 @@ class AutoComplete extends React.Component {
         {this.renderSuggestions()}
         <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
         <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
+        <ul>
+          {selectedIngredients.map(ingredient => (
+            <li key={ingredient}>
+              {ingredient}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
