@@ -22,12 +22,8 @@ class Main extends React.Component {
     this.state = {
       view: 'search',
     };
-    this.onClick = this.onClick.bind(this);
+    // this.onClick = this.onClick.bind(this);
     this.changeView = this.changeView.bind(this);
-  }
-
-  onClick() {
-    console.log('clicked');
   }
 
   // function to change between search and saved view
@@ -43,9 +39,9 @@ class Main extends React.Component {
     return (
       <div>
         <nav>
-          <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Meal Maker</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <div className="nav-wrapper">
+            <a href="#" className="brand-logo">Meal Maker</a>
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href={Search}>Search</a></li>
               <li><a href={SavedRecipes}>Saved</a></li>
               {/* <li><a href="collapsible.html">JavaScript</a></li> */}
@@ -74,10 +70,11 @@ class Main extends React.Component {
 
         <div className="main">
           {this.state.view === 'search'
-            ? <Search ingredients={ingredients} recipe={recipe} getRecipes={getRecipes} />
+            ? <Search ingredients={ingredients} recipes={recipes} recipe={recipe} getRecipes={getRecipes} />
             : <SavedRecipes savedRecipes={savedRecipes} />
           }
         </div>
+        
       </div>
     )
   }

@@ -44,7 +44,7 @@ class App extends React.Component {
       .then((results) => {
         console.log('results recipes', results);
         this.setState({ // change the state
-          recipes: results, // by making the data received back fron the server available
+          recipes: results.data, // by making the data received back fron the server available
         });
       }).catch((err) => {
         console.log(err, 'error while retrieving data from server');
