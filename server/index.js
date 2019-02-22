@@ -9,19 +9,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
+const userInViews = require('./routes/middleware/userInViews');
+const authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// Needed for React at Some Point //
-// app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
@@ -167,12 +171,12 @@ app.post('/random', (req, res) => {
 app.get('/recipeoftheday', (req, res) => {
   db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
     if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
-      axios.post('/random').then((res) =>{
+      axios.post('/random').then((res) => {
         res.status(204).send(res.data);
       });
     } else {
       const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
-      db.getRecipeIngredients(recipeOfTheDay.id, (err, ingredients) => {
+      db.getRecipeIngredients(recipeOfTheDay.idRecipe, (err, ingredients) => {
         if (err) {
           res.status(500).send('Something went wrong!');
         }

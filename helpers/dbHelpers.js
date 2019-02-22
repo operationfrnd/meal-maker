@@ -142,7 +142,7 @@ const saveRecipeIngredient = (recipeId, ingredientId) => {
       console.log('saved id pairs to db');
     }
   });
-}
+};
 
 const getRecipeIngredients = (recipeId, callback) => {
   connection.query(`SELECT * FROM recipesIngredients WHERE idRecipe = ${recipeId}`, (err, ingredients) => {
