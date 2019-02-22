@@ -30,6 +30,7 @@ const recFoodNutrApi = function (ingredients, callback) {
       recipeInfo.name = recipe.title;
       recipeInfo.recipeId = recipe.id;
       recipeInfo.cookTime = recipe.readyInMinutes;
+      recipeInfo.image = recipe.image;
       recipeInfo.instructions = _.map(recipe.analyzedInstructions[0].steps, (instruction) => {
         return instruction.step;
       });
@@ -89,6 +90,8 @@ const rfnRandomRecipe = function (callback) {
     receipeInfo.ingredients = _.map(recipe.data.recipes[0].extendedIngredients, (ingredient, index) => {
       return ingredient.originalString;
     }).join("\n");
+    // get recipe image
+    receipeInfo.recipeImage = recipe.data.recipes[0].image;
     // do a quick search to get a youtube video on preparation of the dish
     youTubeApi(`cook ${receipeInfo.name}`, (anError, video) => {
       if (anError) {
@@ -116,6 +119,7 @@ const rfnSingleRecipe = function (recipeId, callback) {
     // object to be returned and that recipe info is stored within
     recipeInfo = {};
     recipeInfo.name = recipe.data.title;
+    recipeInfo.image = recipe.data.image;
     recipeInfo.recipeId = recipe.data.id;
     recipeInfo.cookTime = recipe.data.readyInMinutes;
     recipeInfo.instructions = _.map(recipe.data.analyzedInstructions[0].steps, (step) => {

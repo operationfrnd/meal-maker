@@ -49,7 +49,7 @@ app.get('/food', (req, res) => {
       _.forEach(recipes, (recipe) => {
         const previousInstances = _.filter(savedRecipes, savedRecipe => savedRecipe.recipe === recipe.name).length;
         if (previousInstances === 0) {
-          db.saveRecipe(recipe.name, recipe.recipeId, (err) => {
+          db.saveRecipe(recipe.name, recipe.recipeId, recipe.recipeImage, (err) => {
             if (err) {
               console.log(err);
             }
@@ -138,7 +138,7 @@ app.post('/random', (req, res) => {
           // Save the random recipe if we don't have it already //
           if (!oldRecipe) {
             // Save the recipe
-            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, (err) => {
+            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, randomRecipe.recipeImage, (err) => {
               if (err) {
                 return res.status(500).send('Something Went Wrong!');
               }

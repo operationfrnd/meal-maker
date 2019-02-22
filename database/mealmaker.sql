@@ -21,6 +21,7 @@ CREATE TABLE Recipes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   recipe TEXT NOT NULL,
   idRecipieFoodNutrition INTEGER NOT NULL,
+  recipeImageLink VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 -- ---
