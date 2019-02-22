@@ -7,15 +7,17 @@
 
 import React from 'react';
 
-const RecipeListItem = ({ recipe }) => {
+const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe }) => {
 
-  const onClick = () => {
-    console.log('clicked');
-  }
+  // const onClick = () => {
+  //   console.log('clicked');
+  // }
 
   return (
-    <div className="recipe-list-item" onClick={() => onClick()}>
+    <div className="recipe-list-item">
       <b>Recipe Name:</b> {recipe.name} 
+      <button type="button" className="save-recipe-button" onClick={() => saveRecipe(recipe)}> Save that recipe </button>
+      <button type="button" className="dislike-recipe-button" onClick={() => saveDislikeRecipe(recipe)}> Never again! </button>
       <br />
       <b>Cook Time:</b> {recipe.cookTime} minutes
       <br />

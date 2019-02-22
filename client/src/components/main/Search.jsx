@@ -16,7 +16,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { recipe, recipes, getRecipes, ingredients } = this.props;
+    const { recipe, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe } = this.props;
     return (
       <div>
         <h2>Search</h2>
@@ -25,7 +25,7 @@ class Search extends React.Component {
         </div>
 
         <div>
-          <RecipeList recipes={recipes}></RecipeList>
+          <RecipeList recipes={recipes} saveRecipe={saveRecipe} saveDislikeRecipe={saveDislikeRecipe}> </RecipeList>
         </div>
 
 
