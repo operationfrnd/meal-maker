@@ -28,6 +28,7 @@ class App extends React.Component {
     this.getRecipes = this.getRecipes.bind(this);
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
+    this.saveDislikeRecipe = this.saveDislikeRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -108,6 +109,22 @@ class App extends React.Component {
       });
   }
 
+  // sends a POST request to serve at endpoint '/toBeSaved'
+  // eslint-disable-next-line class-methods-use-this
+  saveDislikeRecipe(recipe) {
+    const { userId } = this.state;
+    // debugger;
+    return axios.post('/toBeSavedDislike', {
+      userId,
+      recipeId: recipe.recipeId,
+    })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err, 'error while trying to save recipe into DB');
+      });
+  }
+
 
   render() {
     // console.log(this);
@@ -128,6 +145,7 @@ class App extends React.Component {
             ingredients={ingredients}
             getRecipes={this.getRecipes}
             saveRecipe={this.saveRecipe}
+            saveDislikeRecipe={this.saveDislikeRecipe}
           />
         </div>
       </div>

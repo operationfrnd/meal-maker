@@ -300,6 +300,27 @@ app.post('/toBeSaved', (req, res) => {
   });
 });
 
+// when client wants to save a recipe into DB
+app.post('/toBeSavedDislike', (req, res) => {
+  // const userId = req.body.userId;
+  // const recipeId = req.body.recipeId;
+  const { userId, recipeId } = req.body;
+  console.log(userId, recipeId);
+  db.selectDislikedRecipes(userId, (err, ids) => {
+    const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
+    if (previousInstances === 0) {
+      return db.dislikeRecipe(userId, recipeId, (err) => {
+        if (err) {
+          return res.status(500).send('Something Went Wrong!');
+        }
+        console.log('recipe saved into DB dislike table');
+        return res.status(204).send('Saved Recipe To The Dislike Table');
+      });
+    }
+    return res.status(500).send('Recipe Already Saved');
+  });
+});
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 
