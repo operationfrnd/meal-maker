@@ -15,6 +15,10 @@ const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
+const userInViews = require('./routes/middleware/userInViews');
+const authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -53,6 +57,10 @@ app.use(session(sess));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(userInViews());
+app.use('/', authRouter);
+app.use('/', indexRouter);
+app.use('/', usersRouter);
 
 passport.serializeUser((user, done) => {
   done(null, user);

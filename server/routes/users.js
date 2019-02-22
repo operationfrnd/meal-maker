@@ -1,5 +1,5 @@
 const express = require('express');
-const secured = require('./securedHelperFunction');
+const secured = require('./middleware/secured');
 const router = express.Router();
 
 router.get('/user', secured(), (req, res, next) => {
