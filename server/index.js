@@ -9,9 +9,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
+const userInViews = require('./routes/middleware/userInViews');
+const authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -19,8 +26,6 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// Needed for React at Some Point //
-// app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
 // do we need this?
 app.get('/', (req, res) => {
@@ -36,7 +41,7 @@ app.get('/food', (req, res) => {
       console.log(err);
       return res.status(500).send('Something went wrong!');
     }
-    // respond with an array of objects which contain recipie information
+    // respond with an array of objects which contain recipe information
     console.log(recipes);
     db.selectAllRecipes((err, savedRecipes) => {
       if (err) {
