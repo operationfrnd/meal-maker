@@ -55,6 +55,7 @@ CREATE TABLE RecipeOfTheDay (
   link VARCHAR(255) NOT NULL,
   instructions TEXT NOT NULL,
   idRecipe INTEGER NOT NULL,
+  recipeImageLink VARCHAR(255) NOT NULL,
   cooktime INTEGER NOT NULL,
   date INTEGER NOT NULL,
   PRIMARY KEY (id)
