@@ -16,6 +16,8 @@ const RecipeListItem = ({ recipe }) => {
   return (
     <div className="recipe-list-item" onClick={() => onClick()}>
       <b>Recipe Name:</b> {recipe.name} 
+      <button type="button" className="save-recipe-button"> Save that recipe </button>
+      <button type="button" className="dislike-recipe-button"> Never again! </button>
       <br />
       <b>Cook Time:</b> {recipe.cookTime} minutes
       <br />
