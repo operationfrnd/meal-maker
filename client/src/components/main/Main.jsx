@@ -35,23 +35,8 @@ class Main extends React.Component {
 
   render() {
     const { recipe, recipes, savedRecipes, ingredients, getRecipes } = this.props;
-    // const { ingredients } = this.state;
     return (
       <div>
-        <nav>
-          <div className="nav-wrapper">
-            <a href="#" className="brand-logo">Meal Maker</a>
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><a href={Search}>Search</a></li>
-              <li><a href={SavedRecipes}>Saved</a></li>
-              {/* <li><a href="collapsible.html">JavaScript</a></li> */}
-            </ul>
-          </div>
-        </nav>
-
-
-
-
         <div className="nav">
           <span className="logo">Meal Maker</span>
           <button type="button" className={this.state.view === 'search'
@@ -74,9 +59,8 @@ class Main extends React.Component {
             : <SavedRecipes savedRecipes={savedRecipes} />
           }
         </div>
-        
       </div>
-    )
+    );
   }
 }
 
