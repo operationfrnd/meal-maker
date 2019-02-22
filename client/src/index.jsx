@@ -2,6 +2,7 @@
 /* eslint import/extensions: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import Login from './components/login/Login.jsx';
 import Recipe from './components/Recipe.jsx';
@@ -19,6 +20,8 @@ class App extends React.Component {
       recipes: [],
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
+      ingredients: [],
+      // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
@@ -28,19 +31,20 @@ class App extends React.Component {
   componentDidMount() {
     this.getRandomRecipe();
     // this.getSavedRecipes();
+    this.grabIngredients();
   }
 
   // function to retrieve recipes to display
-  getRecipes() {
+  getRecipes(ingredients) {
     return axios.get('/food', {
       params: {
-        ingredients: '',
+        ingredients: ingredients,
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
-        // console.log(results);
+        console.log('results recipes', results);
         this.setState({ // change the state
-          recipes: results, // by making the data received back fron the server available
+          recipes: results.data, // by making the data received back fron the server available
         });
       }).catch((err) => {
         console.log(err, 'error while retrieving data from server');
@@ -75,12 +79,28 @@ class App extends React.Component {
       });
   }
 
-  //
+  // gets all ingredients saved to db to for autocomplete component
+  grabIngredients() {
+    console.log('grabbing');
+    axios.get('/ingredients')
+      .then((allIngOptions) => {
+        console.log(Array.isArray(allIngOptions.data), 'Opt');
+        this.setState({
+          ingredients: allIngOptions.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error in getting all ingredients');
+      });
+  }
 
   render() {
-    console.log(this);
-    const { recipeOfTheDay, savedRecipes, recipes } = this.state;
+    // console.log(this);
+    const { recipeOfTheDay, savedRecipes, recipes, ingredients } = this.state;
     return (
+      // <BrowserRouter>
+      //   <Route path="/login" component={Login} />
+      // </BrowserRouter>
       <div>
         <div>
           <Login recipe={recipeOfTheDay} />
@@ -90,6 +110,8 @@ class App extends React.Component {
             recipes={recipes}
             recipe={recipeOfTheDay}
             savedRecipes={savedRecipes}
+            ingredients={ingredients}
+            getRecipes={this.getRecipes}
           />
         </div>
       </div>
