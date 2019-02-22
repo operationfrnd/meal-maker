@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon --inspect server/index.js"
   },
@@ -44,6 +44,7 @@
     "hash-sum": "^1.0.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
+    "mocha": "^6.0.1",
     "mongoose": "^5.4.13",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.10",

@@ -2,6 +2,7 @@
 /* eslint import/extensions: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import Login from './components/login/Login.jsx';
 import Recipe from './components/Recipe.jsx';
@@ -20,7 +21,7 @@ class App extends React.Component {
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
       ingredients: [],
-      show: 'search',
+      // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
@@ -97,6 +98,9 @@ class App extends React.Component {
     // console.log(this);
     const { recipeOfTheDay, savedRecipes, recipes, ingredients } = this.state;
     return (
+      // <BrowserRouter>
+      //   <Route path="/login" component={Login} />
+      // </BrowserRouter>
       <div>
         <div>
           <Login recipe={recipeOfTheDay} />

@@ -42,20 +42,34 @@ class Main extends React.Component {
     // const { ingredients } = this.state;
     return (
       <div>
+        <nav>
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Meal Maker</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href={Search}>Search</a></li>
+              <li><a href={SavedRecipes}>Saved</a></li>
+              {/* <li><a href="collapsible.html">JavaScript</a></li> */}
+            </ul>
+          </div>
+        </nav>
+
+
+
+
         <div className="nav">
           <span className="logo">Meal Maker</span>
-          <span className={this.state.view === 'search'
+          <button type="button" className={this.state.view === 'search'
             ? 'nav-selected'
             : 'nav-unselected'}
             onClick={() => this.changeView('search')}>
             Search
-          </span>
-          <span className={this.state.view === 'saved'
+          </button>
+          <button type="button" className={this.state.view === 'saved'
             ? 'nav-selected'
             : 'nav-unselected'}
             onClick={() => this.changeView('saved')}>
             Saved Recipes
-          </span>
+          </button>
         </div>
 
         <div className="main">
