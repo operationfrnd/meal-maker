@@ -12,38 +12,10 @@ button {
   border: none;
   border-radius: 3px;
   color: #F3F3F3;
-  background-color: #C0163A;
+  background-color: rgb(192, 57, 86);
   margin-right: 5px;
   padding: 10px;
   font-size: 1em;
-}
-
-.card {
-  border: 1px solid rgba(0, 0, 0, .25);
-  background-color: rgba(255, 255, 255, .5);
-  padding: 15px;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-  height: 300px;
-  line-height: 50px;
-}
-
-.card-kor {
-  font-size: 3em;
-  margin-top: 30px;
-}
-
-.card-rom {
-  font-style: italic;
-  margin: 15px;
-  color: rgba(0, 0, 0, .5);
-  font-size: 1.2em;
-}
-
-.card-eng {
-  margin: 15px;
-  font-size: 1.5em;
 }
 
 .logo {
@@ -57,7 +29,7 @@ button {
 }
 
 .nav {
-  background-color: #033578;
+  background-color: #47d3c7;
   margin: 0px;
   padding: 10px;
   display: flex;
@@ -80,61 +52,50 @@ button {
   font-size: 1.1em;
 }
 
-
-.phrases {
-  margin: 20px;
+.Search-Comp {
+  margin: 150px auto 0 auto;
+  width: 600px;
 }
 
-.phrase-table {
-  display: flex;
-  flex-flow: column nowrap;
-  margin: 0.5rem;
-  line-height: 1.5;
-  flex: 1 1 auto;
-  border: 1px solid #d0d0d0;
-}
-
-.phrase-header {
-  display: none;
-  font-weight: 700;
-  font-size: 1.1em;
-  background-color: #f2f2f2;
-}
-
-.phrase-header > .phrase-data {
-  white-space: normal;
-}
-
-.phrase-row {
+.auto-complete {
   width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
+  border:1px solid gray;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14;
+  color: black;
 }
 
-.phrase-row:nth-of-type(even) {
-  background-color: #f2f2f2;
+.auto-complete input {
+  width: 100%;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14;
+  color: black;
+  box-sizing: border-box;
+  outline: none;
 }
 
-.phrase-row:nth-of-type(odd) {
-  background-color: #ffffff;
+.auto-ulist {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  border-top: 1px gray;
 }
 
-.phrase-row:hover {
-  color: #C0163A;
+.auto-ulist::before {
+  content: "";
 }
 
-.phrase-data {
-  display: flex;
-  flex-flow: row nowrap;
-  flex-grow: 1;
-  flex-basis: 0;
-  padding: 0.5em;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0px;
-  white-space: nowrap;
-  border-bottom: 1px solid #d0d0d0;
+.auto-list {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.auto-list::before {
+  text-decoration: underline;
+  background-color: 128, 128, 129, 0.20;
 }
 
 .recipe-list-item {
