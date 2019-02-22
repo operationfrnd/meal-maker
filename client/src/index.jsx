@@ -53,11 +53,7 @@ class App extends React.Component {
   getRandomRecipe() {
     return axios.get('/recipeoftheday') // sends get request to server for random recipe
       .then((recipe) => {
-        // debugger;
-        // console.log(recipe, 'recipe');
-        // console.log(this);
         this.setState({
-
           recipeOfTheDay: recipe.data,
         });
       })
@@ -67,7 +63,7 @@ class App extends React.Component {
   }
 
   getSavedRecipes() {
-    return axios.get('/saverecipes') // sends get request to server for saved recipes
+    return axios.get('/savedrecipes') // sends get request to server for saved recipes
       .then((recipes) => {
         this.setState({
           savedRecipes: recipes,
@@ -80,7 +76,7 @@ class App extends React.Component {
 
   // gets all ingredients saved to db to for autocomplete component
   grabIngredients() {
-    console.log('grabbing');
+    // console.log('grabbing');
     axios.get('/ingredients')
       .then((allIngOptions) => {
         console.log(Array.isArray(allIngOptions.data), 'Opt');

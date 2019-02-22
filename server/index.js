@@ -17,12 +17,12 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// Probably not needed //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // Needed for React at Some Point //
 // app.use(express.static(path.join(__dirname, [REACT DIRECTORY])));
 
+// do we need this?
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
     res.send(res2);
@@ -87,8 +87,8 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+// get a single recipe by its name
 app.get('/single', (req, res) => {
-  // get a single recipe by its name
   db.selectSingleRecipeByName(req.body.recipeName, (err, singleRecipeArray) => {
     if (err) {
       console.log(err);
@@ -143,7 +143,7 @@ app.post('/random', (req, res) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
-                const ingredients = randomRecipe.ingredients.split("\n");
+                const ingredients = randomRecipe.ingredients.split('\n');
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
                 db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cookTime, randomRecipe.date);
@@ -152,14 +152,14 @@ app.post('/random', (req, res) => {
                 });
                 return 'Finished';
               });
-            })
+            });
           } else {
             // Save the recipe of the day //
             return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
           }
         });
       }
-    })
+    });
   });
 });
 
@@ -167,13 +167,13 @@ app.post('/random', (req, res) => {
 app.get('/recipeoftheday', (req, res) => {
   db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
     if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
-      axios.post('/random').then((res) =>{
+      axios.post('/random').then((res) => {
         res.status(204).send(res.data);
       });
     } else {
       const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
-      db.getRecipeIngredients(recipeOfTheDay.id, (err, ingredients) => {
-        if (err) {
+      db.getRecipeIngredients(recipeOfTheDay.id, (error, ingredients) => {
+        if (error) {
           res.status(500).send('Something went wrong!');
         }
         ingredients = _.map(ingredients, (ingredient) => {
@@ -186,17 +186,18 @@ app.get('/recipeoftheday', (req, res) => {
   });
 });
 
-// get a single youtube video from a search query
+// client requests a single youtube video from a search query
 app.get('/search', (req, res) => {
   helper.youTubeApi(req.query.q, (err, searchResult) => {
     if (err) {
-      return res.status(500).send("Something went wrong!");
+      return res.status(500).send('Something went wrong!');
     }
     // send back the video inforamtion
     res.status(200).send(searchResult);
   });
 });
 
+// when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
   if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
     return res.status(500).redirect('/restrictedhome');
@@ -218,6 +219,7 @@ app.post('/signup', (req, res) => {
   })
 });
 
+// when client requests to login => authentication request
 app.get('/login', (req, res) => {
   db.selectAllUsers((err, users) => {
     const user = _.filter(users, (storedUser) => {
@@ -236,6 +238,7 @@ app.get('/login', (req, res) => {
   });
 });
 
+// when client wants to retrieve all disliked recipes for a particular user
 app.get('/disliked', (req, res) => {
   db.selectDislikedRecipes(req.userId, (err, ids) => {
     if (err) {
@@ -245,6 +248,7 @@ app.get('/disliked', (req, res) => {
   });
 });
 
+// when client wants add a particular recipe to the disliked table
 app.post('/disliked', (req, res) => {
   db.selectDislikedRecipes(req.userId, (err, ids) => {
     const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
@@ -260,6 +264,7 @@ app.post('/disliked', (req, res) => {
   });
 });
 
+// when client wants to retrieve all the saved recipes for a particular user
 app.get('/saved', (req, res) => {
   db.selectLikedRecipes(req.userId, (err, ids) => {
     if (err) {
