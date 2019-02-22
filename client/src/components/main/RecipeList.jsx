@@ -3,13 +3,12 @@
 import React from 'react';
 import RecipeListItem from './RecipeListItem.jsx';
 
-const RecipeList = ({ recipe, onClick }) => {
+const RecipeList = ({ recipes, onClick }) => {
   return (
     <div className="recipe-list">
-      {/* {recipes.map((recipe) => {
+      {recipes.map((recipe) => {
         return <RecipeListItem recipe={recipe} key={recipe.recipeId} onClick={onClick} />;
-      })} */}
-      <RecipeListItem recipe={recipe} />
+      })}
     </div>
   );
 };
