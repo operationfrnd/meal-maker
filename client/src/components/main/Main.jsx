@@ -38,7 +38,7 @@ class Main extends React.Component {
   }
 
   render() {
-    const { recipe, recipes, savedRecipes, ingredients } = this.props;
+    const { recipe, recipes, savedRecipes, ingredients, getRecipes } = this.props;
     // const { ingredients } = this.state;
     return (
       <div>
@@ -60,7 +60,7 @@ class Main extends React.Component {
 
         <div className="main">
           {this.state.view === 'search'
-            ? <Search ingredients={ingredients} recipe={recipe} />
+            ? <Search ingredients={ingredients} recipe={recipe} getRecipes={getRecipes} />
             : <SavedRecipes savedRecipes={savedRecipes} />
           }
         </div>

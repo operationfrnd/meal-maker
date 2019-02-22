@@ -9,10 +9,13 @@ class AutoComplete extends React.Component {
       suggestions: [],
       text: '',
       // ingredientList: [],
+      selectedIngredients: [],
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.suggestionSelected = this.suggestionSelected.bind(this);
+    this.addIngredient = this.addIngredient.bind(this);
   }
+
 
   onTextChange(e) {
     const { value } = e.target;
@@ -22,6 +25,17 @@ class AutoComplete extends React.Component {
       suggestions = this.props.ingredients.sort().filter(v => regex.test(v));
     }
     this.setState({ suggestions, text: value });
+  }
+
+
+  addIngredient(ingredient) {
+
+    const { selectedIngredients } = this.state;
+    selectedIngredients.push(ingredient);
+    this.setState({
+      selectedIngredients,
+      text: '',
+    });
   }
 
   suggestionSelected(value) {
@@ -44,11 +58,21 @@ class AutoComplete extends React.Component {
   }
 
   render() {
-    const { text } = this.state;
+    const { text, selectedIngredients } = this.state;
+    const { getRecipes } = this.props;
     return (
       <div>
         <input value={text} onChange={this.onTextChange} type="text" />
         {this.renderSuggestions()}
+        <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
+        <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
+        <ul>
+          {selectedIngredients.map(ingredient => (
+            <li key={ingredient}>
+              {ingredient}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
