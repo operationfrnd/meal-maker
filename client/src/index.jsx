@@ -21,11 +21,14 @@ class App extends React.Component {
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
       ingredients: [],
+      userId: 1,
       // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
+    this.saveDislikeRecipe = this.saveDislikeRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -54,11 +57,7 @@ class App extends React.Component {
   getRandomRecipe() {
     return axios.get('/recipeoftheday') // sends get request to server for random recipe
       .then((recipe) => {
-        // debugger;
-        // console.log(recipe, 'recipe');
-        // console.log(this);
         this.setState({
-
           recipeOfTheDay: recipe.data,
         });
       })
@@ -68,7 +67,7 @@ class App extends React.Component {
   }
 
   getSavedRecipes() {
-    return axios.get('/saverecipes') // sends get request to server for saved recipes
+    return axios.get('/savedrecipes') // sends get request to server for saved recipes
       .then((recipes) => {
         this.setState({
           savedRecipes: recipes,
@@ -81,7 +80,7 @@ class App extends React.Component {
 
   // gets all ingredients saved to db to for autocomplete component
   grabIngredients() {
-    console.log('grabbing');
+    // console.log('grabbing');
     axios.get('/ingredients')
       .then((allIngOptions) => {
         console.log(Array.isArray(allIngOptions.data), 'Opt');
@@ -93,6 +92,39 @@ class App extends React.Component {
         console.log('error in getting all ingredients');
       });
   }
+
+  // sends a POST request to serve at endpoint '/toBeSaved'
+  // eslint-disable-next-line class-methods-use-this
+  saveRecipe(recipe) {
+    const { userId } = this.state;
+    // debugger;
+    return axios.post('/toBeSaved', {
+      userId,
+      recipeId: recipe.recipeId,
+    })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err, 'error while trying to save recipe into DB');
+      });
+  }
+
+  // sends a POST request to serve at endpoint '/toBeSaved'
+  // eslint-disable-next-line class-methods-use-this
+  saveDislikeRecipe(recipe) {
+    const { userId } = this.state;
+    // debugger;
+    return axios.post('/toBeSavedDislike', {
+      userId,
+      recipeId: recipe.recipeId,
+    })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err, 'error while trying to save recipe into DB');
+      });
+  }
+
 
   render() {
     // console.log(this);
@@ -112,28 +144,12 @@ class App extends React.Component {
             savedRecipes={savedRecipes}
             ingredients={ingredients}
             getRecipes={this.getRecipes}
+            saveRecipe={this.saveRecipe}
+            saveDislikeRecipe={this.saveDislikeRecipe}
           />
         </div>
       </div>
     );
-
-
-    // <div>
-    //   <div className="nav">
-    //     <span className="logo">Meal Maker</span>
-    //     <Credentials />
-    //   </div>
-
-    //   <div className="main">
-    //   <div className="videoPlayer">
-    //     <VideoPlayer recipe={this.state.recipeOfTheDay} />
-    //   </div>
-    //   <div className="recipeInstructions">
-    //   <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
-    //   </div>
-    //   </div>
-    // </div>
-    // );
   }
 }
 

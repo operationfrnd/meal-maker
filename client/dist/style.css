@@ -7,6 +7,7 @@ body {
   background-color: #F3F3F3;
 }
 
+
 button {
   cursor: pointer;
   border: none;
@@ -15,6 +16,28 @@ button {
   background-color: rgb(192, 57, 86);
   margin-right: 5px;
   padding: 10px;
+  font-size: 1em;
+}
+
+.save-recipe-button{
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: rgb(31, 39, 150);
+  margin-left: 10px;
+  padding: 3px;
+  font-size: 1em;
+}
+
+.dislike-recipe-button{
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: rgb(214, 60, 14);
+  margin-left: 5px;
+  padding: 3px;
   font-size: 1em;
 }
 
