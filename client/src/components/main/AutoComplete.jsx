@@ -62,18 +62,22 @@ class AutoComplete extends React.Component {
     const { text, selectedIngredients } = this.state;
     const { getRecipes } = this.props;
     return (
-      <div className="auto-complete">
-        <input value={text} onChange={this.onTextChange} type="text" />
-        {this.renderSuggestions()}
-        <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
-        <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
-        <ul>
-          {selectedIngredients.map(ingredient => (
-            <li key={ingredient}>
-              {ingredient}
-            </li>
-          ))}
-        </ul>
+      <div className="AutoCompleteComponent">
+        <div className="auto-complete">
+          <input value={text} onChange={this.onTextChange} type="text" />
+          {this.renderSuggestions()}
+          <ul>
+            {selectedIngredients.map(ingredient => (
+              <li key={ingredient}>
+                {ingredient}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="buttons">
+          <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
+          <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
+        </div>
       </div>
     );
   }
