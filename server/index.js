@@ -111,9 +111,9 @@ app.get('/single', (req, res) => {
 });
 
 // get a random recipe
-app.post('/random', (req, res) => {
+app.post('/random', (req, res) => 
   // First get a random recipe //
-  return helper.rfnRandomRecipe((err, randomRecipe) => {
+   helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
@@ -158,15 +158,15 @@ app.post('/random', (req, res) => {
                 return 'Finished';
               });
             });
-          } else {
+          }
             // Save the recipe of the day //
             return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
-          }
+
         });
       }
     });
-  });
-});
+  })
+);
 
 // get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
@@ -181,9 +181,7 @@ app.get('/recipeoftheday', (req, res) => {
         if (error) {
           res.status(500).send('Something went wrong!');
         }
-        ingredients = _.map(ingredients, (ingredient) => {
-          return ingredient.ingredients;
-        });
+        ingredients = _.map(ingredients, ingredient => ingredient.ingredients);
         recipeOfTheDay.ingredients = ingredients.join('\n');
         res.status(200).send(recipeOfTheDay);
       });
@@ -211,25 +209,21 @@ app.post('/signup', (req, res) => {
     if (err) {
       console.error(err);
     }
-    const sameNameCounter = _.filter(users, (user) => {
-      return user.username === req.body.username;
-    }).length;
+    const sameNameCounter = _.filter(users, user => user.username === req.body.username).length;
     if (sameNameCounter === 0) {
       process.env.LOCAL_USER = req.body.username;
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
-    } else {
-      return res.status(500).redirect('/restrictedhome');
     }
+      return res.status(500).redirect('/restrictedhome');
+
   })
 });
 
 // when client requests to login => authentication request
 app.get('/login', (req, res) => {
   db.selectAllUsers((err, users) => {
-    const user = _.filter(users, (storedUser) => {
-      return storedUser.username === req.body.username;
-    })[0];
+    const user = _.filter(users, storedUser => storedUser.username === req.body.username)[0];
     if (user) {
       if (user.password === helper.hasher(req.body.password)) {
         process.env.LOCAL_USER = req.body.username;
@@ -270,13 +264,47 @@ app.post('/disliked', (req, res) => {
 });
 
 // when client wants to retrieve all the saved recipes for a particular user
-app.get('/saved', (req, res) => {
-  db.selectLikedRecipes(req.userId, (err, ids) => {
+app.get('/savedrecipes', (req, res) => {
+  const { userId } = req.query;
+  db.selectLikedRecipes(userId, (err, results) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
-    res.status(200).send(ids);
+    else {
+      console.log('next step');
+      // get the recipeIds from the DB
+      const recipeIds = results.map(result => result.idRecipes);
+
+      const recipesObj = [];
+      // get an array of objects named recipeInfo from rfn and youtube for each id
+      const recipesInfo = recipeIds.forEach(id => helper.rfnSingleRecipe(id, (err, result) => {
+        if (err) {
+          console.log('error in getting recipe saved');
+          return;
+        }
+        console.log(`${result}, from saved db`);
+        recipesObj.push(result);
+
+        console.log(recipesObj);
+      }));
+      
+    // .then((recipesInfo) => {
+      const sendResults = () => {
+        res.status(200).send(recipesObj); // send that array back to client
+      };
+      setTimeout(sendResults, 2000);
+    // })
+    // .catch((err) => {
+    //   console.log('not successful');
+    // })
+    }
   });
+  // .then((results) => {
+  //   console.log(results);
+  // })
+  // .catch((err) => {
+  //   console.log('error in db saved fiels');
+  // })
 });
 
 // when client wants to save a recipe into DB
