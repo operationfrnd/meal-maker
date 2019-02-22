@@ -279,14 +279,20 @@ app.get('/saved', (req, res) => {
   });
 });
 
-app.post('/saved', (req, res) => {
-  db.selectLikedRecipes(req.userId, (err, ids) => {
-    const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
-    if (previousInstances.length === 0) {
-      return db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
+// when client wants to save a recipe into DB
+app.post('/toBeSaved', (req, res) => {
+  // const userId = req.body.userId;
+  // const recipeId = req.body.recipeId;
+  const { userId, recipeId } = req.body;
+  console.log(userId, recipeId);
+  db.selectLikedRecipes(userId, (err, ids) => {
+    const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
+    if (previousInstances === 0) {
+      return db.saveLikedRecipe(userId, recipeId, (err) => {
         if (err) {
           return res.status(500).send('Something Went Wrong!');
         }
+        console.log('recipe saved into DB')
         return res.status(204).send('Saved Recipe To The Saved Table');
       });
     }

@@ -21,11 +21,13 @@ class App extends React.Component {
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
       ingredients: [],
+      userId: 1,
       // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +92,23 @@ class App extends React.Component {
       });
   }
 
+  // sends a POST request to serve at endpoint '/toBeSaved'
+  // eslint-disable-next-line class-methods-use-this
+  saveRecipe(recipe) {
+    const { userId } = this.state;
+    // debugger;
+    return axios.post('/toBeSaved', {
+      userId,
+      recipeId: recipe.recipeId,
+    })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err, 'error while trying to save recipe into DB');
+      });
+  }
+
+
   render() {
     // console.log(this);
     const { recipeOfTheDay, savedRecipes, recipes, ingredients } = this.state;
@@ -108,28 +127,11 @@ class App extends React.Component {
             savedRecipes={savedRecipes}
             ingredients={ingredients}
             getRecipes={this.getRecipes}
+            saveRecipe={this.saveRecipe}
           />
         </div>
       </div>
     );
-
-
-    // <div>
-    //   <div className="nav">
-    //     <span className="logo">Meal Maker</span>
-    //     <Credentials />
-    //   </div>
-
-    //   <div className="main">
-    //   <div className="videoPlayer">
-    //     <VideoPlayer recipe={this.state.recipeOfTheDay} />
-    //   </div>
-    //   <div className="recipeInstructions">
-    //   <RecipeInstructions recipe={this.state.recipeOfTheDay}/>
-    //   </div>
-    //   </div>
-    // </div>
-    // );
   }
 }
 
