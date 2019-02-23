@@ -14,13 +14,15 @@ class RecipeInstructions extends React.Component {
     return (
       <div className="instructions-list">
         <h3>{recipe.name}</h3>
-        <b>Cook Time:</b>
+        <b>Cook Time: </b>
         {recipe.cooktime}
+        {' '}
+        minutes
         <br />
-        <b>Ingredients:</b>
+        <b>Ingredients: </b>
         {recipe.ingredients}
         <br />
-        <b>Instructions:</b>
+        <b>Instructions: </b>
         {/* {recipe.instructions} */}
         <ul>{ steps.map(step => <li>{ step }</li> ) }
         </ul>

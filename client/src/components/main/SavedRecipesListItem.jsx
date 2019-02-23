@@ -6,18 +6,18 @@ import React from 'react';
 
 const SavedRecipeListItem = ({ savedRecipe }) => (
   <div className="saved-recipe-list-item">
-    <b>Recipe Name:</b>
+    <b>Recipe Name: </b>
     {savedRecipe.name}
     <br />
-    <b>Cook Time:</b>
-    {savedRecipe.cookTime}
+    <b>Cook Time: </b>
+    {savedRecipe.cookTime} minutes
     <br />
-    <b>Uses:</b>
+    {/* <b>Uses:</b>
     {savedRecipe.ingredients.usedIngredients}
-    <br />
-    <b>Match Percentage:</b>
+    <br /> */}
+    {/* <b>Match Percentage:</b>
     {savedRecipe.percentage}
-    %
+    % */}
   </div>
 );
 
