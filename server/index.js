@@ -28,12 +28,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/../client/dist')));
-
-app.use(cors());
 app.use(require('morgan')('dev'));
+
+app.use(express.static(path.join(__dirname, '/../client/dist')));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {
