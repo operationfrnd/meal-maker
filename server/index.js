@@ -3,6 +3,7 @@
 // 1) Request handler for a GET request from client with ingredients as params => will call Nutrition helper then send back results to client
 // 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper
 // 3) Request handler for a GET request from client on main page endpoint => compare current date & Ingredients table update date from DB
+
 require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
@@ -13,6 +14,7 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
+const Auth = require('../src/Auth/Auth');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
 const userInViews = require('./routes/middleware/userInViews');
