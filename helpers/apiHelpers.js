@@ -74,7 +74,7 @@ const recFoodNutrApi = (ingredients, callback) => {
       return youTubeApi(`cook ${recipeInfo.name}`, (err, video) => {
         recipeInfo.videoId = video.id.videoId;
         recipes.push(recipeInfo);
-        console.log(recipes);
+        // console.log(recipes);
         if (index === result.data.results.length - 1) {
           return callback(null, recipes);
         }
