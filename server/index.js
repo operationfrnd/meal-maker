@@ -31,9 +31,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 app.use(cors());
-// app.use(require());
+app.use(require('morgan')('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {
@@ -276,7 +276,7 @@ app.get('/savedrecipes', (req, res) => {
 
       const recipesObj = [];
       // get an array of objects named recipeInfo from rfn and youtube for each id
-      const recipesInfo = recipeIds.forEach(id => helper.rfnSingleRecipe(id, (err, result) => {
+      const recipesInfo = recipeIds.forEach((id, index) => helper.rfnSingleRecipe(id, (err, result) => {
         if (err) {
           console.log(err, 'error in getting recipe saved');
           return;
@@ -284,13 +284,12 @@ app.get('/savedrecipes', (req, res) => {
         console.log(`${result}, from saved db`);
         recipesObj.push(result);
 
+        if (index === recipeIds.length - 1) {
+          res.status(200).send(recipesObj); // send that array back to client
+        }
         console.log(recipesObj);
       }));
       // .then((recipesInfo) => {
-      const sendResults = () => {
-        res.status(200).send(recipesObj); // send that array back to client
-      };
-      setTimeout(sendResults, 2000);
     // })
     // .catch((err) => {
     //   console.log('not successful');
