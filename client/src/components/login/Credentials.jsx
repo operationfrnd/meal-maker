@@ -25,9 +25,9 @@ class Credentials extends React.Component {
   // handleSubmit = event => {
   //   event.preventDefault();
   // }
-  onClick() {
-    console.log('clicked');
-  }
+  // onClick() {
+  //   console.log('clicked');
+  // }
 
   render() {
     // <div className="Login">
@@ -38,6 +38,7 @@ class Credentials extends React.Component {
     //   <button type="submit"> Login </button>
     //   <button type="submit"> Sign Up </button>
     // </div>
+    const { signUp, login } = this.props;
 
     return (
     // <form>
@@ -48,10 +49,10 @@ class Credentials extends React.Component {
     //   <button type="submit" value="Sign Up" />
 
       <div>
-        <input type="text" name="username" placeholder="Username" />
-        <input type="text" name="password" placeholder="Password" />
-        <Button variant="contained" color="primary" type="submit" value="login" onClick={this.onClick.bind(this)}>Login</Button>
-        <Button variant="contained" color="primary" type="submit" value="signUp" onClick={this.onClick.bind(this)}>Sign Up</Button>
+        <input id="username" type="text" name="username" placeholder="Username" />
+        <input id="password" type="text" name="password" placeholder="Password" />
+        <Button variant="contained" color="primary" type="submit" value="login" onClick={() => console.log(document.getElementById('username').value)}>Login</Button>
+        <Button variant="contained" color="primary" type="submit" value="signUp" onClick={() => signUp('Pineapple')}>Sign Up</Button>
       </div>
     );
   }
