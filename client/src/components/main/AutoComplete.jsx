@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 // import './AutoComplete.css';
 
 class AutoComplete extends React.Component {
@@ -75,8 +76,8 @@ class AutoComplete extends React.Component {
           </ul>
         </div>
         <div className="buttons">
-          <button className="showMore" type="button" onClick={() => this.addIngredient(text)}>Add</button>
-          <button className="search" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</button>
+          <Button className="showMore" variant="contained" color="primary" type="button" onClick={() => this.addIngredient(text)}>Add</Button>
+          <Button className="search" variant="contained" color="primary" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</Button>
         </div>
       </div>
     );
