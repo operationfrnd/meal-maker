@@ -15,14 +15,14 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe }) => {
 
   return (
     <div className="recipe-list-item">
-      <b>Recipe Name:</b> {recipe.name} 
+      <b onClick={() => console.log('hey there')}>Recipe Name: </b> {recipe.name} 
       <button type="button" className="save-recipe-button" onClick={() => saveRecipe(recipe)}> Save that recipe </button>
       <button type="button" className="dislike-recipe-button" onClick={() => saveDislikeRecipe(recipe)}> Never again! </button>
       <br />
-      <b>Cook Time:</b> {recipe.cookTime} minutes
+      <b>Cook Time: </b> {recipe.cookTime} minutes
       <br />
-      <b>Uses:</b> {recipe.ingredients.usedIngredients} <br />
-      <b>Match Percentage:</b> {recipe.percentage}%
+      <b>Uses: </b> {recipe.ingredients.usedIngredients} <br />
+      <b>Match Percentage: </b> {recipe.percentage}%
     </div>
   );
 };
