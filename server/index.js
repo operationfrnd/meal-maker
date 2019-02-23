@@ -3,6 +3,7 @@
 // 1) Request handler for a GET request from client with ingredients as params => will call Nutrition helper then send back results to client
 // 2) Request handler for a GET request from client with a Receipe name (clicked on client side) => will call Youtube helper
 // 3) Request handler for a GET request from client on main page endpoint => compare current date & Ingredients table update date from DB
+
 require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
@@ -11,8 +12,10 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
+const Auth = require('../src/Auth/Auth');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
 const userInViews = require('./routes/middleware/userInViews');
@@ -20,19 +23,17 @@ const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+//Configure isProduction variable
+const isProduction = process.env.NODE_ENV === 'production';
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
+app.use(cors());
+app.use(require('morgan')('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// do we need this?
-app.get('/', (req, res) => {
-  fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
-    res.send(res2);
-  });
-});
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {
@@ -50,7 +51,7 @@ app.get('/food', (req, res) => {
       _.forEach(recipes, (recipe) => {
         const previousInstances = _.filter(savedRecipes, savedRecipe => savedRecipe.recipe === recipe.name).length;
         if (previousInstances === 0) {
-          db.saveRecipe(recipe.name, recipe.recipeId, (err) => {
+          db.saveRecipe(recipe.name, recipe.recipeId, recipe.recipeImage, (err) => {
             if (err) {
               console.log(err);
             }
@@ -111,9 +112,9 @@ app.get('/single', (req, res) => {
 });
 
 // get a random recipe
-app.post('/random', (req, res) => 
+app.post('/random', (req, res) => {
   // First get a random recipe //
-   helper.rfnRandomRecipe((err, randomRecipe) => {
+  helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
@@ -139,7 +140,7 @@ app.post('/random', (req, res) =>
           // Save the random recipe if we don't have it already //
           if (!oldRecipe) {
             // Save the recipe
-            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, (err) => {
+            return db.saveRecipe(randomRecipe.name, randomRecipe.recipeId, randomRecipe.recipeImage, (err) => {
               if (err) {
                 return res.status(500).send('Something Went Wrong!');
               }
@@ -159,14 +160,13 @@ app.post('/random', (req, res) =>
               });
             });
           }
-            // Save the recipe of the day //
-            return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
-
+          // Save the recipe of the day //
+          return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
         });
       }
     });
-  })
-);
+  });
+});
 
 // get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
@@ -202,7 +202,7 @@ app.get('/search', (req, res) => {
 
 // when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
-  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+  if (!req.body.username || !req.body.password || req.body.password === "" || req.body.username === "") {
     return res.status(500).redirect('/restrictedhome');
   }
   return db.selectAllUsers((err, users) => {
@@ -215,9 +215,8 @@ app.post('/signup', (req, res) => {
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
     }
-      return res.status(500).redirect('/restrictedhome');
-
-  })
+    return res.status(500).redirect('/restrictedhome');
+  });
 });
 
 // when client requests to login => authentication request
@@ -277,7 +276,7 @@ app.get('/savedrecipes', (req, res) => {
 
       const recipesObj = [];
       // get an array of objects named recipeInfo from rfn and youtube for each id
-      const recipesInfo = recipeIds.forEach(id => helper.rfnSingleRecipe(id, (err, result) => {
+      const recipesInfo = recipeIds.forEach((id, index) => helper.rfnSingleRecipe(id, (err, result) => {
         if (err) {
           console.log(err, 'error in getting recipe saved');
           return;
@@ -285,14 +284,12 @@ app.get('/savedrecipes', (req, res) => {
         console.log(`${result}, from saved db`);
         recipesObj.push(result);
 
+        if (index === recipeIds.length - 1) {
+          res.status(200).send(recipesObj); // send that array back to client
+        }
         console.log(recipesObj);
       }));
-      
-    // .then((recipesInfo) => {
-      const sendResults = () => {
-        res.status(200).send(recipesObj); // send that array back to client
-      };
-      setTimeout(sendResults, 2000);
+      // .then((recipesInfo) => {
     // })
     // .catch((err) => {
     //   console.log('not successful');
