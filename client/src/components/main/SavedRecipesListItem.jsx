@@ -6,7 +6,7 @@ import React from 'react';
 
 const SavedRecipeListItem = ({ savedRecipe, changeView }) => (
   <div className="saved-recipe-list-item">
-    <div onClick={() => changeView(recipe)}>
+    <div onClick={() => changeView('recipe')}>
       <b> {savedRecipe.name} </b>
     </div>
     <br />

@@ -15,6 +15,7 @@ import RecipeList from './RecipeList.jsx';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
+import Recipe from '../Recipe.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -37,7 +38,8 @@ class Main extends React.Component {
 
   render() {
     const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
-    const { view, changeView } = this.state;
+    const { view } = this.state;
+
     return (
       <div>
         <div className="nav">
@@ -71,10 +73,10 @@ class Main extends React.Component {
                 getRecipes={getRecipes}
                 saveRecipe={saveRecipe}
                 saveDislikeRecipe={saveDislikeRecipe}
-                changeView={changeView}
+                changeView={this.changeView}
               />
             )
-              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={changeView}/>
+              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView}/>
               :  <Recipe recipe={recipe} />
           }
         </div>
