@@ -31,6 +31,8 @@ class App extends React.Component {
     this.saveRecipe = this.saveRecipe.bind(this);
     this.saveDislikeRecipe = this.saveDislikeRecipe.bind(this);
     this.selectRecipe = this.selectRecipe.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.login = this.login.bind(this);
   }
 
   componentDidMount() {
@@ -135,10 +137,18 @@ class App extends React.Component {
       selectedRecipe: recipe,
     })
   }
-  
+
+  signUp(user) {
+    console.log('sign-up');
+    console.log(`Hello, ${user}`);
+  }
+
+  login() {
+    console.log('logged in');
+  }
 
   render() {
-    // console.log(this);
+    console.log(this);
     const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients } = this.state;
     return (
       // <BrowserRouter>
@@ -146,7 +156,7 @@ class App extends React.Component {
       // </BrowserRouter>
       <div>
         <div>
-          <Login recipe={recipeOfTheDay} />
+          <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />
         </div>
         <div>
           <Main
