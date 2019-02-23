@@ -91,7 +91,7 @@ class App extends React.Component {
     // console.log('grabbing');
     axios.get('/ingredients')
       .then((allIngOptions) => {
-        console.log(Array.isArray(allIngOptions.data), 'Opt');
+        // console.log(Array.isArray(allIngOptions.data), 'Opt');
         this.setState({
           ingredients: allIngOptions.data,
         });

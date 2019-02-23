@@ -10,11 +10,11 @@ class RecipeInstructions extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      currentVideo: this.props.recipe,
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     currentVideo: this.props.recipe,
+  //   })
+  // }
 
   render() {
     const { currentVideo } = this.state;
