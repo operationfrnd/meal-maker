@@ -34,9 +34,10 @@ class Main extends React.Component {
   }
 
 
-  
+
   render() {
     const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
+    const { view, changeView } = this.state;
     return (
       <div>
         <div className="nav">
@@ -44,7 +45,8 @@ class Main extends React.Component {
           <button type="button" className={this.state.view === 'search'
             ? 'nav-selected'
             : 'nav-unselected'}
-            onClick={() => this.changeView('search')}>
+            onClick={() => this.changeView('search')}
+          >
             Search
           </button>
           <button type="button" className={this.state.view === 'saved'
@@ -60,14 +62,20 @@ class Main extends React.Component {
         </div>
 
         <div className="main">
-          {this.state.view === 'search'
-            ? <Search ingredients={ingredients} 
-                      recipes={recipes} 
-                      recipe={recipe} 
-                      getRecipes={getRecipes} 
-                      saveRecipe={saveRecipe}
-                      saveDislikeRecipe={saveDislikeRecipe} />
-            : <SavedRecipes savedRecipes={savedRecipes} />
+          { view === 'search' ? 
+            (
+              <Search
+                ingredients={ingredients}
+                recipes={recipes}
+                recipe={recipe}
+                getRecipes={getRecipes}
+                saveRecipe={saveRecipe}
+                saveDislikeRecipe={saveDislikeRecipe}
+                changeView={changeView}
+              />
+            )
+              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={changeView}/>
+              :  <Recipe recipe={recipe} />
           }
         </div>
       </div>
@@ -76,33 +84,33 @@ class Main extends React.Component {
 }
 
 
-  //     <div>
-  //       <div className="logo">
-  //         {/* <img></img> */}
-  //       </div>
-  //       <h2>Hello Main</h2>
-  //       <div className="search">
-  //         <Search ingredients={ingredients} />
-  //       </div>
-  //       <div className="recipe-list">
-  //         <RecipeList recipe={recipes} onClick={this.onClick} />
-  //       </div>
-  //       <div className="saved-recipes">
-  //         <SavedRecipes savedRecipes={savedRecipes} />
-  //       </div>
-        // <div className="recipe-of-the-day-container">
-        //   <table>
-        //     <tbody>
-        //       <tr>
-        //         <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
-        //         <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
-        //       </tr>
-        //     </tbody>
-        //   </table>
-        // </div>
-  //     </div>
-  //   );
-  // }
+//     <div>
+//       <div className="logo">
+//         {/* <img></img> */}
+//       </div>
+//       <h2>Hello Main</h2>
+//       <div className="search">
+//         <Search ingredients={ingredients} />
+//       </div>
+//       <div className="recipe-list">
+//         <RecipeList recipe={recipes} onClick={this.onClick} />
+//       </div>
+//       <div className="saved-recipes">
+//         <SavedRecipes savedRecipes={savedRecipes} />
+//       </div>
+// <div className="recipe-of-the-day-container">
+//   <table>
+//     <tbody>
+//       <tr>
+//         <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
+//         <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
+//       </tr>
+//     </tbody>
+//   </table>
+// </div>
+//     </div>
+//   );
+// }
 // }
 
 export default Main;

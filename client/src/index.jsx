@@ -45,7 +45,6 @@ class App extends React.Component {
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
-        console.log('results recipes', results);
         this.setState({ // change the state
           recipes: results.data, // by making the data received back fron the server available
         });
@@ -75,11 +74,10 @@ class App extends React.Component {
       },
     }) // sends get request to server for saved recipes
       .then((results) => {
-
-        console.log(results);
-        // this.setState({
-        //   savedRecipes: recipes,
-        // });
+        // console.log(results);
+        this.setState({
+          savedRecipes: results.data,
+        });
       })
       .catch((err) => {
         console.log(`there was an error retrieving saved recipes : ${err}`);
@@ -110,7 +108,6 @@ class App extends React.Component {
       recipeId: recipe.recipeId,
     })
       .then((result) => {
-        console.log(result);
       }).catch((err) => {
         console.log(err, 'error while trying to save recipe into DB');
       });

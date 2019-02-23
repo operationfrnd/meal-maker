@@ -4,20 +4,22 @@
 // ingredients
 import React from 'react';
 
-const SavedRecipeListItem = ({ savedRecipe }) => (
+const SavedRecipeListItem = ({ savedRecipe, changeView }) => (
   <div className="saved-recipe-list-item">
-    <b>Recipe Name:</b>
-    {savedRecipe.name}
+    <div onClick={() => changeView(recipe)}>
+      <b> {savedRecipe.name} </b>
+    </div>
     <br />
-    <b>Cook Time:</b>
-    {savedRecipe.cookTime}
+    <sup>Cook Time: 
+    {savedRecipe.cookTime} minutes
+    </sup>
     <br />
-    <b>Uses:</b>
+    {/* <b>Uses:</b>
     {savedRecipe.ingredients.usedIngredients}
-    <br />
-    <b>Match Percentage:</b>
+    <br /> */}
+    {/* <b>Match Percentage:</b>
     {savedRecipe.percentage}
-    %
+    % */}
   </div>
 );
 

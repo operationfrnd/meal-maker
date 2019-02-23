@@ -92,18 +92,18 @@ const rfnRandomRecipe = (callback) => {
     const receipeInfo = {};
     // get recipe name/title
     receipeInfo.name = recipe.data.recipes[0].title;
-    //get recipe id as it is in the rfn api
+    // get recipe id as it is in the rfn api
     receipeInfo.recipeId = recipe.data.recipes[0].id;
     // get recipe cooktime
     receipeInfo.cookTime = recipe.data.recipes[0].readyInMinutes;
     // get recipe instructions
     receipeInfo.instructions = _.map(recipe.data.recipes[0].analyzedInstructions[0].steps, (step, stepNumber) => {
       return step.step;
-    }).join("\n");
+    }).join('\n');
     // get recipe ingredients
     receipeInfo.ingredients = _.map(recipe.data.recipes[0].extendedIngredients, (ingredient, index) => {
       return ingredient.originalString;
-    }).join("\n");
+    }).join('\n');
     // do a quick search to get a youtube video on preparation of the dish
     youTubeApi(`cook ${receipeInfo.name}`, (anError, video) => {
       if (anError) {
