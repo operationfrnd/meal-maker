@@ -15,6 +15,7 @@ import RecipeList from './RecipeList.jsx';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
+import Button from '@material-ui/core/Button';
 
 class Main extends React.Component {
   constructor(props) {
@@ -42,14 +43,14 @@ class Main extends React.Component {
       <div>
         <div className="nav">
           <span className="logo">Meal Maker</span>
-          <button type="button" className={this.state.view === 'search'
+          <Button variant="contained" color="primary" type="button" className={this.state.view === 'search'
             ? 'nav-selected'
             : 'nav-unselected'}
             onClick={() => this.changeView('search')}
           >
             Search
-          </button>
-          <button type="button" className={this.state.view === 'saved'
+          </Button>
+          <Button variant="contained" color="primary" type="button" className={this.state.view === 'saved'
             ? 'nav-selected'
             : 'nav-unselected'}
             onClick={() => {
@@ -58,7 +59,7 @@ class Main extends React.Component {
             }}
           >
             Saved Recipes
-          </button>
+          </Button>
         </div>
 
         <div className="main">

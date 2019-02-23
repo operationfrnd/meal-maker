@@ -23,19 +23,17 @@ const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+//Configure isProduction variable
+const isProduction = process.env.NODE_ENV === 'production';
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
+app.use(cors());
+// app.use(require());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// do we need this?
-app.get('/', (req, res) => {
-  fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
-    res.send(res2);
-  });
-});
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {
