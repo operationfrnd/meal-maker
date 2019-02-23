@@ -18,7 +18,7 @@ const Recipe = ({ selectedRecipe }) => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table>  
     </div>
   );
 };

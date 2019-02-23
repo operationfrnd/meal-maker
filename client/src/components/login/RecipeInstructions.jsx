@@ -24,14 +24,15 @@ class RecipeInstructions extends React.Component {
       <div className="instructions-list">
         <h3>{currentVideo.name}</h3>
         <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
-          <b>Cook Time:</b>
-          {currentVideo.cooktime}
+          <b>Cook Time: </b>
+          {currentVideo.cookTime}
+          {' '}minutes
           <br />
-          <b>Ingredients:</b>
+          <b>Ingredients: </b>
           {currentVideo.ingredients}
           <br />
           {/* {currentVideo.instructions} */}
-          <b>Instructions:</b>
+          <b>Instructions: </b>
           <ul>
             { steps.map(step => <li key={step}>{ step }</li>) }
           </ul>

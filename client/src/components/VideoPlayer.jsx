@@ -17,7 +17,7 @@ class VideoPlayer extends React.Component {
   // }
 
   render() {
-    console.log(this);
+    // console.log(this);
     const { currentVideo } = this.state;
 
     return (

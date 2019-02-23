@@ -72,7 +72,7 @@ const recFoodNutrApi = (ingredients, callback) => {
       });
       recipeInfo.percentage = recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100 
       return youTubeApi(`cook ${recipeInfo.name}`, (err, video) => {
-        recipeInfo.link = video.id.videoId;
+        recipeInfo.videoId = video.id.videoId;
         recipes.push(recipeInfo);
         console.log(recipes);
         if (index === result.data.results.length - 1) {
@@ -154,7 +154,7 @@ const rfnSingleRecipe = (recipeId, callback) => {
       if (youtubeError) {
         return callback(youtubeError, null);
       }
-      recipeInfo.videoId = video.id.videoId;
+      recipeInfo.link = video.id.videoId;
       return callback(null, recipeInfo);
     });
   }).catch((err) => {

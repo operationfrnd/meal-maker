@@ -15,7 +15,8 @@ const SavedRecipeListItem = ({ savedRecipe, changeView, selectRecipe }) => (
     </div>
     <br />
     <sup>Cook Time: 
-    {savedRecipe.cookTime} minutes
+    {' '}{savedRecipe.cookTime} 
+    minutes
     </sup>
     <br />
     {/* <b>Uses:</b>
