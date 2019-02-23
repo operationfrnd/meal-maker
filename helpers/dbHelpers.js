@@ -41,7 +41,7 @@ const selectAllRecipes = (callback) => {
 
 const saveRecipe = (recipeName, idOriginalDB, recipeImageLink, callback) => {
   let q = [recipeName, idOriginalDB, recipeImageLink];
-  connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition. recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition, recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
