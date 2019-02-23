@@ -10,12 +10,14 @@
 // 2) a recipe of the day video player component
 // 3) a recipe instructions component (with a scrolling list of instructions)
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import VideoPlayer from '../VideoPlayer.jsx';
 import RecipeList from './RecipeList.jsx';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
-import Button from '@material-ui/core/Button';
+import Recipe from '../Recipe.jsx';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -23,7 +25,6 @@ class Main extends React.Component {
     this.state = {
       view: 'search',
     };
-    // this.onClick = this.onClick.bind(this);
     this.changeView = this.changeView.bind(this);
   }
 
@@ -37,8 +38,9 @@ class Main extends React.Component {
 
 
   render() {
-    const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
-    const { view, changeView } = this.state;
+    const { selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
+    const { view } = this.state;
+
     return (
       <div>
         <div className="nav">
@@ -68,15 +70,15 @@ class Main extends React.Component {
               <Search
                 ingredients={ingredients}
                 recipes={recipes}
-                recipe={recipe}
+                recipeOfTheDay={recipeOfTheDay}
                 getRecipes={getRecipes}
                 saveRecipe={saveRecipe}
                 saveDislikeRecipe={saveDislikeRecipe}
-                changeView={changeView}
+                changeView={this.changeView}
               />
             )
-              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={changeView}/>
-              :  <Recipe recipe={recipe} />
+              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe}/>
+              :  <Recipe selectedRecipe={selectedRecipe} />
           }
         </div>
       </div>

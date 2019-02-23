@@ -5,16 +5,16 @@ import RecipeInstructions from './login/RecipeInstructions.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
 
 
-const Recipe = ({ recipe }) => {
+const Recipe = ({ selectedRecipe }) => {
   return (
-    <div className="recipe">
-      <h1>{recipe.name}</h1>
+    <div className="selected-recipe">
+      <h1>{selectedRecipe.name}</h1>
       <table>
         <tbody>
           <tr>
-            <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
+            <td className="vidPlayer"><VideoPlayer recipe={selectedRecipe} /></td>
             <td className="instructions">
-              <RecipeInstructions recipe={recipe} />
+              <RecipeInstructions recipe={selectedRecipe} />
             </td>
           </tr>
         </tbody>

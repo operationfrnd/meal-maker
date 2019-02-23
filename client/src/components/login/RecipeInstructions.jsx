@@ -6,23 +6,31 @@ class RecipeInstructions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentVideo: props.recipe,
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      currentVideo: this.props.recipe,
+    })
+  }
+
   render() {
-    const { recipe } = this.props;
-    const steps = recipe.instructions.split('\n');
+    const { currentVideo } = this.state;
+    // const { selectedRecipe } = this.props;
+    const steps = currentVideo.instructions.split('\n');
     return (
       <div className="instructions-list">
-        <h3>{recipe.name}</h3>
+        <h3>{currentVideo.name}</h3>
         <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
           <b>Cook Time:</b>
-          {recipe.cooktime}
+          {currentVideo.cooktime}
           <br />
           <b>Ingredients:</b>
-          {recipe.ingredients}
+          {currentVideo.ingredients}
           <br />
-          {/* {recipe.instructions} */}
+          {/* {currentVideo.instructions} */}
           <b>Instructions:</b>
           <ul>
             { steps.map(step => <li key={step}>{ step }</li>) }
