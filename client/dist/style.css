@@ -52,7 +52,7 @@ button {
 }
 
 .nav {
-  background-color: #47d3c7;
+  background-color: rgb(172, 202, 241);
   margin: 0px;
   padding: 10px;
   display: flex;
