@@ -22,6 +22,7 @@ class App extends React.Component {
       savedRecipes: [],
       ingredients: [],
       userId: 1,
+      selectedRecipe: randomRecipe,
       // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
     this.saveDislikeRecipe = this.saveDislikeRecipe.bind(this);
+    this.selectRecipe = this.selectRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -128,10 +130,16 @@ class App extends React.Component {
       });
   }
 
+  selectRecipe(recipe) {
+    this.setState({
+      selectedRecipe: recipe,
+    })
+  }
+  
 
   render() {
     // console.log(this);
-    const { recipeOfTheDay, savedRecipes, recipes, ingredients } = this.state;
+    const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients } = this.state;
     return (
       // <BrowserRouter>
       //   <Route path="/login" component={Login} />
@@ -143,13 +151,15 @@ class App extends React.Component {
         <div>
           <Main
             recipes={recipes}
-            recipe={recipeOfTheDay}
+            recipeOfTheDay={recipeOfTheDay}
+            selectedRecipe={selectedRecipe}
             savedRecipes={savedRecipes}
             ingredients={ingredients}
             getRecipes={this.getRecipes}
             saveRecipe={this.saveRecipe}
             saveDislikeRecipe={this.saveDislikeRecipe}
             getSavedRecipes={this.getSavedRecipes}
+            selectRecipe={this.selectRecipe}
           />
         </div>
       </div>

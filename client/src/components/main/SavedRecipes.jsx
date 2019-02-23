@@ -2,12 +2,12 @@
 import React from 'react';
 import SavedRecipesList from './SavedRecipesList.jsx';
 
-const SavedRecipes = ({ savedRecipes, changeView }) => (
+const SavedRecipes = ({ savedRecipes, changeView, selectRecipe }) => (
 
   <div className="saved-recipes-container">
     <h1>Your saved recipes</h1>
     <div>
-      <SavedRecipesList savedRecipes={savedRecipes} changeView={changeView} />
+      <SavedRecipesList savedRecipes={savedRecipes} changeView={changeView} selectRecipe={selectRecipe}  />
     </div>
   </div>
 );

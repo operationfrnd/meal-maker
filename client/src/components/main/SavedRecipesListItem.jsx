@@ -4,9 +4,13 @@
 // ingredients
 import React from 'react';
 
-const SavedRecipeListItem = ({ savedRecipe, changeView }) => (
+const SavedRecipeListItem = ({ savedRecipe, changeView, selectRecipe }) => (
   <div className="saved-recipe-list-item">
-    <div onClick={() => changeView('recipe')}>
+    <div onClick={() => {
+      selectRecipe(savedRecipe);
+      changeView('recipe');
+    }}
+    >
       <b> {savedRecipe.name} </b>
     </div>
     <br />
