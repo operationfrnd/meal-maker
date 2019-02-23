@@ -113,9 +113,9 @@ app.get('/single', (req, res) => {
 });
 
 // get a random recipe
-app.post('/random', (req, res) => 
+app.post('/random', (req, res) => {
   // First get a random recipe //
-   helper.rfnRandomRecipe((err, randomRecipe) => {
+  helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
@@ -161,14 +161,13 @@ app.post('/random', (req, res) =>
               });
             });
           }
-            // Save the recipe of the day //
-            return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
-
+          // Save the recipe of the day //
+          return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
         });
       }
     });
-  })
-);
+  });
+});
 
 // get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
@@ -204,7 +203,7 @@ app.get('/search', (req, res) => {
 
 // when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
-  if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
+  if (!req.body.username || !req.body.password || req.body.password === "" || req.body.username === "") {
     return res.status(500).redirect('/restrictedhome');
   }
   return db.selectAllUsers((err, users) => {
@@ -217,9 +216,8 @@ app.post('/signup', (req, res) => {
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
     }
-      return res.status(500).redirect('/restrictedhome');
-
-  })
+    return res.status(500).redirect('/restrictedhome');
+  });
 });
 
 // when client requests to login => authentication request
@@ -289,8 +287,7 @@ app.get('/savedrecipes', (req, res) => {
 
         console.log(recipesObj);
       }));
-      
-    // .then((recipesInfo) => {
+      // .then((recipesInfo) => {
       const sendResults = () => {
         res.status(200).send(recipesObj); // send that array back to client
       };
