@@ -1,5 +1,6 @@
 // component (with username and password input forms, a login button and a signup button)
 import React from 'react';
+import Button from '@material-ui/core/Button';
 
 class Credentials extends React.Component {
   constructor(props) {
@@ -49,8 +50,8 @@ class Credentials extends React.Component {
       <div>
         <input type="text" name="username" placeholder="Username" />
         <input type="text" name="password" placeholder="Password" />
-        <button type="submit" value="login" onClick={this.onClick.bind(this)}>Login</button>
-        <button type="submit" value="signUp" onClick={this.onClick.bind(this)}>Sign Up</button>
+        <Button variant="contained" color="primary" type="submit" value="login" onClick={this.onClick.bind(this)}>Login</Button>
+        <Button variant="contained" color="primary" type="submit" value="signUp" onClick={this.onClick.bind(this)}>Sign Up</Button>
       </div>
     );
   }

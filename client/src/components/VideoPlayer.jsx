@@ -15,8 +15,8 @@ const VideoPlayer = ({ recipe }) => (
   </div>
 );
 
-VideoPlayer.propTypes = {
-  recipe: React.PropTypes.object.isRequired,
-};
+// VideoPlayer.propTypes = {
+//   recipe: React.PropTypes.object.isRequired,
+// };
 
 export default VideoPlayer;
