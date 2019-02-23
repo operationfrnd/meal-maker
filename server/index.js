@@ -6,6 +6,7 @@
 
 require('dotenv').config();
 const axios = require('axios');
+const errorHandler = require('errorhandler');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -18,10 +19,6 @@ const _ = require('lodash');
 const Auth = require('../src/Auth/Auth');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
-const userInViews = require('./routes/middleware/userInViews');
-const authRouter = require('./routes/auth');
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
