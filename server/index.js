@@ -279,7 +279,7 @@ app.get('/savedrecipes', (req, res) => {
       // get an array of objects named recipeInfo from rfn and youtube for each id
       const recipesInfo = recipeIds.forEach(id => helper.rfnSingleRecipe(id, (err, result) => {
         if (err) {
-          console.log('error in getting recipe saved');
+          console.log(err, 'error in getting recipe saved');
           return;
         }
         console.log(`${result}, from saved db`);
