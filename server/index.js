@@ -36,6 +36,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
+if (!isProduction) {
+  app.use(errorHandler());
+}
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {

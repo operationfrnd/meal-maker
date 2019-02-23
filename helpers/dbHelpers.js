@@ -5,6 +5,8 @@
 // 5) Function to save a receipe into the 'dislike' table (optional)
 
 // const axios = require('axios');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const connection = require('../database/index.js').connection;
 
 const selectSingleRecipeById = (idOriginalDB, callback) => {
