@@ -10,8 +10,8 @@ class RecipeInstructions extends React.Component {
   }
 
   render() {
-    const steps = this.props.recipe.instructions.split('\n');
     const { recipe } = this.props;
+    const steps = recipe.instructions.split('\n');
     return (
       <div className="instructions-list">
         <h3>{recipe.name}</h3>
@@ -25,10 +25,9 @@ class RecipeInstructions extends React.Component {
           {/* {recipe.instructions} */}
           <b>Instructions:</b>
           <ul>
-            { steps.map(step => <li>{ step }</li>) }
+            { steps.map(step => <li key={step}>{ step }</li>) }
           </ul>
         </Paper>
-        <br />
       </div>
     );
   }
