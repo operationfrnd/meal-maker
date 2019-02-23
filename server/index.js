@@ -177,7 +177,7 @@ app.get('/recipeoftheday', (req, res) => {
       });
     } else {
       const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
-      db.getRecipeIngredients(recipeOfTheDay.id, (error, ingredients) => {
+      db.getRecipeIngredients(recipeOfTheDay.idRecipe, (error, ingredients) => {
         if (error) {
           res.status(500).send('Something went wrong!');
         }
