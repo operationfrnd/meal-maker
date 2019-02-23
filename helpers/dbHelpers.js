@@ -226,7 +226,18 @@ const generateJWT = (username) => {
   });
 };
 
-
+const toAuthJSON = (username) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    return {
+      id: user.id,
+      usernmae: user.username,
+      token: generateJWT(username),
+    };
+  });
+};
 
 const loginUser = (username) => {
   connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = ${username}`, (err) => {
