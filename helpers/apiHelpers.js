@@ -39,7 +39,8 @@ const recFoodNutrApi = (ingredients, callback) => {
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?includeIngredients=${ingredients}&ranking=1&fillIngredients=true&instructionsRequired=true&addRecipeInformation=true&limitLicense=true&offset=0&number=10`
   }).then((result) => {
     // return sorted and reversed recipies array
-    const recipes = _.sortBy(_.map(result.data.results, (recipe) => {
+    const recipes = [];
+    _.forEach(result.data.results, (recipe, index) => {
       // object to store recipe info
       const recipeInfo = {};
       recipeInfo.name = recipe.title;
@@ -70,10 +71,15 @@ const recFoodNutrApi = (ingredients, callback) => {
         }
       });
       recipeInfo.percentage = recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100 
-      return recipeInfo;
-      // sort parameters and a reverse to have the highest at the front
-    }), ['percentage', 'name']).reverse();
-    return callback(null, recipes);
+      return youTubeApi(`cook ${recipeInfo.name}`, (err, video) => {
+        recipeInfo.link = video.id.videoId;
+        recipes.push(recipeInfo);
+        console.log(recipes);
+        if (index === result.data.results.length - 1) {
+          return callback(null, recipes);
+        }
+      });
+    });
   }).catch((err) => {
     return callback(err, null);
   });
