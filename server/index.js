@@ -6,6 +6,7 @@
 
 require('dotenv').config();
 const axios = require('axios');
+const errorHandler = require('errorhandler');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -18,10 +19,6 @@ const _ = require('lodash');
 const Auth = require('../src/Auth/Auth');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
-const userInViews = require('./routes/middleware/userInViews');
-const authRouter = require('./routes/auth');
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
@@ -35,7 +32,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(require('../routes'));
 
+if (!isProduction) {
+  app.use(errorHandler());
+}
 
 // get recipies depending upon passed in ingredients //
 app.get('/food', (req, res) => {
@@ -105,7 +106,7 @@ app.get('/single', (req, res) => {
     // get a recipe's info throuhg its id
     return helper.rfnSingleRecipe(singleRecipeArray[0].idRecipieFoodNutrition, (err, recipe) => {
       if (err) {
-        res.status(500).send('Something went wrong!');
+        return res.status(500).send('Something went wrong!');
       }
       // send back recipe info
       res.status(200).send(recipe);

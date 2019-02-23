@@ -5,6 +5,9 @@
 // 5) Function to save a receipe into the 'dislike' table (optional)
 
 // const axios = require('axios');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const connection = require('../database/index.js').connection;
 
 const selectSingleRecipeById = (idOriginalDB, callback) => {
@@ -175,13 +178,19 @@ const selectAllUsers = (callback) => {
   })
 };
 
-const saveUser = (username, password, loggedin) => {
-  const q = [username, password, loggedin];
-  connection.query('INSERT INTO Users (username, password) VALUES (?, ?, ?)', q, (err) => {
+const saveUser = (username, password, loggedin, callback) => {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
+  return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
     if (err) {
       console.log('could not insert new user into Users table');
     } else {
-      console.log('successfully added new user to Users table');
+      return selectAllUsers((err, users) => {
+        const user = users.filter(users, (oldUser) => {
+          return oldUser.username === username;
+        })[0];
+        return callback(null, user);
+      });
     }
   });
 };
@@ -193,6 +202,45 @@ const logoutUser = (username) => {
     } else {
       console.log('Successfully logged out user');
     }
+  });
+};
+
+const validatePassword = (username, password) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
+    return this.hash === hash;
+  });
+};
+
+const generateJWT = (username) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 60);
+    return jwt.sign({
+      user: user.username,
+      id: user.id,
+      exp: parseInt(expirationDate.getTime() / 1000, 10),
+    }, 'secret');
+  });
+};
+
+const toAuthJSON = (username) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    return {
+      id: user.id,
+      usernmae: user.username,
+      token: generateJWT(username),
+    };
   });
 };
 
