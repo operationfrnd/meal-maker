@@ -178,14 +178,19 @@ const selectAllUsers = (callback) => {
   })
 };
 
-const saveUser = (username, password, loggedin) => {
+const saveUser = (username, password, loggedin, callback) => {
   const salt = crypto.randomBytes(16).toString('hex');
   const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
-  connection.query('INSERT INTO Users (username, password, salt, loggedin) VALUES (?, ?, ?, ?)', q, (err) => {
+  return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
     if (err) {
       console.log('could not insert new user into Users table');
     } else {
-      console.log('successfully added new user to Users table');
+      return selectAllUsers((err, users) => {
+        const user = users.filter(users, (oldUser) => {
+          return oldUser.username === username;
+        })[0];
+        return callback(null, user);
+      });
     }
   });
 };

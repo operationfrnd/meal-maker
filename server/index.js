@@ -32,6 +32,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(require('../routes'));
 
 if (!isProduction) {
   app.use(errorHandler());
@@ -105,7 +106,7 @@ app.get('/single', (req, res) => {
     // get a recipe's info throuhg its id
     return helper.rfnSingleRecipe(singleRecipeArray[0].idRecipieFoodNutrition, (err, recipe) => {
       if (err) {
-        res.status(500).send('Something went wrong!');
+        return res.status(500).send('Something went wrong!');
       }
       // send back recipe info
       res.status(200).send(recipe);
