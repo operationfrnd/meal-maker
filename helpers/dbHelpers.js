@@ -7,6 +7,7 @@
 // const axios = require('axios');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const connection = require('../database/index.js').connection;
 
 const selectSingleRecipeById = (idOriginalDB, callback) => {
@@ -198,6 +199,34 @@ const logoutUser = (username) => {
     }
   });
 };
+
+const validatePassword = (username, password) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
+    return this.hash === hash;
+  });
+};
+
+const generateJWT = (username) => {
+  return selectAllUsers((err, users) => {
+    const user = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    })[0];
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 60);
+    return jwt.sign({
+      user: user.username,
+      id: user.id,
+      exp: parseInt(expirationDate.getTime() / 1000, 10),
+    }, 'secret');
+  });
+};
+
+
 
 const loginUser = (username) => {
   connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = ${username}`, (err) => {
