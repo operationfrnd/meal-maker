@@ -12,6 +12,7 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
 const Auth = require('../src/Auth/Auth');
