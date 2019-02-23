@@ -36,7 +36,7 @@ class Main extends React.Component {
 
   
   render() {
-    const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe } = this.props;
+    const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
     return (
       <div>
         <div className="nav">
@@ -50,7 +50,11 @@ class Main extends React.Component {
           <button type="button" className={this.state.view === 'saved'
             ? 'nav-selected'
             : 'nav-unselected'}
-            onClick={() => this.changeView('saved')}>
+            onClick={() => {
+              getSavedRecipes();
+              this.changeView('saved');
+            }}
+          >
             Saved Recipes
           </button>
         </div>

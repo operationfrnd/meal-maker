@@ -11,7 +11,22 @@ const _ = require('lodash');
 // const keys = require('./keys');
 // make .env files locally to assign api keys (see .env.example)
 
-const recFoodNutrApi = function (ingredients, callback) {
+
+const youTubeApi = (query, callback) => {
+  // search for videos based on the query
+  return axios({
+    method: 'get',
+    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}&q=${query}&maxResults=5`,
+  }).then((searchResults) => {
+    // preform a callback with the first object full of video data from the search results
+    callback(null, searchResults.data.items[0]);
+  }).catch((err) => {
+    callback(err, null);
+  });
+};
+
+
+const recFoodNutrApi = (ingredients, callback) => {
   if (!callback) {
     return Error('Function requires callback!!!');
   }
@@ -63,7 +78,7 @@ const recFoodNutrApi = function (ingredients, callback) {
   });
 };
 
-const rfnRandomRecipe = function (callback) {
+const rfnRandomRecipe = (callback) => {
   // get request for random recipe
   axios({
     method: 'get',
@@ -104,7 +119,7 @@ const rfnRandomRecipe = function (callback) {
   })
 };
 
-const rfnSingleRecipe = function (recipeId, callback) {
+const rfnSingleRecipe = (recipeId, callback) => {
   // request recipe info by id
   return axios({
     method: 'get',
@@ -114,7 +129,7 @@ const rfnSingleRecipe = function (recipeId, callback) {
     url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`
   }).then((recipe) => {
     // object to be returned and that recipe info is stored within
-    recipeInfo = {};
+    const recipeInfo = {};
     recipeInfo.name = recipe.data.title;
     recipeInfo.recipeId = recipe.data.id;
     recipeInfo.cookTime = recipe.data.readyInMinutes;
@@ -127,7 +142,7 @@ const rfnSingleRecipe = function (recipeId, callback) {
     // get recipe video and return the recipe info
     youTubeApi(`cook ${recipeInfo.name}`, (youtubeError, video) => {
       if (youtubeError) {
-        return callback(anError, null);
+        return callback(youtubeError, null);
       }
       recipeInfo.videoId = video.id.videoId;
       return callback(null, recipeInfo);
@@ -137,7 +152,7 @@ const rfnSingleRecipe = function (recipeId, callback) {
   });
 };
 
-const mealDBIngredientSearch = function (callback) {
+const mealDBIngredientSearch = (callback) => {
   // get all ingredients
   return axios({
     method: 'get',
@@ -155,22 +170,8 @@ const mealDBIngredientSearch = function (callback) {
   });
 };
 
-const youTubeApi = function(query, callback) {
-  // search for videos based on the query
-  return axios({
-    method: 'get',
-    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}&q=${query}&maxResults=5`,
-  }).then((searchResults) => {
-    // preform a callback with the first object full of video data from the search results
-    callback(null, searchResults.data.items[0]);
-  }).catch((err) => {
-    callback(err, null);
-  });
-};
 
-const hasher = function(password) {
-  return hash(password);
-}
+const hasher = password => hash(password);
 
 module.exports.recFoodNutrApi = recFoodNutrApi;
 module.exports.mealDBIngredientSearch = mealDBIngredientSearch;

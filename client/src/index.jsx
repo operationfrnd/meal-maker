@@ -41,7 +41,7 @@ class App extends React.Component {
   getRecipes(ingredients) {
     return axios.get('/food', {
       params: {
-        ingredients: ingredients,
+        ingredients,
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
@@ -67,14 +67,22 @@ class App extends React.Component {
   }
 
   getSavedRecipes() {
-    return axios.get('/savedrecipes') // sends get request to server for saved recipes
-      .then((recipes) => {
-        this.setState({
-          savedRecipes: recipes,
-        });
+    const { userId } = this.state;
+    // debugger;
+    return axios.get('/savedrecipes', {
+      params: {
+        userId,
+      },
+    }) // sends get request to server for saved recipes
+      .then((results) => {
+
+        console.log(results);
+        // this.setState({
+        //   savedRecipes: recipes,
+        // });
       })
       .catch((err) => {
-        console.log(`there was an error retriving saved recipes : ${err}`);
+        console.log(`there was an error retrieving saved recipes : ${err}`);
       });
   }
 
@@ -97,7 +105,6 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveRecipe(recipe) {
     const { userId } = this.state;
-    // debugger;
     return axios.post('/toBeSaved', {
       userId,
       recipeId: recipe.recipeId,
@@ -113,7 +120,6 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveDislikeRecipe(recipe) {
     const { userId } = this.state;
-    // debugger;
     return axios.post('/toBeSavedDislike', {
       userId,
       recipeId: recipe.recipeId,
@@ -146,6 +152,7 @@ class App extends React.Component {
             getRecipes={this.getRecipes}
             saveRecipe={this.saveRecipe}
             saveDislikeRecipe={this.saveDislikeRecipe}
+            getSavedRecipes={this.getSavedRecipes}
           />
         </div>
       </div>
