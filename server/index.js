@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// do we need this?
 app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, '../client/src/example_rfn_data.json'), 'utf-8', (err, res2) => {
     res.send(res2);
@@ -42,7 +43,7 @@ app.get('/food', (req, res) => {
       console.log(err);
       return res.status(500).send('Something went wrong!');
     }
-    // respond with an array of objects which contain recipie information
+    // respond with an array of objects which contain recipe information
     console.log(recipes);
     db.selectAllRecipes((err, savedRecipes) => {
       if (err) {
@@ -93,8 +94,8 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+// get a single recipe by its name
 app.get('/single', (req, res) => {
-  // get a single recipe by its name
   db.selectSingleRecipeByName(req.body.recipeName, (err, singleRecipeArray) => {
     if (err) {
       console.log(err);
@@ -112,9 +113,9 @@ app.get('/single', (req, res) => {
 });
 
 // get a random recipe
-app.post('/random', (req, res) => {
+app.post('/random', (req, res) => 
   // First get a random recipe //
-  return helper.rfnRandomRecipe((err, randomRecipe) => {
+   helper.rfnRandomRecipe((err, randomRecipe) => {
     if (err) {
       return res.status(500).send('Something Went Wrong!');
     }
@@ -149,7 +150,7 @@ app.post('/random', (req, res) => {
                 if (err) {
                   return res.status(500).send('Something Went Wrong!');
                 }
-                const ingredients = randomRecipe.ingredients.split("\n");
+                const ingredients = randomRecipe.ingredients.split('\n');
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
                 db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cookTime, randomRecipe.date);
@@ -158,16 +159,16 @@ app.post('/random', (req, res) => {
                 });
                 return 'Finished';
               });
-            })
-          } else {
+            });
+          }
             // Save the recipe of the day //
             return db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, oldRecipe.id, randomRecipe.date);
-          }
+
         });
       }
-    })
-  });
-});
+    });
+  })
+);
 
 // get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
@@ -178,13 +179,11 @@ app.get('/recipeoftheday', (req, res) => {
       });
     } else {
       const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
-      db.getRecipeIngredients(recipeOfTheDay.idRecipe, (err, ingredients) => {
-        if (err) {
+      db.getRecipeIngredients(recipeOfTheDay.id, (error, ingredients) => {
+        if (error) {
           res.status(500).send('Something went wrong!');
         }
-        ingredients = _.map(ingredients, (ingredient) => {
-          return ingredient.ingredients;
-        });
+        ingredients = _.map(ingredients, ingredient => ingredient.ingredients);
         recipeOfTheDay.ingredients = ingredients.join('\n');
         res.status(200).send(recipeOfTheDay);
       });
@@ -192,17 +191,18 @@ app.get('/recipeoftheday', (req, res) => {
   });
 });
 
-// get a single youtube video from a search query
+// client requests a single youtube video from a search query
 app.get('/search', (req, res) => {
   helper.youTubeApi(req.query.q, (err, searchResult) => {
     if (err) {
-      return res.status(500).send("Something went wrong!");
+      return res.status(500).send('Something went wrong!');
     }
     // send back the video inforamtion
     res.status(200).send(searchResult);
   });
 });
 
+// when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
   if (!req.body.username || !req.body.password  || req.body.password === "" || req.body.username === "") {
     return res.status(500).redirect('/restrictedhome');
@@ -211,24 +211,21 @@ app.post('/signup', (req, res) => {
     if (err) {
       console.error(err);
     }
-    const sameNameCounter = _.filter(users, (user) => {
-      return user.username === req.body.username;
-    }).length;
+    const sameNameCounter = _.filter(users, user => user.username === req.body.username).length;
     if (sameNameCounter === 0) {
       process.env.LOCAL_USER = req.body.username;
       db.saveUser(req.body.username, helper.hasher(req.body.password));
       return res.status(204).redirect('/home');
-    } else {
-      return res.status(500).redirect('/restrictedhome');
     }
+      return res.status(500).redirect('/restrictedhome');
+
   })
 });
 
+// when client requests to login => authentication request
 app.get('/login', (req, res) => {
   db.selectAllUsers((err, users) => {
-    const user = _.filter(users, (storedUser) => {
-      return storedUser.username === req.body.username;
-    })[0];
+    const user = _.filter(users, storedUser => storedUser.username === req.body.username)[0];
     if (user) {
       if (user.password === helper.hasher(req.body.password)) {
         process.env.LOCAL_USER = req.body.username;
@@ -242,6 +239,7 @@ app.get('/login', (req, res) => {
   });
 });
 
+// when client wants to retrieve all disliked recipes for a particular user
 app.get('/disliked', (req, res) => {
   db.selectDislikedRecipes(req.userId, (err, ids) => {
     if (err) {
@@ -251,6 +249,7 @@ app.get('/disliked', (req, res) => {
   });
 });
 
+// when client wants add a particular recipe to the disliked table
 app.post('/disliked', (req, res) => {
   db.selectDislikedRecipes(req.userId, (err, ids) => {
     const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
@@ -266,24 +265,86 @@ app.post('/disliked', (req, res) => {
   });
 });
 
-app.get('/saved', (req, res) => {
-  db.selectLikedRecipes(req.userId, (err, ids) => {
+// when client wants to retrieve all the saved recipes for a particular user
+app.get('/savedrecipes', (req, res) => {
+  const { userId } = req.query;
+  db.selectLikedRecipes(userId, (err, results) => {
     if (err) {
       res.status(500).send('Something went wrong!');
     }
-    res.status(200).send(ids);
+    else {
+      console.log('next step');
+      // get the recipeIds from the DB
+      const recipeIds = results.map(result => result.idRecipes);
+
+      const recipesObj = [];
+      // get an array of objects named recipeInfo from rfn and youtube for each id
+      const recipesInfo = recipeIds.forEach(id => helper.rfnSingleRecipe(id, (err, result) => {
+        if (err) {
+          console.log('error in getting recipe saved');
+          return;
+        }
+        console.log(`${result}, from saved db`);
+        recipesObj.push(result);
+
+        console.log(recipesObj);
+      }));
+      
+    // .then((recipesInfo) => {
+      const sendResults = () => {
+        res.status(200).send(recipesObj); // send that array back to client
+      };
+      setTimeout(sendResults, 2000);
+    // })
+    // .catch((err) => {
+    //   console.log('not successful');
+    // })
+    }
   });
+  // .then((results) => {
+  //   console.log(results);
+  // })
+  // .catch((err) => {
+  //   console.log('error in db saved fiels');
+  // })
 });
 
-app.post('/saved', (req, res) => {
-  db.selectLikedRecipes(req.userId, (err, ids) => {
-    const previousInstances = _.filter(ids, id => req.recipeId === id.idRecipes).length;
-    if (previousInstances.length === 0) {
-      return db.saveLikedRecipe(req.userId, req.recipeId, (err) => {
+// when client wants to save a recipe into DB
+app.post('/toBeSaved', (req, res) => {
+  // const userId = req.body.userId;
+  // const recipeId = req.body.recipeId;
+  const { userId, recipeId } = req.body;
+  console.log(userId, recipeId);
+  db.selectLikedRecipes(userId, (err, ids) => {
+    const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
+    if (previousInstances === 0) {
+      return db.saveLikedRecipe(userId, recipeId, (err) => {
         if (err) {
           return res.status(500).send('Something Went Wrong!');
         }
+        console.log('recipe saved into DB')
         return res.status(204).send('Saved Recipe To The Saved Table');
+      });
+    }
+    return res.status(500).send('Recipe Already Saved');
+  });
+});
+
+// when client wants to save a recipe into DB
+app.post('/toBeSavedDislike', (req, res) => {
+  // const userId = req.body.userId;
+  // const recipeId = req.body.recipeId;
+  const { userId, recipeId } = req.body;
+  console.log(userId, recipeId);
+  db.selectDislikedRecipes(userId, (err, ids) => {
+    const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
+    if (previousInstances === 0) {
+      return db.dislikeRecipe(userId, recipeId, (err) => {
+        if (err) {
+          return res.status(500).send('Something Went Wrong!');
+        }
+        console.log('recipe saved into DB dislike table');
+        return res.status(204).send('Saved Recipe To The Dislike Table');
       });
     }
     return res.status(500).send('Recipe Already Saved');

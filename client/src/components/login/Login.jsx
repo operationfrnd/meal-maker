@@ -11,8 +11,6 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // display: 'off', // initial state of display is off
-      // what: 'Reveal Translation' // which means the 'Reveal Translation' text is displayed
     };
   }
 
@@ -33,7 +31,9 @@ class Login extends React.Component {
           <tbody>
             <tr>
               <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
-              <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
+              <td className="instructions">
+                <RecipeInstructions recipe={recipe} />
+              </td>
             </tr>
           </tbody>
         </table>

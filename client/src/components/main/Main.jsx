@@ -33,8 +33,10 @@ class Main extends React.Component {
     });
   }
 
+
+  
   render() {
-    const { recipe, recipes, savedRecipes, ingredients, getRecipes } = this.props;
+    const { recipe, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes } = this.props;
     return (
       <div>
         <div className="nav">
@@ -48,14 +50,23 @@ class Main extends React.Component {
           <button type="button" className={this.state.view === 'saved'
             ? 'nav-selected'
             : 'nav-unselected'}
-            onClick={() => this.changeView('saved')}>
+            onClick={() => {
+              getSavedRecipes();
+              this.changeView('saved');
+            }}
+          >
             Saved Recipes
           </button>
         </div>
 
         <div className="main">
           {this.state.view === 'search'
-            ? <Search ingredients={ingredients} recipes={recipes} recipe={recipe} getRecipes={getRecipes} />
+            ? <Search ingredients={ingredients} 
+                      recipes={recipes} 
+                      recipe={recipe} 
+                      getRecipes={getRecipes} 
+                      saveRecipe={saveRecipe}
+                      saveDislikeRecipe={saveDislikeRecipe} />
             : <SavedRecipes savedRecipes={savedRecipes} />
           }
         </div>
