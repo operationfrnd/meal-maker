@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+
+
 body {
   font-family: 'Jeju Gothic', sans-serif;
   margin: 0px;
@@ -7,6 +11,20 @@ body {
   background-color: #F3F3F3;
 }
 
+.mealMaker {
+  font-family: Lobster;
+  font-size: 1.9em;
+  margin-right: auto;
+  margin-left: 10px;
+}
+
+.mealMakerLogo {
+  font-family: Lobster;
+  font-size: 1.9em;
+  margin-right: auto;
+  margin-left: 10px;
+  color: #f3f3f3;
+}
 
 button {
   cursor: pointer;
@@ -41,12 +59,6 @@ button {
   font-size: 1em;
 }
 
-.logo {
-  font-size: 1.9em;
-  margin-right: auto;
-  margin-left: 10px;
-  color: #f3f3f3;
-}
 .main {
   margin: 20px;
 }
@@ -84,7 +96,7 @@ button {
   width: 100%;
   border:1px solid gray;
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Lobster;
   font-size: 14;
   color: black;
 }
