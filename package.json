@@ -44,12 +44,9 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
-<<<<<<< HEAD
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-=======
     "classnames": "^2.2.6",
->>>>>>> 1959df6a1207312eae8e0924ed2e3111233897db
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",

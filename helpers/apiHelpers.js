@@ -16,7 +16,7 @@ const youTubeApi = (query, callback) => {
   // search for videos based on the query
   return axios({
     method: 'get',
-    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}&q=${query}&maxResults=5`,
+    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}&q=${query}&maxResults=1`,
   }).then((searchResults) => {
     // preform a callback with the first object full of video data from the search results
     callback(null, searchResults.data.items[0]);

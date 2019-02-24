@@ -165,7 +165,7 @@ app.post('/random', (req, res) => {
                 const ingredients = randomRecipe.ingredients.split('\n');
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
-                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cooktime, randomRecipe.recipeImage, randomRecipe.date);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cookTime, randomRecipe.recipeImage, randomRecipe.date);
                 _.forEach(ingredients, (ingredient) => {
                   db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
                 });
