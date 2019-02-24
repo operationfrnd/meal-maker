@@ -1,9 +1,14 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 /* eslint-disable no-undef */
+const mocha = require('mocha');
 const assert = require('assert');
-const server = require('../server/index');
 const axios = require('axios');
+const request = require('request');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+
+const describe = mocha.describe;
 
 describe('Array', () => {
   describe('#indexOf()', () => {
@@ -14,23 +19,13 @@ describe('Array', () => {
 });
 
 describe('Server', () => {
-  it("server should default to port 3001 if PORT isn't already set", () => {
-    assert.deepEqual(server.port, 3001);
-  });
   describe('Endpoints', () => {
     describe('/food', () => {
       it('should give back an array of objects', () => {
-        axios({
-          method: 'get',
-          url: 'https://localhost:3001/food',
-          params: {
-            ingredients: 'beef, brocolli',
-          },
-        }).then((result) => {
-          return assert.deepEqual(Array.isArray(result.data), false);
+        axios.get('https://localhost:3001/').then((res) => {
+          console.log(res);
         }).catch((err) => {
           console.log(err);
-          return Error('STOP THIS MADNESS');
         });
       });
     });
