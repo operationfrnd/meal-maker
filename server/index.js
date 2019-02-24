@@ -70,6 +70,16 @@ app.get('/food', (req, res) => {
         }
       });
     });
+    if (req.query.userId) {
+      return db.selectDislikedRecipes(req.query.userId, (err, dislikedRecipes) => {
+        const recipeNames = _.map(dislikedRecipes, (dislikedRecipe) => {
+          return dislikedRecipe.recipeName
+        });
+        return res.status(200).send(_.filter(recipes, (recipe) => {
+          return _.includes(recipeNames, recipe.name);
+        }));
+      });
+    }
     return res.status(200).send(recipes);
   });
 });
@@ -356,3 +366,6 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`listening on port ${port}!`);
 });
+
+module.exports.app = app;
+module.exports.port = port;

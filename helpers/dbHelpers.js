@@ -105,18 +105,18 @@ const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
 };
 
 const selectDislikedRecipes = (userId, callback) => {
-  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+  connection.query(`SELECT * FROM Dislikes WHERE idUsers = ${userId}`, (err, recipes) => {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, err);
+      callback(null, recipes);
     }
   });
 };
 
-const dislikeRecipe = (userId, recipeId, callback) => {
-  let q = [userId, recipeId];
-  connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
+const dislikeRecipe = (userId, recipeName, callback) => {
+  let q = [userId, recipeName];
+  connection.query('INSERT INTO Dislikes (idUsers, recipeName) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
