@@ -179,11 +179,13 @@ const selectAllUsers = (callback) => {
 };
 
 const saveUser = (username, password, loggedin, callback) => {
+  console.log(username, password, 'in db');
   const salt = crypto.randomBytes(16).toString('hex');
   const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
   return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
     if (err) {
       console.log('could not insert new user into Users table');
+      callback(err);
     } else {
       return selectAllUsers((err, users) => {
         const user = users.filter(users, (oldUser) => {
