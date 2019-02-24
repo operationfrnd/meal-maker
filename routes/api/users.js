@@ -23,7 +23,7 @@ router.post('/', auth.optional, (req, res, next) => {
   }
 
   const finalUser = db.saveUser(user.username, user.password, true, (err, user) => {
-    res.json({ user: user.toAuthJSON() });
+    res.json({ user: db.toAuthJSON(user.username) });
   });
 });
 
@@ -56,7 +56,7 @@ router.post('/login', auth.optional, (req, res, next) => {
       const user = passportUser;
       user.token = passportUser.generateJWT(passportUser);
 
-      return res.json({ user: user.toAuthJSON() });
+      return res.json({ user: db.toAuthJSON(passportUser) });
     }
 
     return status(400).info;

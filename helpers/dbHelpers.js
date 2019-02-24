@@ -175,23 +175,31 @@ const selectAllUsers = (callback) => {
     } else {
       callback(null, users);
     }
-  })
+  });
 };
 
 const saveUser = (username, password, loggedin, callback) => {
   const salt = crypto.randomBytes(16).toString('hex');
-  const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
-  return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
-    if (err) {
-      console.log('could not insert new user into Users table');
-    } else {
-      return selectAllUsers((err, users) => {
-        const user = users.filter(users, (oldUser) => {
-          return oldUser.username === username;
-        })[0];
-        return callback(null, user);
+  const q = [username, crypto.pbkdf2Sync(password, salt, 500, 512, 'sha512').toString('hex'), salt, loggedin];
+  return selectAllUsers((err, users) => {
+    const previousInstance = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    }).length;
+    if (previousInstance === 0) {
+      return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
+        if (err) {
+          console.log('could not insert new user into Users table');
+        } else {
+          return selectAllUsers((err, users) => {
+            const user = users.filter((oldUser) => {
+              return oldUser.username === username;
+            })[0];
+            return callback(null, user);
+          });
+        }
       });
     }
+    return callback('User already exists', null);
   });
 };
 
@@ -255,5 +263,5 @@ const loginUser = (username) => {
 };
 
 module.exports = {
-  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
+  selectSingleRecipeById, toAuthJSON, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
 };
