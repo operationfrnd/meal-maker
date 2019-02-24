@@ -21,6 +21,7 @@ const youTubeApi = (query, callback) => {
     // preform a callback with the first object full of video data from the search results
     callback(null, searchResults.data.items[0]);
   }).catch((err) => {
+    console.log(err);
     callback(err, null);
   });
 };

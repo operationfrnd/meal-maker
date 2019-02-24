@@ -7,6 +7,7 @@ import RecipeInstructions from '../login/RecipeInstructions.jsx';
 import RecipeList from './RecipeList.jsx';
 import AutoComplete from './AutoComplete.jsx';
 
+
 // eslint-disable-next-line react/prefer-stateless-function
 class Search extends React.Component {
   constructor(props) {
