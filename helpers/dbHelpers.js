@@ -175,25 +175,33 @@ const selectAllUsers = (callback) => {
     } else {
       callback(null, users);
     }
-  })
+  });
 };
 
 const saveUser = (username, password, loggedin, callback) => {
   console.log(username, password, 'in db');
   const salt = crypto.randomBytes(16).toString('hex');
-  const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
-  return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
-    if (err) {
-      console.log('could not insert new user into Users table');
-      callback(err);
-    } else {
-      return selectAllUsers((err, users) => {
-        const user = users.filter(users, (oldUser) => {
-          return oldUser.username === username;
-        })[0];
-        return callback(null, user);
+  const q = [username, crypto.pbkdf2Sync(password, salt, 500, 512, 'sha512').toString('hex'), salt, loggedin];
+  return selectAllUsers((err, users) => {
+    const previousInstance = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    }).length;
+    if (previousInstance === 0) {
+      return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
+        if (err) {
+          console.log('could not insert new user into Users table');
+          callback(err);
+        } else {
+          return selectAllUsers((err, users) => {
+            const user = users.filter((oldUser) => {
+              return oldUser.username === username;
+            })[0];
+            return callback(null, user);
+          });
+        }
       });
     }
+    return callback('User already exists', null);
   });
 };
 
@@ -213,36 +221,34 @@ const validatePassword = (username, password) => {
       return oldUser.username === username;
     })[0];
     const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-    return this.hash === hash;
+    return user.password === hash;
   });
 };
 
-const generateJWT = (username) => {
+const generateJWT = (username, id, callback) => {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+  return callback(jwt.sign({
+    user: username,
+    id: id,
+    exp: parseInt(expirationDate.getTime() / 1000, 10),
+  }, 'secret'));
+};
+
+const toAuthJSON = (username, callback) => {
   return selectAllUsers((err, users) => {
     const user = _.filter(users, (oldUser) => {
       return oldUser.username === username;
     })[0];
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 60);
-    return jwt.sign({
-      user: user.username,
+    const returnObject = {
       id: user.id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10),
-    }, 'secret');
-  });
-};
-
-const toAuthJSON = (username) => {
-  return selectAllUsers((err, users) => {
-    const user = _.filter(users, (oldUser) => {
-      return oldUser.username === username;
-    })[0];
-    return {
-      id: user.id,
-      usernmae: user.username,
-      token: generateJWT(username),
+      username: user.username,
+      token: generateJWT(username, user.id, (res) => {
+        return res;
+      }),
     };
+    callback(returnObject);
   });
 };
 
@@ -257,5 +263,5 @@ const loginUser = (username) => {
 };
 
 module.exports = {
-  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
+  selectSingleRecipeById, toAuthJSON, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
 };

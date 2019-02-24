@@ -41,6 +41,9 @@ body {
   color: #f3f3f3;
 }
 
+.Lobster {
+  font-family: Lobster;
+}
 button {
   cursor: pointer;
   border: none;
@@ -141,6 +144,11 @@ button {
 .auto-list {
   padding: 10px 5px;
   cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.new {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .auto-list::before {

@@ -220,7 +220,7 @@ app.post('/signup', (req, res) => {
         if (err) {
           console.log(err, 'HEY not Saved');
         } else {
-          console.log(result, 'Saved user');
+          console.log(result, 'Saved user')
         }
       });
       return res.status(204).redirect('/home');

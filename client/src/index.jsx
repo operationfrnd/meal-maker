@@ -22,7 +22,7 @@ class App extends React.Component {
       recipeOfTheDay: randomRecipe, // recipe of the day video
       savedRecipes: [],
       ingredients: [],
-      userId: 1,
+      userId: 0,
       selectedRecipe: randomRecipe,
       authorized: false,
       show: 'login',
@@ -147,29 +147,35 @@ class App extends React.Component {
   selectRecipe(recipe) {
     this.setState({
       selectedRecipe: recipe,
-    })
+    });
   }
 
   signUp(user, pw) {
     console.log(`thank you for signing up, ${user}`);
     console.log(`Hello, ${user}`);
-    axios.post('/signup', {
-      params: {
+    axios.post('/api/users', {
+      user: {
         username: user,
         password: pw,
       },
     })
-      .then(() => {
+      .then((res) => {
+        console.log('made to signup');
+        console.log(res.data.user, res.data.user.id, 'RESPONSE');
+        console.log('where is res');
         this.setState({
           authorized: true,
+          userId: res.data.user.id,
+
         });
+        this.componentDidMount();
       })
       .catch((bool) => {
         console.log('could not log in after signup');
-        this.setState({
-          authorized: true,
-        });
-        this.componentDidMount();
+        // this.setState({
+        //   authorized: true,
+        // });
+        // this.componentDidMount();
       });
   }
 
@@ -191,10 +197,10 @@ class App extends React.Component {
       .catch(() => {
         console.log('could not log in');
         // document.getElementById('username').del
-        this.setState({
-          authorized: true,
-        });
-        this.componentDidMount();
+      //   this.setState({
+      //     authorized: true,
+      //   });
+      //   this.componentDidMount();
       });
   }
 

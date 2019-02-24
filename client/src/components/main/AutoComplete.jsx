@@ -45,6 +45,7 @@ class AutoComplete extends React.Component {
       text: value,
       suggestions: [],
     });
+    this.addIngredient(value);
   }
 
   renderSuggestions() {
@@ -76,7 +77,7 @@ class AutoComplete extends React.Component {
           </ul>
         </div>
         <div className="buttons">
-          <Button className="showMore" variant="contained" color="primary" type="button" onClick={() => this.addIngredient(text)}>Add</Button>
+          {/* <Button className="showMore" variant="contained" color="primary" type="button" onClick={() => this.addIngredient(text)}>Add</Button> */}
           <Button className="search" variant="contained" color="primary" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</Button>
         </div>
       </div>

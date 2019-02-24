@@ -19,7 +19,7 @@ class Search extends React.Component {
     const { recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe } = this.props;
     return (
       <div>
-        <h2>Search</h2>
+        <h2 className="Lobster">Search</h2>
         <div className="Search-Comp">
         <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         </div>
