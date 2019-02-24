@@ -8,11 +8,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
+// import green from '@material-ui/core/colors/green';
 
 const StyledButtonSave = withStyles({
   root: {
-    background: 'lightgreen',
+    background: 'forestgreen',
     borderRadius: 3,
     border: 0,
     color: 'white',
@@ -27,7 +27,8 @@ const StyledButtonSave = withStyles({
 
 const StyledButtonDislike = withStyles({
   root: {
-    background: 'lightorange',
+    background: 'firebrick',
+    hover: 'red',
     borderRadius: 3,
     border: 0,
     color: 'white',
@@ -56,8 +57,8 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe })
       >
         <b> {recipe.name} </b>
       </div>
-      <StyledButtonSave type="button" className="save-recipe-button" variant="contained" color="primary" onClick={() => saveRecipe(recipe)}> Save that recipe </StyledButtonSave>
-      <StyledButtonDislike type="button" className="dislike-recipe-button" variant="contained" color="primary" onClick={() => saveDislikeRecipe(recipe)}> Never again! </StyledButtonDislike>
+      <StyledButtonSave type="button" className="save-recipe-button" variant="contained" onClick={() => saveRecipe(recipe)}> Save that recipe </StyledButtonSave>
+      <StyledButtonDislike type="button" className="dislike-recipe-button" variant="contained" onClick={() => saveDislikeRecipe(recipe)}> Never again! </StyledButtonDislike>
       <br />
       <b>Cook Time: </b> {recipe.cookTime} minutes
       <br />

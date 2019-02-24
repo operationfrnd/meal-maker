@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
-@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url(https://fonts.googleapis.com/css?family=Lobster);
 
 
 
@@ -27,6 +27,15 @@ body {
   color: #f3f3f3;
 }
 
+.save-recipe-button:hover{
+    background-color: darkgreen !important;
+    color: #FFF;
+}
+
+.dislike-recipe-button:hover{
+    background-color:darkred !important;
+    color: #FFF;
+}
 /* button {
   cursor: pointer;
   border: none;
@@ -38,7 +47,7 @@ body {
   font-size: 1em;
 } */
 
-.save-recipe-button{
+/* .save-recipe-button{
   cursor: pointer;
   border: none;
   border-radius: 3px;
@@ -58,7 +67,7 @@ body {
   margin-left: 5px;
   padding: 3px;
   font-size: 1em;
-}
+} */
 
 .main {
   margin: 20px;
