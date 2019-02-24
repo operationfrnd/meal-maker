@@ -2,6 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-undef */
 const assert = require('assert');
+const server = require('../server/index');
 
 describe('Array', () => {
   describe('#indexOf()', () => {
@@ -9,4 +10,8 @@ describe('Array', () => {
       assert.equal([1, 2, 3].indexOf(4), -1);
     });
   });
+});
+
+describe('Server', () => {
+  console.log(server);
 });
