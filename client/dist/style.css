@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('../images/white-kitchen.jpg');
 @import url(https://fonts.googleapis.com/css?family=Lobster);
 
 
@@ -12,21 +14,130 @@ body {
   background-image: url('../src/images/backgroundlight.jpg')
 }
 
+.background {
+  /* background-image: url('../images/white-kitchen.jpg'); */
+  /* background-repeat: no-repeat;
+  height: 500px; 
+  background-position: center;
+  background-size: cover; */
+}
+
 .mealMaker {
   font-family: Lobster;
   font-size: 1.9em;
-  margin-right: auto;
+  /* margin-right: auto; */
   margin-left: 10px;
+}
+
+.loginMeal {
+  font-family: Lobster;
+  font-size: 7em;
+}
+
+.credentials {
+  align-content: center;
+  /* margin-block-start: 12%; */
+  margin-left: 30%;
+}
+
+.appName {
+  margin-left: 20%;
 }
 
 .mealMakerLogo {
   font-family: Lobster;
   font-size: 1.9em;
   margin-right: auto;
-  margin-left: 10px;
+  margin-left: 5px;
   color: #f3f3f3;
 }
 
+.Lobster {
+  font-family: Lobster;
+}
+
+.Search-Comp {
+  margin: 20px auto 0 auto;
+  margin-bottom: 20px;
+  width: 600px;
+}
+
+.auto-complete {
+  width: 100%;
+  border:1px solid gray;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18;
+  color: black;
+}
+
+.auto-complete input {
+  width: 100%;
+  height: 10%;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18;
+  color: black;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auto-ulist {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  border-top: 1px gray;
+}
+
+.auto-ulist::before {
+  content: "";
+}
+
+.auto-list {
+  padding: 10px 5px;
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.auto-list::before {
+  text-decoration: underline;
+  background-color: 128, 128, 129, 0.20;
+}
+
+.main {
+  margin: 20px;
+}
+
+.nav {
+  background-color: rgb(172, 202, 241);
+  margin: 0px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #F3F3F3;
+}
+
+.nav-selected {
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
+.nav-unselected {
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
+.new {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+button {
 .save-recipe-button:hover{
     background-color: darkgreen !important;
     color: #FFF;
@@ -69,79 +180,7 @@ body {
   font-size: 1em;
 } */
 
-.main {
-  margin: 20px;
-}
 
-.nav {
-  background-color: rgb(172, 202, 241);
-  margin: 0px;
-  padding: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  color: #F3F3F3;
-}
-
-.nav-selected {
-  padding: 5px;
-  color: white;
-  font-weight: bold;
-  margin-right: 5px;
-  font-size: 1.1em;
-}
-
-.nav-unselected {
-  padding: 5px;
-  margin-right: 5px;
-  font-size: 1.1em;
-}
-
-.Search-Comp {
-  margin: 150px auto 0 auto;
-  width: 600px;
-}
-
-.auto-complete {
-  width: 100%;
-  border:1px solid gray;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
-  font-family: Lobster;
-  font-size: 14;
-  color: black;
-}
-
-.auto-complete input {
-  width: 100%;
-  border: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14;
-  color: black;
-  box-sizing: border-box;
-  outline: none;
-}
-
-.auto-ulist {
-  list-style-type: none;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  border-top: 1px gray;
-}
-
-.auto-ulist::before {
-  content: "";
-}
-
-.auto-list {
-  padding: 10px 5px;
-  cursor: pointer;
-}
-
-.auto-list::before {
-  text-decoration: underline;
-  background-color: 128, 128, 129, 0.20;
-}
 
 .recipe-list-item {
   margin: 10px;
@@ -151,7 +190,7 @@ body {
   margin: 10px;
 }
 
-img{
+.recipe-list {
     max-height:200px;
     max-width:300px;
     height:auto;

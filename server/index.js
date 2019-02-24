@@ -205,17 +205,24 @@ app.get('/search', (req, res) => {
 
 // when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
-  if (!req.body.username || !req.body.password || req.body.password === "" || req.body.username === "") {
+  console.log(req.body, typeof(req.body.params.username), 'BODY');
+  if (!req.body.params.username || !req.body.params.password || req.body.params.password === "" || req.body.params.username === "") {
     return res.status(500).redirect('/restrictedhome');
   }
   return db.selectAllUsers((err, users) => {
     if (err) {
       console.error(err);
     }
-    const sameNameCounter = _.filter(users, user => user.username === req.body.username).length;
+    const sameNameCounter = _.filter(users, user => user.username === req.body.params.username).length;
     if (sameNameCounter === 0) {
-      process.env.LOCAL_USER = req.body.username;
-      db.saveUser(req.body.username, helper.hasher(req.body.password));
+      process.env.LOCAL_USER = req.body.params.username;
+      db.saveUser(req.body.params.username, helper.hasher(req.body.params.password), true, (err, result) => {
+        if (err) {
+          console.log(err, 'HEY not Saved');
+        } else {
+          console.log(result, 'Saved user')
+        }
+      });
       return res.status(204).redirect('/home');
     }
     return res.status(500).redirect('/restrictedhome');
@@ -224,11 +231,12 @@ app.post('/signup', (req, res) => {
 
 // when client requests to login => authentication request
 app.get('/login', (req, res) => {
+  console.log(req, 'LOGIN Parm');
   db.selectAllUsers((err, users) => {
-    const user = _.filter(users, storedUser => storedUser.username === req.body.username)[0];
+    const user = _.filter(users, storedUser => storedUser.username === req.query.username)[0];
     if (user) {
-      if (user.password === helper.hasher(req.body.password)) {
-        process.env.LOCAL_USER = req.body.username;
+      if (user.password === helper.hasher(req.bquery.password)) {
+        process.env.LOCAL_USER = req.query.username;
         res.status(200).redirect('/home');
       } else {
         res.status(500).redirect('/restrictedhome');
