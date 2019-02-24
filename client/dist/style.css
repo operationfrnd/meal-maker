@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
-@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url(https://fonts.googleapis.com/css?family=Lobster);
 
 
 
@@ -8,7 +8,8 @@ body {
   font-family: 'Jeju Gothic', sans-serif;
   margin: 0px;
   color: #292929;
-  background-color: #F3F3F3;
+  /* background-color: #F3F3F3; */
+  background-image: url('../src/images/backgroundlight.jpg')
 }
 
 .mealMaker {
@@ -26,7 +27,16 @@ body {
   color: #f3f3f3;
 }
 
-button {
+.save-recipe-button:hover{
+    background-color: darkgreen !important;
+    color: #FFF;
+}
+
+.dislike-recipe-button:hover{
+    background-color:darkred !important;
+    color: #FFF;
+}
+/* button {
   cursor: pointer;
   border: none;
   border-radius: 3px;
@@ -35,9 +45,9 @@ button {
   margin-right: 5px;
   padding: 10px;
   font-size: 1em;
-}
+} */
 
-.save-recipe-button{
+/* .save-recipe-button{
   cursor: pointer;
   border: none;
   border-radius: 3px;
@@ -57,7 +67,7 @@ button {
   margin-left: 5px;
   padding: 3px;
   font-size: 1em;
-}
+} */
 
 .main {
   margin: 20px;
@@ -141,4 +151,10 @@ button {
   margin: 10px;
 }
 
+img{
+    max-height:200px;
+    max-width:300px;
+    height:auto;
+    width:auto;
+}
 
