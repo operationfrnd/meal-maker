@@ -8,7 +8,7 @@ import VideoPlayer from './VideoPlayer.jsx';
 const Recipe = ({ selectedRecipe }) => {
   return (
     <div className="selected-recipe">
-      <h1>{selectedRecipe.name}</h1>
+      {/* <h1>{selectedRecipe.name}</h1> */}
       <table>
         <tbody>
           <tr>
@@ -18,7 +18,7 @@ const Recipe = ({ selectedRecipe }) => {
             </td>
           </tr>
         </tbody>
-      </table>  
+      </table>
     </div>
   );
 };

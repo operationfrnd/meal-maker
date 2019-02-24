@@ -64,16 +64,17 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, c
                   // missedIngredients: (3)["1 ounce butter", "1 pound mushrooms, sliced", "1 cup sherry"]
                   // unusedIngredients: []
                   // usedIngredients: ["1 fillet of beef about 5 lbs., fat removed"]
-                  const newIng = _.flatten(recipe.allIngredients, recipe.missedIngredients, recipe.unusedIngredients, recipe.usedIngredients);
+                  const ingObj = recipe.ingredients;
+                  const newIng = _.flatten(ingObj.allIngredients, ingObj.missedIngredients, ingObj.unusedIngredients, ingObj.usedIngredients);
                   const newRecipe = {
                     cookTime: recipe.cookTime,
                     image: recipe.image,
                     ingredients: newIng,
                     instructions: recipe.instructions,
-                    link: recipe.link,
+                    link: recipe.videoId,
                     name: recipe.name,
                     recipeId: recipe.recipeId,
-                  }
+                  };
                   selectRecipe(newRecipe);
                   changeView('recipe');
                 }}

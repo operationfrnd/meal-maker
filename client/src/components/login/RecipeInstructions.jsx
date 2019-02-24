@@ -14,7 +14,6 @@ class RecipeInstructions extends React.Component {
 
   render() {
     const { currentVideo } = this.state;
-    console.log(currentVideo);
     let video;
     let steps;
 
@@ -24,59 +23,8 @@ class RecipeInstructions extends React.Component {
     } else {
       video = currentVideo;
       steps = currentVideo.instructions;
-
     }
-    console.log(steps, 'here');
-    // debugger;
 
-    // const compObj = (
-    //   <div className="instructions-list">
-    //     <h3>{currentVideo.name}</h3>
-    //     {/* <Paper style={{ maxHeight: 250, overflow: 'auto' }}> */}
-    //     <b>Cook Time: </b>
-    //     {currentVideo.cookTime}
-    //     {' '}
-    //     minutes
-    //     <br />
-    //     <b>Ingredients: </b>
-    //     {currentVideo.ingredients}
-    //     <br />
-    //     {/* {currentVideo.instructions} */}
-    //     <b>Instructions: </b>
-    //     <ul>
-    //       {steps.map(step => <li key={step}>{step}</li>)}
-    //     </ul>
-    //     {/* </Paper> */}
-    //   </div>
-    // );
-
-    // const compArray = (
-    //   <div className="instructions-list">
-    //     <h3>{currentVideo[0].name}</h3>
-    //     {/* <Paper style={{ maxHeight: 250, overflow: 'auto' }}> */}
-    //     <b>Cook Time: </b>
-    //     {currentVideo[0].cookTime}
-    //     {' '}
-    //     minutes
-    //     <br />
-    //     <b>Ingredients: </b>
-    //     {currentVideo[0].ingredients}
-    //     <br />
-    //     {/* {currentVideo.instructions} */}
-    //     <b>Instructions: </b>
-    //     <ul>
-    //       {steps.map(step => <li key={step}>{step}</li>)}
-    //     </ul>
-    //     {/* </Paper> */}
-    //   </div>
-    // );
-
-    // let mainComp;
-    // if (Array.isArray(currentVideo)) {
-    //   mainComp = compArray;
-    // } else {
-    //   mainComp = compObj;
-    // }
     return (
       <div className="instructions-list">
         <h3>{video.name}</h3>
@@ -89,7 +37,7 @@ class RecipeInstructions extends React.Component {
           <b>Ingredients: </b>
           {video.ingredients}
           <br />
-          {video.instructions}
+          {/* {video.instructions} */}
           <br />
           <b>Instructions: </b>
           <ul>
