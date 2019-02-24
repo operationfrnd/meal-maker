@@ -23,7 +23,9 @@ router.post('/', auth.optional, (req, res, next) => {
   }
 
   const finalUser = db.saveUser(user.username, user.password, true, (err, user) => {
-    res.json({ user: db.toAuthJSON(user.username) });
+    db.toAuthJSON(user.username, (resp) => {
+      res.json({ user: resp });
+    });
   });
 });
 

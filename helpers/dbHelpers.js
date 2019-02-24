@@ -219,36 +219,34 @@ const validatePassword = (username, password) => {
       return oldUser.username === username;
     })[0];
     const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-    return this.hash === hash;
+    return user.password === hash;
   });
 };
 
-const generateJWT = (username) => {
+const generateJWT = (username, id, callback) => {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+  return callback(jwt.sign({
+    user: username,
+    id: id,
+    exp: parseInt(expirationDate.getTime() / 1000, 10),
+  }, 'secret'));
+};
+
+const toAuthJSON = (username, callback) => {
   return selectAllUsers((err, users) => {
     const user = _.filter(users, (oldUser) => {
       return oldUser.username === username;
     })[0];
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 60);
-    return jwt.sign({
-      user: user.username,
+    const returnObject = {
       id: user.id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10),
-    }, 'secret');
-  });
-};
-
-const toAuthJSON = (username) => {
-  return selectAllUsers((err, users) => {
-    const user = _.filter(users, (oldUser) => {
-      return oldUser.username === username;
-    })[0];
-    return {
-      id: user.id,
-      usernmae: user.username,
-      token: generateJWT(username),
+      username: user.username,
+      token: generateJWT(username, user.id, (res) => {
+        return res;
+      }),
     };
+    callback(returnObject);
   });
 };
 
