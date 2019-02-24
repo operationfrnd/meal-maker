@@ -10,6 +10,7 @@ class Credentials extends React.Component {
       email: "",
       password: ""
     };
+    this.clearField = this.clearField.bind(this);
   }
 
   // validateForm() {
@@ -28,6 +29,10 @@ class Credentials extends React.Component {
   // onClick() {
   //   console.log('clicked');
   // }
+  clearField(user, pw){
+    document.getElementById('username').reset();
+    document.getElementById('password').reset();
+  }
 
   render() {
     // <div className="Login">
@@ -51,8 +56,19 @@ class Credentials extends React.Component {
       <div>
         <input id="username" type="text" name="username" placeholder="Username" />
         <input id="password" type="text" name="password" placeholder="Password" />
-        <Button variant="contained" color="primary" type="submit" value="login" onClick={() => console.log(document.getElementById('username').value)}>Login</Button>
-        <Button variant="contained" color="primary" type="submit" value="signUp" onClick={() => signUp('Pineapple')}>Sign Up</Button>
+        <Button variant="contained" color="primary" type="submit" value="login" onClick={() => {
+          const user = document.getElementById('username').value;
+          const pw = document.getElementById('password').value;
+          login(user, pw);
+          // this.clearField();
+          // this.clearField('password');
+
+        }}>Login</Button>
+        <Button variant="contained" color="primary" type="submit" value="signUp" onClick={() => {
+          const user = document.getElementById('username').value;
+          const pw = document.getElementById('password').value;
+          signUp(user, pw);
+        }}>Sign Up</Button>
       </div>
     );
   }

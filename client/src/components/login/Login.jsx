@@ -20,11 +20,11 @@ class Login extends React.Component {
       <div>
         <div className="credentials">
           <Credentials signUp={signUp} login={login} />
-        </div>
         <div className="appName">
           <h1 className="mealMaker">mealMaker</h1>
         </div>
-        <div className="title">
+        </div>
+        {/* <div className="title">
           <h2>Recipe of the day</h2>
         </div>
         <table>
@@ -36,7 +36,7 @@ class Login extends React.Component {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
       </div>
     );
   }

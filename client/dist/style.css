@@ -18,6 +18,12 @@ body {
   margin-left: 10px;
 }
 
+.credentials {
+  align-content: center;
+  margin-block-start: 20%;
+  margin-left: 30%;
+}
+
 .mealMakerLogo {
   font-family: Lobster;
   font-size: 1.9em;

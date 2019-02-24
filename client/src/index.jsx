@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 // rendering all components
 /* eslint import/extensions: 0 */
 import React from 'react';
@@ -23,6 +24,8 @@ class App extends React.Component {
       ingredients: [],
       userId: 1,
       selectedRecipe: randomRecipe,
+      authorized: false,
+      show: 'login',
       // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -36,9 +39,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // let mainComponent = 'login';
     this.getRandomRecipe();
     // this.getSavedRecipes();
     this.grabIngredients();
+    if (this.state.authorized) {
+      this.setState({
+        show: 'main',
+      });
+    // } else {
+    //   mainComponent = 'login';
+    }
   }
 
   // function to retrieve recipes to display
@@ -138,13 +149,42 @@ class App extends React.Component {
     })
   }
 
-  signUp(user) {
-    console.log('sign-up');
+  signUp(user, pw) {
+    console.log(`thank you for signing up, ${user}`);
     console.log(`Hello, ${user}`);
+    axios.post('/signup', {
+      params: {
+        username: user,
+        password: pw,
+      },
+    })
+      .then(() => {
+        this.setState({
+          authorized: true,
+        });
+      })
+      .catch((bool) => {
+        console.log('could not log in');
+      });
   }
 
-  login() {
+  login(user, pw) {
     console.log('logged in');
+    console.log(`Hello, ${user}`);
+    axios.post('/login', {
+      params: {
+        username: user,
+        password: pw,
+      },
+    })
+      .then(() => {
+        this.setState({
+          authorized: true,
+        });
+      })
+      .catch(() => {
+        console.log('could not sign up');
+      });
   }
 
   render() {
