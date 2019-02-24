@@ -14,21 +14,30 @@ body {
 .mealMaker {
   font-family: Lobster;
   font-size: 1.9em;
-  margin-right: auto;
+  /* margin-right: auto; */
   margin-left: 10px;
+}
+
+.loginMeal {
+  font-family: Lobster;
+  font-size: 7em;
 }
 
 .credentials {
   align-content: center;
-  margin-block-start: 20%;
+  margin-block-start: 12%;
   margin-left: 30%;
+}
+
+.appName {
+  margin-left: 20%;
 }
 
 .mealMakerLogo {
   font-family: Lobster;
   font-size: 1.9em;
-  margin-right: auto;
-  margin-left: 10px;
+  /* margin-right: auto; */
+  /* margin-left: 5px; */
   color: #f3f3f3;
 }
 

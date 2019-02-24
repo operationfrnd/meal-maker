@@ -24,7 +24,7 @@ class App extends React.Component {
       ingredients: [],
       userId: 1,
       selectedRecipe: randomRecipe,
-      authorized: true,
+      authorized: false,
       show: 'login',
       // show: 'search',
     };
@@ -40,12 +40,13 @@ class App extends React.Component {
 
   componentDidMount() {
     // let mainComponent = 'login';
+    const { authorized } = this.state;
     this.getRandomRecipe();
     // this.getSavedRecipes();
     this.grabIngredients();
-    if (this.state.authorized) {
+    if (authorized) {
       this.setState({
-        show: 'main',
+        show: 'home',
       });
     // } else {
     //   mainComponent = 'login';
@@ -164,7 +165,7 @@ class App extends React.Component {
         });
       })
       .catch((bool) => {
-        console.log('could not log in');
+        console.log('could not log in after signup');
       });
   }
 
@@ -183,7 +184,7 @@ class App extends React.Component {
         });
       })
       .catch(() => {
-        console.log('could not sign up');
+        console.log('could not log in');
       });
   }
 
@@ -193,7 +194,7 @@ class App extends React.Component {
     const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients } = this.state;
     if (this.state.show === 'login') {
       mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
-    } else if (this.state.show === 'main') {
+    } else if (this.state.show === 'home') {
       mainComponent = (
         <Main
           recipes={recipes}
