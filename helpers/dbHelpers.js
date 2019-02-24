@@ -213,13 +213,16 @@ const logoutUser = (username) => {
   });
 };
 
-const validatePassword = (username, password) => {
+const validatePassword = (username, password, callback) => {
   return selectAllUsers((err, users) => {
     const user = _.filter(users, (oldUser) => {
       return oldUser.username === username;
     })[0];
-    const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-    return user.password === hash;
+    const hash = crypto.pbkdf2Sync(password, user.salt, 500, 512, 'sha512').toString('hex');
+    if (user.password === hash) {
+      loginUser(username);
+      return callback(null, user);
+    }
   });
 };
 
@@ -251,15 +254,15 @@ const toAuthJSON = (username, callback) => {
 };
 
 const loginUser = (username) => {
-  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = ${username}`, (err) => {
+  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = '${username}'`, (err) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('Successfully logged out user');
+      console.log('Successfully logged in user');
     }
   });
 };
 
 module.exports = {
-  selectSingleRecipeById, toAuthJSON, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
+  selectSingleRecipeById, toAuthJSON, validatePassword, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
 };
