@@ -138,7 +138,7 @@ class App extends React.Component {
   selectRecipe(recipe) {
     this.setState({
       selectedRecipe: recipe,
-    })
+    });
   }
 
   signUp(user) {

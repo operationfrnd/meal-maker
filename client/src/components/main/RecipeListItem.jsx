@@ -41,31 +41,59 @@ const StyledButtonDislike = withStyles({
   },
 })(Button);
 
-const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe }) => {
-
-  // const onClick = () => {
-  //   console.log('clicked');
-  // }
+const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, changeView }) => {
 
   return (
-    <div className="recipe-list-item">
-      {/* <b onClick={() => console.log('hey there')}>Recipe Name: </b> {recipe.name}  */}
-      <div onClick={() => {
-        selectRecipe(recipe);
-        changeView('recipe');
-      }}
-      >
-        <b> {recipe.name} </b>
-      </div>
-      <StyledButtonSave type="button" className="save-recipe-button" variant="contained" onClick={() => saveRecipe(recipe)}> Save that recipe </StyledButtonSave>
-      <StyledButtonDislike type="button" className="dislike-recipe-button" variant="contained" onClick={() => saveDislikeRecipe(recipe)}> Never again! </StyledButtonDislike>
-      <br />
-      <b>Cook Time: </b> {recipe.cookTime} minutes
-      <br />
-      <b>Uses: </b> {recipe.ingredients.usedIngredients} <br />
-      <b>Match Percentage: </b> {recipe.percentage}%
+    <div
+      className="recipe-list-item"
+    >
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <img src={recipe.image} alt="" />
+            </td>
+            <td>
+              <div
+                className="name"
+                onClick={() => {
+                  // const rec = [recipe];
+                  console.log(recipe, 'test')
+                  selectRecipe([recipe]);
+                  changeView('recipe');
+                }}
+                role="presentation"
+              >
+                <b>
+                  {recipe.name}
+                </b>
+              </div>
+              <div className="cookTime">
+                <b>Cook Time:</b>
+                {' '}
+                {recipe.cookTime}
+                {' '}
+                minutes
+              </div>
+              <div className="ingredients-used">
+                <b>Uses: </b>
+                {recipe.ingredients.usedIngredients}
+                <br />
+                <b>Match Percentage: </b>
+                {recipe.percentage}
+                %
+              </div>
+              <div>
+                <StyledButtonSave type="button" className="save-recipe-button" variant="contained" onClick={() => saveRecipe(recipe)}> Save that recipe </StyledButtonSave>
+                <StyledButtonDislike type="button" className="dislike-recipe-button" variant="contained" onClick={() => saveDislikeRecipe(recipe)}> Never again! </StyledButtonDislike>
+              </div>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  );
+  )
 };
 
 
