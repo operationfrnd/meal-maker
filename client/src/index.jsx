@@ -26,6 +26,7 @@ class App extends React.Component {
       selectedRecipe: randomRecipe,
       authorized: false,
       show: 'login',
+      userName: '',
       // show: 'search',
     };
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -166,7 +167,7 @@ class App extends React.Component {
         this.setState({
           authorized: true,
           userId: res.data.user.id,
-
+          userName: res.data.user.username,
         });
         this.componentDidMount();
       })
@@ -188,9 +189,11 @@ class App extends React.Component {
         password: pw,
       },
     })
-      .then(() => {
+      .then((res) => {
+        console.log(res, 'LOGGING IN');
         this.setState({
           authorized: true,
+          userName: res.data.user.username,
         });
         this.componentDidMount();
       })
@@ -207,7 +210,7 @@ class App extends React.Component {
   render() {
     console.log(this);
     let mainComponent = 'login';
-    const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients } = this.state;
+    const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName } = this.state;
     if (this.state.show === 'login') {
       mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
     } else if (this.state.show === 'home') {
@@ -223,6 +226,7 @@ class App extends React.Component {
           saveDislikeRecipe={this.saveDislikeRecipe}
           getSavedRecipes={this.getSavedRecipes}
           selectRecipe={this.selectRecipe}
+          user={userName}
         />
       );
     }

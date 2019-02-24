@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 @import url('https://fonts.googleapis.com/css?family=Lobster');
-
+@import url('../images/white-kitchen.jpg');
 
 
 body {
@@ -9,6 +9,14 @@ body {
   margin: 0px;
   color: #292929;
   background-color: #F3F3F3;
+}
+
+.background {
+  /* background-image: url('../images/white-kitchen.jpg'); */
+  /* background-repeat: no-repeat;
+  height: 500px; 
+  background-position: center;
+  background-size: cover; */
 }
 
 .mealMaker {
@@ -25,7 +33,7 @@ body {
 
 .credentials {
   align-content: center;
-  margin-block-start: 12%;
+  /* margin-block-start: 12%; */
   margin-left: 30%;
 }
 

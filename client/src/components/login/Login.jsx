@@ -8,7 +8,18 @@ import RecipeInstructions from './RecipeInstructions.jsx';
 import VideoPlayer from '../VideoPlayer.jsx';
 import kitchen from '../../../images/kitchen.png';
 import fridge from '../../../images/refrigerator-512.png';
+import logo from '../../../images/clearLogo.png';
 import Paper from '@material-ui/core/Paper';
+import Background from '../../../images/opaque.jpg';
+
+
+const sectionStyle = {
+  // width: '100%',
+  height: '700px',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundImage: `url(${Background})`,
+};
 
 class Login extends React.Component {
   constructor(props) {
@@ -18,11 +29,18 @@ class Login extends React.Component {
   }
 
   render() {
-    const { recipe, signUp, login } = this.props;
+    const { recipe, signUp, login, user } = this.props;
     return (
-      <Paper height="100%" width="100%">
+      // <Paper height="100%" width="100%">
 
-        <div>
+        <div className="background" style={sectionStyle} >
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <div className="credentials">
             <Credentials signUp={signUp} login={login} />
           </div>
@@ -33,12 +51,18 @@ class Login extends React.Component {
                 
               </div> */}
             <div>
-              <img alt="" align="left" src={fridge} height="200px" width="200px" />
+              <img alt="" align="left" src={logo} height="200px" width="200px" />
               <h1 className="loginMeal">mealMaker</h1>
               <h5>FROM: operation-FRND</h5>
             </div>
           </div>
-          {/* <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
           <br />
           <br />
           <br />
@@ -49,7 +73,8 @@ class Login extends React.Component {
           <br />
           <br />
           <br />
-          <br /> */}
+          <br />
+          <br />
           {/* <div>Icons made by <a href="https://www.flaticon.com/<?=_('authors').'/'?>freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> */}
           {/* <div className="title">
             <h2>Recipe of the day</h2>
@@ -65,7 +90,7 @@ class Login extends React.Component {
             </tbody>
           </table> */}
         </div>
-      </Paper>
+      // </Paper>
     );
   }
 }
