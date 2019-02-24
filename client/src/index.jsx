@@ -182,8 +182,8 @@ class App extends React.Component {
   login(user, pw) {
     console.log('logged in');
     console.log(`Hello, ${user}`);
-    axios.get('/login', {
-      params: {
+    axios.post('/api/users/login', {
+      user: {
         username: user,
         password: pw,
       },

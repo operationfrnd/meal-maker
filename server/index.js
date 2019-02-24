@@ -231,7 +231,7 @@ app.post('/signup', (req, res) => {
 
 // when client requests to login => authentication request
 app.get('/login', (req, res) => {
-  console.log(req.query, 'LOGIN Parm');
+  console.log(req, 'LOGIN Parm');
   db.selectAllUsers((err, users) => {
     const user = _.filter(users, storedUser => storedUser.username === req.query.username)[0];
     if (user) {
