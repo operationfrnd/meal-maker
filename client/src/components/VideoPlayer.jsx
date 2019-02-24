@@ -4,20 +4,20 @@ import React from 'react';
 class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
-      currentVideo: props.recipe,
+      currentVideo: this.props.recipe,
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      currentVideo: this.props.recipe,
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     currentVideo: this.props.recipe,
+  //   })
+  // }
 
   render() {
-    console.log(this);
+    // console.log(this);
     const { currentVideo } = this.state;
 
     return (

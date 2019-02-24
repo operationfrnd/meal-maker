@@ -1,6 +1,8 @@
 // component with a list of instructions for the recipe of the day which can be scrolled
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
+import { ListItemText } from '@material-ui/core';
+import { inflate } from 'zlib';
 
 class RecipeInstructions extends React.Component {
   constructor(props) {
@@ -10,30 +12,36 @@ class RecipeInstructions extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      currentVideo: this.props.recipe,
-    })
-  }
-
   render() {
     const { currentVideo } = this.state;
-    // const { selectedRecipe } = this.props;
-    const steps = currentVideo.instructions.split('\n');
+    let video;
+    let steps;
+
+    if (typeof (currentVideo.instructions) === 'string') {
+      video = currentVideo;
+      steps = currentVideo.instructions.split('\n');
+    } else {
+      video = currentVideo;
+      steps = currentVideo.instructions;
+    }
+
     return (
       <div className="instructions-list">
-        <h3>{currentVideo.name}</h3>
+        <h3>{video.name}</h3>
         <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
-          <b>Cook Time:</b>
-          {currentVideo.cooktime}
+          <b>Cook Time: </b>
+          {video.cookTime}
+          {' '}
+          minutes
           <br />
-          <b>Ingredients:</b>
-          {currentVideo.ingredients}
+          <b>Ingredients: </b>
+          {video.ingredients}
           <br />
-          {/* {currentVideo.instructions} */}
-          <b>Instructions:</b>
+          {/* {video.instructions} */}
+          <br />
+          <b>Instructions: </b>
           <ul>
-            { steps.map(step => <li key={step}>{ step }</li>) }
+            {steps.map(step => <li key={step}>{step}</li>)}
           </ul>
         </Paper>
       </div>
