@@ -55,13 +55,15 @@ class Credentials extends React.Component {
 
       <div>
         <input id="username" type="text" name="username" placeholder="Username" />
-        <input id="password" type="text" name="password" placeholder="Password" />
+        <input id="password" type="password" name="password" placeholder="Password" />
         <Button variant="contained" color="primary" type="submit" value="login" onClick={() => {
           const user = document.getElementById('username').value;
           const pw = document.getElementById('password').value;
           login(user, pw);
           // this.clearField();
           // this.clearField('password');
+          this.username.value = '';
+          this.password.value = '';
 
         }}>Login</Button>
         <Button variant="contained" color="primary" type="submit" value="signUp" onClick={() => {

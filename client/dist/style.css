@@ -36,8 +36,8 @@ body {
 .mealMakerLogo {
   font-family: Lobster;
   font-size: 1.9em;
-  /* margin-right: auto; */
-  /* margin-left: 5px; */
+  margin-right: auto;
+  margin-left: 5px;
   color: #f3f3f3;
 }
 

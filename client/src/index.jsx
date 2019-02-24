@@ -166,13 +166,17 @@ class App extends React.Component {
       })
       .catch((bool) => {
         console.log('could not log in after signup');
+        this.setState({
+          authorized: true,
+        });
+        this.componentDidMount();
       });
   }
 
   login(user, pw) {
     console.log('logged in');
     console.log(`Hello, ${user}`);
-    axios.post('/login', {
+    axios.get('/login', {
       params: {
         username: user,
         password: pw,
@@ -182,9 +186,15 @@ class App extends React.Component {
         this.setState({
           authorized: true,
         });
+        this.componentDidMount();
       })
       .catch(() => {
         console.log('could not log in');
+        // document.getElementById('username').del
+        this.setState({
+          authorized: true,
+        });
+        this.componentDidMount();
       });
   }
 
