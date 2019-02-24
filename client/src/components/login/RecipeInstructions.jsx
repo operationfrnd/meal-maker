@@ -12,42 +12,90 @@ class RecipeInstructions extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     currentVideo: this.props.recipe,
-  //   })
-  // }
-
   render() {
     const { currentVideo } = this.state;
     console.log(currentVideo);
-    // if (Arrayis)
+    let video;
     let steps;
+
     if (typeof (currentVideo.instructions) === 'string') {
+      video = currentVideo;
       steps = currentVideo.instructions.split('\n');
     } else {
-      steps = currentVideo[0].instructions;
+      video = currentVideo;
+      steps = currentVideo.instructions;
+
     }
     console.log(steps, 'here');
     // debugger;
+
+    // const compObj = (
+    //   <div className="instructions-list">
+    //     <h3>{currentVideo.name}</h3>
+    //     {/* <Paper style={{ maxHeight: 250, overflow: 'auto' }}> */}
+    //     <b>Cook Time: </b>
+    //     {currentVideo.cookTime}
+    //     {' '}
+    //     minutes
+    //     <br />
+    //     <b>Ingredients: </b>
+    //     {currentVideo.ingredients}
+    //     <br />
+    //     {/* {currentVideo.instructions} */}
+    //     <b>Instructions: </b>
+    //     <ul>
+    //       {steps.map(step => <li key={step}>{step}</li>)}
+    //     </ul>
+    //     {/* </Paper> */}
+    //   </div>
+    // );
+
+    // const compArray = (
+    //   <div className="instructions-list">
+    //     <h3>{currentVideo[0].name}</h3>
+    //     {/* <Paper style={{ maxHeight: 250, overflow: 'auto' }}> */}
+    //     <b>Cook Time: </b>
+    //     {currentVideo[0].cookTime}
+    //     {' '}
+    //     minutes
+    //     <br />
+    //     <b>Ingredients: </b>
+    //     {currentVideo[0].ingredients}
+    //     <br />
+    //     {/* {currentVideo.instructions} */}
+    //     <b>Instructions: </b>
+    //     <ul>
+    //       {steps.map(step => <li key={step}>{step}</li>)}
+    //     </ul>
+    //     {/* </Paper> */}
+    //   </div>
+    // );
+
+    // let mainComp;
+    // if (Array.isArray(currentVideo)) {
+    //   mainComp = compArray;
+    // } else {
+    //   mainComp = compObj;
+    // }
     return (
       <div className="instructions-list">
-        <h3>{currentVideo.name}</h3>
-        {/* <Paper style={{ maxHeight: 250, overflow: 'auto' }}> */}
+        <h3>{video.name}</h3>
+        <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
           <b>Cook Time: </b>
-          {currentVideo.cookTime}
+          {video.cookTime}
           {' '}
           minutes
           <br />
           <b>Ingredients: </b>
-          {currentVideo.ingredients}
+          {video.ingredients}
           <br />
-          {/* {currentVideo.instructions} */}
+          {video.instructions}
+          <br />
           <b>Instructions: </b>
           <ul>
-            { steps.map(step => <li key={step}>{ step }</li>) }
+            {steps.map(step => <li key={step}>{step}</li>)}
           </ul>
-        {/* </Paper> */}
+        </Paper>
       </div>
     );
   }

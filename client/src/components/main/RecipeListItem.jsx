@@ -8,6 +8,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 // import green from '@material-ui/core/colors/green';
 
 const StyledButtonSave = withStyles({
@@ -58,8 +59,22 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, c
                 className="name"
                 onClick={() => {
                   // const rec = [recipe];
-                  console.log(recipe, 'test')
-                  selectRecipe([recipe]);
+                  console.log(recipe, 'test');
+                  // allIngredients: (4)["1 ounce butter", "1 pound mushrooms, sliced", "1 cup sherry", "1 fillet of beef about 5 lbs., fat removed"]
+                  // missedIngredients: (3)["1 ounce butter", "1 pound mushrooms, sliced", "1 cup sherry"]
+                  // unusedIngredients: []
+                  // usedIngredients: ["1 fillet of beef about 5 lbs., fat removed"]
+                  const newIng = _.flatten(recipe.allIngredients, recipe.missedIngredients, recipe.unusedIngredients, recipe.usedIngredients);
+                  const newRecipe = {
+                    cookTime: recipe.cookTime,
+                    image: recipe.image,
+                    ingredients: newIng,
+                    instructions: recipe.instructions,
+                    link: recipe.link,
+                    name: recipe.name,
+                    recipeId: recipe.recipeId,
+                  }
+                  selectRecipe(newRecipe);
                   changeView('recipe');
                 }}
                 role="presentation"
