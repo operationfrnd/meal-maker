@@ -23,7 +23,7 @@ class Search extends React.Component {
         <h2 className="Lobster">
           Welcome, {user}
         </h2>
-        <h3>Search for a recipe</h3>
+        <h2 align="center">Search for a recipe</h2>
         <div className="Search-Comp">
           <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         </div>
@@ -32,7 +32,7 @@ class Search extends React.Component {
           <RecipeList recipes={recipes} saveRecipe={saveRecipe} saveDislikeRecipe={saveDislikeRecipe} selectRecipe={selectRecipe} changeView={changeView}> </RecipeList>
         </div>
 
-
+        <h3 id="recipeTitle">Recipe of the day</h3>
         <div className="recipe-of-the-day-container">
           <table>
             <tbody>

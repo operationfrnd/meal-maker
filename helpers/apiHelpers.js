@@ -71,7 +71,7 @@ const recFoodNutrApi = (ingredients, callback) => {
           });
         }
       });
-      recipeInfo.percentage = recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100 
+      recipeInfo.percentage = Math.round(recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100) 
       return youTubeApi(`cook ${recipeInfo.name}`, (err, video) => {
         recipeInfo.videoId = video.id.videoId;
         recipes.push(recipeInfo);

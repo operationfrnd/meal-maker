@@ -58,12 +58,6 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, c
               <div
                 className="name"
                 onClick={() => {
-                  // const rec = [recipe];
-                  console.log(recipe, 'test');
-                  // allIngredients: (4)["1 ounce butter", "1 pound mushrooms, sliced", "1 cup sherry", "1 fillet of beef about 5 lbs., fat removed"]
-                  // missedIngredients: (3)["1 ounce butter", "1 pound mushrooms, sliced", "1 cup sherry"]
-                  // unusedIngredients: []
-                  // usedIngredients: ["1 fillet of beef about 5 lbs., fat removed"]
                   const ingObj = recipe.ingredients;
                   const newIng = _.flatten(ingObj.allIngredients, ingObj.missedIngredients, ingObj.unusedIngredients, ingObj.usedIngredients);
                   const newRecipe = {
