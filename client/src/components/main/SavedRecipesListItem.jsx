@@ -13,9 +13,16 @@ const SavedRecipeListItem = ({ savedRecipe, changeView, selectRecipe }) => (
             <img src={savedRecipe.image} alt="" />
           </td>
           <td>
-            <div className="name">
+            <div
+              className="name"
+              onClick={() => {
+                selectRecipe(savedRecipe);
+                changeView('recipe');
+              }}
+              role="presentation"
+            >
               <b>
-                {savedRecipe.name} 
+                {savedRecipe.name}
               </b>
             </div>
             <div className="cookTime">
