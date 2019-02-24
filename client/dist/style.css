@@ -2,13 +2,16 @@
 
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 @import url('../images/white-kitchen.jpg');
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
 
 
 body {
   font-family: 'Jeju Gothic', sans-serif;
   margin: 0px;
   color: #292929;
-  background-color: #F3F3F3;
+  /* background-color: #F3F3F3; */
+  background-image: url('../src/images/backgroundlight.jpg')
 }
 
 .background {
@@ -52,37 +55,54 @@ body {
 .Lobster {
   font-family: Lobster;
 }
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 3px;
-  color: #F3F3F3;
-  background-color: rgb(192, 57, 86);
-  margin-right: 5px;
-  padding: 10px;
-  font-size: 1em;
+
+.Search-Comp {
+  margin: 20px auto 0 auto;
+  margin-bottom: 20px;
+  width: 600px;
 }
 
-.save-recipe-button{
-  cursor: pointer;
-  border: none;
-  border-radius: 3px;
-  color: #F3F3F3;
-  background-color: rgb(31, 39, 150);
-  margin-left: 10px;
-  padding: 3px;
-  font-size: 1em;
+.auto-complete {
+  width: 100%;
+  border:1px solid gray;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18;
+  color: black;
 }
 
-.dislike-recipe-button{
-  cursor: pointer;
+.auto-complete input {
+  width: 100%;
+  height: 10%;
   border: none;
-  border-radius: 3px;
-  color: #F3F3F3;
-  background-color: rgb(214, 60, 14);
-  margin-left: 5px;
-  padding: 3px;
-  font-size: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18;
+  color: black;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auto-ulist {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  border-top: 1px gray;
+}
+
+.auto-ulist::before {
+  content: "";
+}
+
+.auto-list {
+  padding: 10px 5px;
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.auto-list::before {
+  text-decoration: underline;
+  background-color: 128, 128, 129, 0.20;
 }
 
 .main {
@@ -113,56 +133,54 @@ button {
   font-size: 1.1em;
 }
 
-.Search-Comp {
-  margin: 150px auto 0 auto;
-  width: 600px;
-}
-
-.auto-complete {
-  width: 100%;
-  border:1px solid gray;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 4px 1px rgba(0,0,0, .18);
-  font-family: Lobster;
-  font-size: 14;
-  color: black;
-}
-
-.auto-complete input {
-  width: 100%;
-  border: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14;
-  color: black;
-  box-sizing: border-box;
-  outline: none;
-}
-
-.auto-ulist {
-  list-style-type: none;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  border-top: 1px gray;
-}
-
-.auto-ulist::before {
-  content: "";
-}
-
-.auto-list {
-  padding: 10px 5px;
-  cursor: pointer;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
 .new {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.auto-list::before {
-  text-decoration: underline;
-  background-color: 128, 128, 129, 0.20;
+button {
+.save-recipe-button:hover{
+    background-color: darkgreen !important;
+    color: #FFF;
 }
+
+.dislike-recipe-button:hover{
+    background-color:darkred !important;
+    color: #FFF;
+}
+/* button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: rgb(192, 57, 86);
+  margin-right: 5px;
+  padding: 10px;
+  font-size: 1em;
+} */
+
+/* .save-recipe-button{
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: rgb(31, 39, 150);
+  margin-left: 10px;
+  padding: 3px;
+  font-size: 1em;
+}
+
+.dislike-recipe-button{
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #F3F3F3;
+  background-color: rgb(214, 60, 14);
+  margin-left: 5px;
+  padding: 3px;
+  font-size: 1em;
+} */
+
+
 
 .recipe-list-item {
   margin: 10px;
@@ -172,4 +190,10 @@ button {
   margin: 10px;
 }
 
+.recipe-list {
+    max-height:200px;
+    max-width:300px;
+    height:auto;
+    width:auto;
+}
 

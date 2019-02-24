@@ -21,6 +21,7 @@ const youTubeApi = (query, callback) => {
     // preform a callback with the first object full of video data from the search results
     callback(null, searchResults.data.items[0]);
   }).catch((err) => {
+    console.log(err);
     callback(err, null);
   });
 };
@@ -72,9 +73,9 @@ const recFoodNutrApi = (ingredients, callback) => {
       });
       recipeInfo.percentage = recipeInfo.ingredients.usedIngredients.length / recipeInfo.ingredients.allIngredients.length * 100 
       return youTubeApi(`cook ${recipeInfo.name}`, (err, video) => {
-        recipeInfo.link = video.id.videoId;
+        recipeInfo.videoId = video.id.videoId;
         recipes.push(recipeInfo);
-        console.log(recipes);
+        // console.log(recipes);
         if (index === result.data.results.length - 1) {
           return callback(null, recipes);
         }
@@ -154,7 +155,7 @@ const rfnSingleRecipe = (recipeId, callback) => {
       if (youtubeError) {
         return callback(youtubeError, null);
       }
-      recipeInfo.videoId = video.id.videoId;
+      recipeInfo.link = video.id.videoId;
       return callback(null, recipeInfo);
     });
   }).catch((err) => {

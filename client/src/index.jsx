@@ -13,6 +13,9 @@ import RecipeInstructions from './components/login/RecipeInstructions.jsx';
 import VideoPlayer from './components/VideoPlayer.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
+// import LightBackground from './images/backgroundlight.jpg'; // Tell Webpack this JS file uses this image
+
+// console.log(LightBackground);
 
 class App extends React.Component {
   constructor(props) {
@@ -106,7 +109,7 @@ class App extends React.Component {
     // console.log('grabbing');
     axios.get('/ingredients')
       .then((allIngOptions) => {
-        console.log(Array.isArray(allIngOptions.data), 'Opt');
+        // console.log(Array.isArray(allIngOptions.data), 'Opt');
         this.setState({
           ingredients: allIngOptions.data,
         });

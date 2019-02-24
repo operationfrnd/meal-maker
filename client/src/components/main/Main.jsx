@@ -17,6 +17,7 @@ import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
 import Recipe from '../Recipe.jsx';
+import logo from '../../../images/clearLogo.png';
 
 
 class Main extends React.Component {
@@ -44,6 +45,7 @@ class Main extends React.Component {
     return (
       <div>
         <div className="nav">
+          <img src={logo} width="7%" height="auto" />
           <span className="mealMakerLogo">mealMaker</span>
           <Button variant="contained" color="primary" type="button" className={this.state.view === 'search'
             ? 'nav-selected'
@@ -76,6 +78,7 @@ class Main extends React.Component {
                 saveDislikeRecipe={saveDislikeRecipe}
                 changeView={this.changeView}
                 user={user}
+                selectRecipe={selectRecipe}
               />
             )
               : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe}/>
