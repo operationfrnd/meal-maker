@@ -123,6 +123,7 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveRecipe(recipe) {
     const { userId } = this.state;
+    console.log(userId);
     return axios.post('/toBeSaved', {
       userId,
       recipeId: recipe.recipeId,

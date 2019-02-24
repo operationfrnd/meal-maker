@@ -70,6 +70,16 @@ app.get('/food', (req, res) => {
         }
       });
     });
+    if (req.query.userId) {
+      return db.selectDislikedRecipes(req.query.userId, (err, dislikedRecipes) => {
+        const recipeNames = _.map(dislikedRecipes, (dislikedRecipe) => {
+          return dislikedRecipe.recipeName
+        });
+        return res.status(200).send(_.filter(recipes, (recipe) => {
+          return _.includes(recipeNames, recipe.name);
+        }));
+      });
+    }
     return res.status(200).send(recipes);
   });
 });
@@ -155,7 +165,7 @@ app.post('/random', (req, res) => {
                 const ingredients = randomRecipe.ingredients.split('\n');
                 // Save the recipe of the day
                 res.status(204).send(randomRecipe);
-                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cooktime, randomRecipe.recipeImage, randomRecipe.date);
+                db.saveRecipeOfTheDay(randomRecipe.name, randomRecipe.videoInfo.id.videoId, randomRecipe.instructions, singleRecipeArray[0].id, randomRecipe.cookTime, randomRecipe.recipeImage, randomRecipe.date);
                 _.forEach(ingredients, (ingredient) => {
                   db.saveRecipeIngredient(singleRecipeArray[0].id, ingredient);
                 });
@@ -364,3 +374,6 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`listening on port ${port}!`);
 });
+
+module.exports.app = app;
+module.exports.port = port;
