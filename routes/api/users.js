@@ -49,34 +49,27 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    if (err) {
-      return next(err);
+  const currentUser = db.validatePassword(user.username, user.password, (err, user) => {
+    if (user) {
+      db.toAuthJSON(user.username, (resp) => {
+        res.json({ user: resp });
+      });
     }
-
-    if (passportUser) {
-      const user = passportUser;
-      user.token = passportUser.generateJWT(passportUser);
-
-      return res.json({ user: db.toAuthJSON(passportUser) });
-    }
-
-    return status(400).info;
-  })(req, res, next);
+  });
 });
 
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req;
 
-  return Users.findById(id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(400);
-      }
-
-      return res.json({ user: user.toAuthJSON() });
+  return db.selectAllUsers((err, oldUsers) => {
+    const user = oldUsers.filter((oldUser) => {
+      return oldUser.id === id;
+    })[0];
+    db.toAuthJSON(user.username, (resp) => {
+      res.json({ user: resp });
     });
+  });
 });
 
 module.exports = router;
