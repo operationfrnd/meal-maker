@@ -175,23 +175,31 @@ const selectAllUsers = (callback) => {
     } else {
       callback(null, users);
     }
-  })
+  });
 };
 
 const saveUser = (username, password, loggedin, callback) => {
   const salt = crypto.randomBytes(16).toString('hex');
-  const q = [username, crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex'), salt, loggedin];
-  return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
-    if (err) {
-      console.log('could not insert new user into Users table');
-    } else {
-      return selectAllUsers((err, users) => {
-        const user = users.filter(users, (oldUser) => {
-          return oldUser.username === username;
-        })[0];
-        return callback(null, user);
+  const q = [username, crypto.pbkdf2Sync(password, salt, 500, 512, 'sha512').toString('hex'), salt, loggedin];
+  return selectAllUsers((err, users) => {
+    const previousInstance = _.filter(users, (oldUser) => {
+      return oldUser.username === username;
+    }).length;
+    if (previousInstance === 0) {
+      return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
+        if (err) {
+          console.log('could not insert new user into Users table');
+        } else {
+          return selectAllUsers((err, users) => {
+            const user = users.filter((oldUser) => {
+              return oldUser.username === username;
+            })[0];
+            return callback(null, user);
+          });
+        }
       });
     }
+    return callback('User already exists', null);
   });
 };
 
@@ -205,55 +213,56 @@ const logoutUser = (username) => {
   });
 };
 
-const validatePassword = (username, password) => {
+const validatePassword = (username, password, callback) => {
   return selectAllUsers((err, users) => {
     const user = _.filter(users, (oldUser) => {
       return oldUser.username === username;
     })[0];
-    const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-    return this.hash === hash;
+    const hash = crypto.pbkdf2Sync(password, user.salt, 500, 512, 'sha512').toString('hex');
+    if (user.password === hash) {
+      loginUser(username);
+      return callback(null, user);
+    }
   });
 };
 
-const generateJWT = (username) => {
-  return selectAllUsers((err, users) => {
-    const user = _.filter(users, (oldUser) => {
-      return oldUser.username === username;
-    })[0];
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 60);
-    return jwt.sign({
-      user: user.username,
-      id: user.id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10),
-    }, 'secret');
-  });
+const generateJWT = (username, id, callback) => {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+  return callback(jwt.sign({
+    user: username,
+    id: id,
+    exp: parseInt(expirationDate.getTime() / 1000, 10),
+  }, 'secret'));
 };
 
-const toAuthJSON = (username) => {
+const toAuthJSON = (username, callback) => {
   return selectAllUsers((err, users) => {
     const user = _.filter(users, (oldUser) => {
       return oldUser.username === username;
     })[0];
-    return {
+    const returnObject = {
       id: user.id,
-      usernmae: user.username,
-      token: generateJWT(username),
+      username: user.username,
+      token: generateJWT(username, user.id, (res) => {
+        return res;
+      }),
     };
+    callback(returnObject);
   });
 };
 
 const loginUser = (username) => {
-  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = ${username}`, (err) => {
+  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = '${username}'`, (err) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('Successfully logged out user');
+      console.log('Successfully logged in user');
     }
   });
 };
 
 module.exports = {
-  selectSingleRecipeById, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
+  selectSingleRecipeById, toAuthJSON, validatePassword, selectSingleRecipeByName, selectAllRecipes, saveRecipe, selectLikedRecipes, saveLikedRecipe, selectAllRecipeOfTheDay, saveRecipeOfTheDay, updateRecipeOfTheDay, selectDislikedRecipes, dislikeRecipe, saveIngredient, saveRecipeIngredient, getRecipeIngredients, selectAllIngredients, selectAllUsers, saveUser, logoutUser, loginUser,
 };
