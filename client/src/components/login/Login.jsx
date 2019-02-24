@@ -15,14 +15,14 @@ class Login extends React.Component {
   }
 
   render() {
-    const { recipe } = this.props;
+    const { recipe, signUp, login } = this.props;
     return (
       <div>
         <div className="credentials">
-          <Credentials />
+          <Credentials signUp={signUp} login={login} />
         </div>
         <div className="appName">
-          <h1>Meal Maker</h1>
+          <h1 className="mealMaker">mealMaker</h1>
         </div>
         <div className="title">
           <h2>Recipe of the day</h2>

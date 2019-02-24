@@ -44,7 +44,7 @@ class Main extends React.Component {
     return (
       <div>
         <div className="nav">
-          <span className="logo">Meal Maker</span>
+          <span className="mealMakerLogo">mealMaker</span>
           <Button variant="contained" color="primary" type="button" className={this.state.view === 'search'
             ? 'nav-selected'
             : 'nav-unselected'}
