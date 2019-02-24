@@ -17,12 +17,15 @@ class Search extends React.Component {
   }
 
   render() {
-    const { recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe, changeView } = this.props;
+    const { recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe, changeView, user } = this.props;
     return (
       <div>
-        <h2>Search</h2>
+        <h2 className="Lobster">
+          Welcome, {user}
+        </h2>
+        <h3>Search for a recipe</h3>
         <div className="Search-Comp">
-        <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
+          <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         </div>
 
         <div>
