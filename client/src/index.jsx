@@ -24,7 +24,7 @@ class App extends React.Component {
       ingredients: [],
       userId: 1,
       selectedRecipe: randomRecipe,
-      authorized: false,
+      authorized: true,
       show: 'login',
       // show: 'search',
     };
@@ -189,30 +189,49 @@ class App extends React.Component {
 
   render() {
     console.log(this);
+    let mainComponent = 'login';
     const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients } = this.state;
+    if (this.state.show === 'login') {
+      mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
+    } else if (this.state.show === 'main') {
+      mainComponent = (
+        <Main
+          recipes={recipes}
+          recipeOfTheDay={recipeOfTheDay}
+          selectedRecipe={selectedRecipe}
+          savedRecipes={savedRecipes}
+          ingredients={ingredients}
+          getRecipes={this.getRecipes}
+          saveRecipe={this.saveRecipe}
+          saveDislikeRecipe={this.saveDislikeRecipe}
+          getSavedRecipes={this.getSavedRecipes}
+          selectRecipe={this.selectRecipe}
+        />
+      );
+    }
     return (
-      // <BrowserRouter>
-      //   <Route path="/login" component={Login} />
-      // </BrowserRouter>
       <div>
-        <div>
-          <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />
-        </div>
-        <div>
-          <Main
-            recipes={recipes}
-            recipeOfTheDay={recipeOfTheDay}
-            selectedRecipe={selectedRecipe}
-            savedRecipes={savedRecipes}
-            ingredients={ingredients}
-            getRecipes={this.getRecipes}
-            saveRecipe={this.saveRecipe}
-            saveDislikeRecipe={this.saveDislikeRecipe}
-            getSavedRecipes={this.getSavedRecipes}
-            selectRecipe={this.selectRecipe}
-          />
-        </div>
+        {mainComponent}
       </div>
+      // <div>
+      //   <div>
+      //     <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />
+      //   </div>
+      //   <div>
+      //     <Main
+      //       recipes={recipes}
+      //       recipeOfTheDay={recipeOfTheDay}
+      //       selectedRecipe={selectedRecipe}
+      //       savedRecipes={savedRecipes}
+      //       ingredients={ingredients}
+      //       getRecipes={this.getRecipes}
+      //       saveRecipe={this.saveRecipe}
+      //       saveDislikeRecipe={this.saveDislikeRecipe}
+      //       getSavedRecipes={this.getSavedRecipes}
+      //       selectRecipe={this.selectRecipe}
+      //     />
+      //   </div>
+      // </div>
     );
   }
 }
