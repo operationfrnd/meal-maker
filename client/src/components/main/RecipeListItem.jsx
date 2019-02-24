@@ -52,7 +52,7 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, c
         <tbody>
           <tr>
             <td>
-              <img src={recipe.image} alt="" />
+              <img className="recipe-list" src={recipe.image} alt="" />
             </td>
             <td>
               <div
