@@ -196,4 +196,6 @@ button {
     height:auto;
     width:auto;
 }
-
+#recipeTitle {
+  margin-left:"25px" 
+}

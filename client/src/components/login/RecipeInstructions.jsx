@@ -24,14 +24,13 @@ class RecipeInstructions extends React.Component {
       video = currentVideo;
       steps = currentVideo.instructions;
     }
-    console.log(video.ingredients);
 
     if (typeof (video.ingredients) === 'string') {
       video.ingredients = video.ingredients.split('\n').join(', ');
     } else {
       video.ingredients = video.ingredients.join(', ');
     }
-    console.log(video.ingredients.split('\n').join(', '));
+
     return (
       <div className="instructions-list">
         <h3>{video.name}</h3>
@@ -44,7 +43,6 @@ class RecipeInstructions extends React.Component {
           <b>Ingredients: </b>
           {video.ingredients}
           <br />
-          {/* {video.instructions} */}
           <br />
           <b>Instructions: </b>
           <ul>
