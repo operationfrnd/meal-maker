@@ -116,7 +116,7 @@ const selectDislikedRecipes = (userId, callback) => {
 
 const dislikeRecipe = (userId, recipeName, callback) => {
   let q = [userId, recipeName];
-  connection.query('INSERT INTO Dislikes (idUsers, recipeName) VALUES (?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {

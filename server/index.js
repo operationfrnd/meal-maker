@@ -73,11 +73,13 @@ app.get('/food', (req, res) => {
     if (req.query.userId) {
       return db.selectDislikedRecipes(req.query.userId, (err, dislikedRecipes) => {
         const recipeNames = _.map(dislikedRecipes, (dislikedRecipe) => {
-          return dislikedRecipe.recipeName
+          return dislikedRecipe.idRecipes;
         });
-        return res.status(200).send(_.filter(recipes, (recipe) => {
-          return _.includes(recipeNames, recipe.name);
-        }));
+        const filtered = _.filter(recipes, (recipe) => {
+          return !_.includes(recipeNames, recipe.recipeId.toString());
+        });
+        console.log(filtered);
+        return res.status(200).send(filtered);
       });
     }
     return res.status(200).send(recipes);
