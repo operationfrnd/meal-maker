@@ -121,6 +121,10 @@ body {
   margin: 20px;
 }
 
+.recTitle {
+  margin-top: 0;
+}
+
 .nav {
   background-color: rgb(172, 202, 241);
   margin: 0px;
@@ -155,9 +159,11 @@ body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-button {
-
+.save-recipe-button:hover{
+    background-color: darkgreen !important;
+    color: #FFF;
 }
+
 
 
 /* button {
@@ -195,10 +201,7 @@ button {
 
 
 
-/* .recipe-list-item {
-  margin: 10px;
-}
-
+/* 
 .saved-recipe-list-item {
   margin: 10px;
 }
@@ -209,6 +212,9 @@ button {
     height:auto;
     width:auto;
 } */
+/* 
+
 #recipeTitle {
   margin-left:"25px" 
-}
+}  */
+
