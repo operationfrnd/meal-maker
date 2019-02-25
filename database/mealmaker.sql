@@ -36,7 +36,7 @@ CREATE TABLE Ingredient (
 -- Dislikes table, holds user's disliked recipes 
 CREATE TABLE Dislikes (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  idUsers INTEGER NOT NULL,
+  username TEXT NOT NULL,
   recipeName TEXT NOT NULL,
   PRIMARY KEY (id)
 );

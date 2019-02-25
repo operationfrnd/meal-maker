@@ -350,12 +350,12 @@ app.post('/toBeSaved', (req, res) => {
 app.post('/toBeSavedDislike', (req, res) => {
   // const userId = req.body.userId;
   // const recipeId = req.body.recipeId;
-  const { userId, recipeId } = req.body;
+  const { username, recipeName } = req.body;
   console.log(userId, recipeId);
-  db.selectDislikedRecipes(userId, (err, ids) => {
-    const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
+  db.selectDislikedRecipes(userId, (err, recipes) => {
+    const previousInstances = _.filter(recipes, recipe => recipeName === recipe.recipeName).length;
     if (previousInstances === 0) {
-      return db.dislikeRecipe(userId, recipeId, (err) => {
+      return db.dislikeRecipe(username, recipeName, (err) => {
         if (err) {
           return res.status(500).send('Something Went Wrong!');
         }
