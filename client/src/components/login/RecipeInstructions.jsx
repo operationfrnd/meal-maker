@@ -33,8 +33,8 @@ class RecipeInstructions extends React.Component {
 
     return (
       <div className="instructions-list">
-        <h3>{video.name}</h3>
-        <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+        <h3 className="recTitle">{video.name}</h3>
+        <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
           <b>Cook Time: </b>
           {video.cookTime}
           {' '}
