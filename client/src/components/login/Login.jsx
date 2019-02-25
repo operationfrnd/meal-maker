@@ -31,8 +31,8 @@ class Login extends React.Component {
   render() {
     const { recipe, signUp, login, user } = this.props;
     return (
-      // <Paper height="100%" width="100%">
-
+    // <Paper height="100%" width="100%">
+    // initially had paper background, white, but added
         <div className="background" style={sectionStyle} >
           <br />
           <br />
@@ -48,7 +48,6 @@ class Login extends React.Component {
             {/* <h1 className="mealMaker">mealMaker</h1> */}
             {/* <div>
                 <img src={fridge} alt="" margin="auto" width="250px" display="block" />
-                
               </div> */}
             <div>
               <img alt="" align="left" src={logo} height="200px" width="200px" />
@@ -56,13 +55,13 @@ class Login extends React.Component {
               <h5>FROM: operation-FRND</h5>
             </div>
           </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <br />
           <br />
           <br />
@@ -90,7 +89,7 @@ class Login extends React.Component {
             </tbody>
           </table> */}
         </div>
-      // </Paper>
+    // </Paper>
     );
   }
 }

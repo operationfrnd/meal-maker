@@ -66,7 +66,7 @@ class AutoComplete extends React.Component {
     return (
       <div className="AutoCompleteComponent">
         <div className="auto-complete">
-          <input value={text} onChange={this.onTextChange} type="text" />
+          <input value={text} onChange={this.onTextChange} type="text" className="inputField" />
           {this.renderSuggestions()}
           <ul>
             {selectedIngredients.map(ingredient => (

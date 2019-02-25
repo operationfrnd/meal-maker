@@ -103,7 +103,7 @@ const RecipeListItem = ({ recipe, saveRecipe, saveDislikeRecipe, selectRecipe, c
         </tbody>
       </table>
     </div>
-  )
+  );
 };
 
 
