@@ -61,6 +61,7 @@ class App extends React.Component {
   getRecipes(ingredients) {
     return axios.get('/food', {
       params: {
+        userId: this.state.userId,
         ingredients,
       },
     }) // sends a GET request to serve at endpoint '/food'
@@ -197,6 +198,7 @@ class App extends React.Component {
         console.log(res, 'LOGGING IN');
         this.setState({
           authorized: true,
+          userId: res.data.user.id,
           userName: res.data.user.username,
         });
         this.componentDidMount();
