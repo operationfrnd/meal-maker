@@ -28,7 +28,7 @@ class Search extends React.Component {
           <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         </div>
 
-        <div>
+        <div className="test">
           <RecipeList recipes={recipes} saveRecipe={saveRecipe} saveDislikeRecipe={saveDislikeRecipe} selectRecipe={selectRecipe} changeView={changeView}> </RecipeList>
         </div>
 
