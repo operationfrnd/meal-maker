@@ -1,12 +1,12 @@
 # Project Name
 
-> Pithy project description
+> Meal Maker project description
 
 ## Team
 
   - __Product Owner__: teamMember
   - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Development Team Members__: Phuoc Nguyen, Frank D'Amico, Austin Reed, Julien de la Mettrie
 
 ## Table of Contents
 
@@ -21,12 +21,19 @@
 ## Usage
 
 > Some usage instructions
+1) Login / Sign Up
+2) Look at your saved recipes or launch a new search, inputting what's in your fridge
+3) Save recipes for later or to never see them again
+4) Click on the recipe title to view recipe details (video & instructions)
+5) Click on Home or Logo to get back to Home Page
+6) Client on Saved Recipes to see previously saved recipes
+7) Click on the recipe title to view recipe details (video & instructions)
+8) Click on Home or Logo to get back to Home Page
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
+- Node > 8.14
+- Mysql: 2.16.0
 - etc
 - etc
 
@@ -36,10 +43,9 @@
 
 From within the root directory:
 
-```sh
-sudo npm install -g bower
 npm install
-bower install
+
+
 ```
 
 ### Roadmap
