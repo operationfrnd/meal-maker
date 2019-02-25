@@ -52,7 +52,7 @@ class Main extends React.Component {
             : 'nav-unselected'}
             onClick={() => this.changeView('search')}
           >
-            Search
+            Home
           </Button>
           <Button variant="contained" color="primary" type="button" className={this.state.view === 'saved'
             ? 'nav-selected'
@@ -63,6 +63,9 @@ class Main extends React.Component {
             }}
           >
             Saved Recipes
+          </Button>
+          <Button variant="contained" color="primary" type="button">
+            Logout
           </Button>
         </div>
 
