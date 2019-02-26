@@ -7,7 +7,7 @@ const SavedRecipes = ({ savedRecipes, changeView, selectRecipe }) => (
   <div className="saved-recipes-container">
     <h1>Your saved recipes</h1>
     <div>
-      <SavedRecipesList savedRecipes={savedRecipes} changeView={changeView} selectRecipe={selectRecipe}  />
+      <SavedRecipesList savedRecipes={savedRecipes} changeView={changeView} selectRecipe={selectRecipe} />
     </div>
   </div>
 );

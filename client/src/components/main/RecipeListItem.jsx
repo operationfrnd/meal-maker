@@ -9,7 +9,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
-// import green from '@material-ui/core/colors/green';
 
 const StyledButtonSave = withStyles({
   root: {
@@ -19,7 +18,6 @@ const StyledButtonSave = withStyles({
     color: 'white',
     height: 28,
     padding: '0 20px',
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
   label: {
     textTransform: 'capitalize',
@@ -35,7 +33,6 @@ const StyledButtonDislike = withStyles({
     color: 'white',
     height: 28,
     padding: '0 20px',
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
   label: {
     textTransform: 'capitalize',

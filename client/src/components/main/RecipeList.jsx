@@ -3,7 +3,8 @@
 import React from 'react';
 import RecipeListItem from './RecipeListItem.jsx';
 
-const RecipeList = ({ recipes, onClick, saveRecipe, saveDislikeRecipe, selectRecipe, changeView }) => {
+const RecipeList = ({ recipes, onClick, saveRecipe, 
+  saveDislikeRecipe, selectRecipe, changeView }) => {
   return (
     <div className="recipe-list">
       {recipes.map((recipe) => {
