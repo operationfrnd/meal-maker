@@ -11,11 +11,8 @@
 // 3) a recipe instructions component (with a scrolling list of instructions)
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import VideoPlayer from '../VideoPlayer.jsx';
-import RecipeList from './RecipeList.jsx';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
-import RecipeInstructions from '../login/RecipeInstructions.jsx';
 import Recipe from '../Recipe.jsx';
 import logo from '../../../images/clearLogo.png';
 
@@ -29,34 +26,41 @@ class Main extends React.Component {
     this.changeView = this.changeView.bind(this);
   }
 
-  // function to change between search and saved view
+  // function to change between views
   changeView(option) {
     this.setState({
       view: option,
     });
   }
 
-
-
   render() {
-    const { selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes, ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user } = this.props;
+    const { selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes, 
+      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user } = this.props;
     const { view } = this.state;
 
     return (
       <div>
         <div className="nav">
           <input type="image" src={logo} width="7%" height="auto" onClick={() => this.changeView('search')} />
-          <button className="mealMakerLogo" onClick={() => this.changeView('search')}>mealMaker</button>
-          <Button variant="contained" color="primary" type="button" className={this.state.view === 'search'
-            ? 'nav-selected'
-            : 'nav-unselected'}
+          <button type="button" className="mealMakerLogo" onClick={() => this.changeView('search')}>mealMaker</button>
+          <Button
+            variant="contained"
+            color="primary"
+            type="button"
+            className={view === 'search'
+              ? 'nav-selected'
+              : 'nav-unselected'}
             onClick={() => this.changeView('search')}
           >
             Home
           </Button>
-          <Button variant="contained" color="primary" type="button" className={this.state.view === 'saved'
-            ? 'nav-selected'
-            : 'nav-unselected'}
+          <Button
+            variant="contained"
+            color="primary"
+            type="button"
+            className={view === 'saved'
+              ? 'nav-selected'
+              : 'nav-unselected'}
             onClick={() => {
               getSavedRecipes();
               this.changeView('saved');
@@ -92,35 +96,5 @@ class Main extends React.Component {
     );
   }
 }
-
-
-//     <div>
-//       <div className="logo">
-//         {/* <img></img> */}
-//       </div>
-//       <h2>Hello Main</h2>
-//       <div className="search">
-//         <Search ingredients={ingredients} />
-//       </div>
-//       <div className="recipe-list">
-//         <RecipeList recipe={recipes} onClick={this.onClick} />
-//       </div>
-//       <div className="saved-recipes">
-//         <SavedRecipes savedRecipes={savedRecipes} />
-//       </div>
-// <div className="recipe-of-the-day-container">
-//   <table>
-//     <tbody>
-//       <tr>
-//         <td className="vidPlayer"><VideoPlayer recipe={recipe} /></td>
-//         <td className="instructions"><RecipeInstructions recipe={recipe} /></td>
-//       </tr>
-//     </tbody>
-//   </table>
-// </div>
-//     </div>
-//   );
-// }
-// }
 
 export default Main;

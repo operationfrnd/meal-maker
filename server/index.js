@@ -10,17 +10,13 @@ const errorHandler = require('errorhandler');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs');
 const session = require('express-session');
-const passport = require('passport');
 const cors = require('cors');
-const Auth0Strategy = require('passport-auth0');
 const _ = require('lodash');
-const Auth = require('../src/Auth/Auth');
 const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
 
-//Configure isProduction variable
+// Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
@@ -47,9 +43,9 @@ app.get('/food', (req, res) => {
     }
     // respond with an array of objects which contain recipe information
     console.log(recipes);
-    db.selectAllRecipes((err, savedRecipes) => {
+    db.selectAllRecipes((error, savedRecipes) => {
       if (err) {
-        return console.log(err);
+        return console.log(error);
       }
       _.forEach(recipes, (recipe) => {
         const previousInstances = _.filter(savedRecipes, savedRecipe => savedRecipe.recipe === recipe.name).length;
@@ -217,8 +213,8 @@ app.get('/search', (req, res) => {
 
 // when client requests to sign up/create a new user
 app.post('/signup', (req, res) => {
-  console.log(req.body, typeof(req.body.params.username), 'BODY');
-  if (!req.body.params.username || !req.body.params.password || req.body.params.password === "" || req.body.params.username === "") {
+  console.log(req.body, typeof (req.body.params.username), 'BODY');
+  if (!req.body.params.username || !req.body.params.password || req.body.params.password === '' || req.body.params.username === '') {
     return res.status(500).redirect('/restrictedhome');
   }
   return db.selectAllUsers((err, users) => {
@@ -312,27 +308,13 @@ app.get('/savedrecipes', (req, res) => {
         }
         console.log(recipesObj);
       }));
-      // .then((recipesInfo) => {
-    // })
-    // .catch((err) => {
-    //   console.log('not successful');
-    // })
     }
   });
-  // .then((results) => {
-  //   console.log(results);
-  // })
-  // .catch((err) => {
-  //   console.log('error in db saved fiels');
-  // })
 });
 
 // when client wants to save a recipe into DB
 app.post('/toBeSaved', (req, res) => {
-  // const userId = req.body.userId;
-  // const recipeId = req.body.recipeId;
   const { userId, recipeId } = req.body;
-  console.log(userId, recipeId);
   db.selectLikedRecipes(userId, (err, ids) => {
     const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
     if (previousInstances === 0) {
@@ -340,7 +322,7 @@ app.post('/toBeSaved', (req, res) => {
         if (err) {
           return res.status(500).send('Something Went Wrong!');
         }
-        console.log('recipe saved into DB')
+        console.log('recipe saved into DB');
         return res.status(204).send('Saved Recipe To The Saved Table');
       });
     }
@@ -353,7 +335,6 @@ app.post('/toBeSavedDislike', (req, res) => {
   // const userId = req.body.userId;
   // const recipeId = req.body.recipeId;
   const { userId, recipeId } = req.body;
-  console.log(userId, recipeId);
   db.selectDislikedRecipes(userId, (err, ids) => {
     const previousInstances = _.filter(ids, id => recipeId === id.idRecipes).length;
     if (previousInstances === 0) {

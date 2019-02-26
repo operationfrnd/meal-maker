@@ -1,8 +1,6 @@
 // component with a list of instructions for the recipe of the day which can be scrolled
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { ListItemText } from '@material-ui/core';
-import { inflate } from 'zlib';
 
 class RecipeInstructions extends React.Component {
   constructor(props) {

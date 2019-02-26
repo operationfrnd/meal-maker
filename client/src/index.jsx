@@ -3,19 +3,11 @@
 /* eslint import/extensions: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import Login from './components/login/Login.jsx';
-import Recipe from './components/Recipe.jsx';
-import sampleData from './example_rfn_data';
-import Credentials from './components/login/Credentials.jsx';
-import RecipeInstructions from './components/login/RecipeInstructions.jsx';
-import VideoPlayer from './components/VideoPlayer.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
-// import LightBackground from './images/backgroundlight.jpg'; // Tell Webpack this JS file uses this image
 
-// console.log(LightBackground);
 
 class App extends React.Component {
   constructor(props) {
@@ -30,8 +22,8 @@ class App extends React.Component {
       authorized: false,
       show: 'login',
       userName: '',
-      // show: 'search',
     };
+    // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
@@ -43,25 +35,22 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // let mainComponent = 'login';
     const { authorized } = this.state;
     this.getRandomRecipe();
-    // this.getSavedRecipes();
     this.grabIngredients();
     if (authorized) {
       this.setState({
         show: 'home',
       });
-    // } else {
-    //   mainComponent = 'login';
     }
   }
 
   // function to retrieve recipes to display
   getRecipes(ingredients) {
+    const { userId } = this.state;
     return axios.get('/food', {
       params: {
-        userId: this.state.userId,
+        userId,
         ingredients,
       },
     }) // sends a GET request to serve at endpoint '/food'
@@ -74,6 +63,7 @@ class App extends React.Component {
       });
   }
 
+  // function to retrieve the recipe of the day
   getRandomRecipe() {
     return axios.get('/recipeoftheday') // sends get request to server for random recipe
       .then((recipe) => {
@@ -86,16 +76,15 @@ class App extends React.Component {
       });
   }
 
+  // function to retrieve all saved recipes for the current user
   getSavedRecipes() {
     const { userId } = this.state;
-    // debugger;
     return axios.get('/savedrecipes', {
       params: {
         userId,
       },
     }) // sends get request to server for saved recipes
       .then((results) => {
-        // console.log(results);
         this.setState({
           savedRecipes: results.data,
         });
@@ -107,16 +96,14 @@ class App extends React.Component {
 
   // gets all ingredients saved to db to for autocomplete component
   grabIngredients() {
-    // console.log('grabbing');
     axios.get('/ingredients')
       .then((allIngOptions) => {
-        // console.log(Array.isArray(allIngOptions.data), 'Opt');
         this.setState({
           ingredients: allIngOptions.data,
         });
       })
-      .catch((err) => {
-        console.log('error in getting all ingredients');
+      .catch((error) => {
+        console.log(error, 'error in getting all ingredients');
       });
   }
 
@@ -124,12 +111,12 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveRecipe(recipe) {
     const { userId } = this.state;
-    console.log(userId);
     return axios.post('/toBeSaved', {
       userId,
       recipeId: recipe.recipeId,
     })
       .then((result) => {
+        console.log(result);
       }).catch((err) => {
         console.log(err, 'error while trying to save recipe into DB');
       });
@@ -150,11 +137,13 @@ class App extends React.Component {
       });
   }
 
+  // function to update the state with a selected recipe => passed down to list items below
   selectRecipe(recipe) {
     this.setState({
       selectedRecipe: recipe,
     });
   }
+
 
   signUp(user, pw) {
     console.log(`thank you for signing up, ${user}`);
@@ -177,11 +166,7 @@ class App extends React.Component {
         this.componentDidMount();
       })
       .catch((bool) => {
-        console.log('could not log in after signup');
-        // this.setState({
-        //   authorized: true,
-        // });
-        // this.componentDidMount();
+        console.log(bool, 'could not log in after signup');
       });
   }
 
@@ -205,21 +190,18 @@ class App extends React.Component {
       })
       .catch(() => {
         console.log('could not log in');
-        // document.getElementById('username').del
-      //   this.setState({
-      //     authorized: true,
-      //   });
-      //   this.componentDidMount();
       });
   }
 
   render() {
-    console.log(this);
+    const { show } = this.state;
     let mainComponent = 'login';
-    const { recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName } = this.state;
-    if (this.state.show === 'login') {
+    const {
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName,
+    } = this.state;
+    if (show === 'login') {
       mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
-    } else if (this.state.show === 'home') {
+    } else if (show === 'home') {
       mainComponent = (
         <Main
           recipes={recipes}
@@ -240,25 +222,6 @@ class App extends React.Component {
       <div>
         {mainComponent}
       </div>
-      // <div>
-      //   <div>
-      //     <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />
-      //   </div>
-      //   <div>
-      //     <Main
-      //       recipes={recipes}
-      //       recipeOfTheDay={recipeOfTheDay}
-      //       selectedRecipe={selectedRecipe}
-      //       savedRecipes={savedRecipes}
-      //       ingredients={ingredients}
-      //       getRecipes={this.getRecipes}
-      //       saveRecipe={this.saveRecipe}
-      //       saveDislikeRecipe={this.saveDislikeRecipe}
-      //       getSavedRecipes={this.getSavedRecipes}
-      //       selectRecipe={this.selectRecipe}
-      //     />
-      //   </div>
-      // </div>
     );
   }
 }

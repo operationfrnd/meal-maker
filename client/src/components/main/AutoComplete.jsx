@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-// import './AutoComplete.css';
 
 class AutoComplete extends React.Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class AutoComplete extends React.Component {
     this.state = {
       suggestions: [],
       text: '',
-      // ingredientList: [],
       selectedIngredients: [],
     };
     this.onTextChange = this.onTextChange.bind(this);
@@ -18,13 +16,13 @@ class AutoComplete extends React.Component {
     this.addIngredient = this.addIngredient.bind(this);
   }
 
-
   onTextChange(e) {
+    const { ingredients } = this.props;
     const { value } = e.target;
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, 'i');
-      suggestions = this.props.ingredients.sort().filter(v => regex.test(v));
+      suggestions = ingredients.sort().filter(v => regex.test(v));
     }
     this.setState({ suggestions, text: value });
   }
@@ -55,7 +53,13 @@ class AutoComplete extends React.Component {
     }
     return (
       <ul className="auto-ulist">
-        {suggestions.map(ingredient => <li className="auto-list" onClick={() => this.suggestionSelected(ingredient)} key={ingredient}>{ingredient}</li>)}
+        {suggestions.map(ingredient => (
+          <li 
+            className="auto-list" 
+            onClick={() => this.suggestionSelected(ingredient)} 
+            key={ingredient}>{ingredient}
+          </li>
+        ))}
       </ul>
     );
   }
@@ -77,7 +81,6 @@ class AutoComplete extends React.Component {
           </ul>
         </div>
         <div className="buttons">
-          {/* <Button className="showMore" variant="contained" color="primary" type="button" onClick={() => this.addIngredient(text)}>Add</Button> */}
           <Button className="search" variant="contained" color="primary" type="button" onClick={() => getRecipes(selectedIngredients.join(', '))}>Search</Button>
         </div>
       </div>

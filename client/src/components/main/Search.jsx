@@ -3,7 +3,6 @@
 import React, { Component, Fragment } from 'react';
 import VideoPlayer from '../VideoPlayer.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
-// import PropTypes from "prop-types";
 import RecipeList from './RecipeList.jsx';
 import AutoComplete from './AutoComplete.jsx';
 
@@ -21,7 +20,8 @@ class Search extends React.Component {
     return (
       <div>
         <h2 className="Lobster">
-          Welcome, {user}
+          Welcome, 
+          {user}
         </h2>
         <h2 align="center">Search for a recipe</h2>
         <div className="Search-Comp">
