@@ -32,7 +32,7 @@
 
 ## Requirements
 
-- Node > 8.14
+- Node: > 8.14
 - Mysql: 2.16.0
 - etc
 - etc
