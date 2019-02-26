@@ -7,16 +7,9 @@ class Credentials extends React.Component {
     super(props);
 
     this.state = {
-      // email: "",
-      // password: ""
     };
-  //   this.clearField = this.clearField.bind(this);
   }
 
-  // clearField(user, pw) {
-  //   document.getElementById('username').reset();
-  //   document.getElementById('password').reset();
-  // }
 
   render() {
     const { signUp, login } = this.props;

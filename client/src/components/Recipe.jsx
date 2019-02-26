@@ -8,7 +8,6 @@ import VideoPlayer from './VideoPlayer.jsx';
 const Recipe = ({ selectedRecipe }) => {
   return (
     <div className="selected-recipe">
-      {/* <h1>{selectedRecipe.name}</h1> */}
       <table>
         <tbody>
           <tr>
