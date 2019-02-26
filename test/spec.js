@@ -36,12 +36,13 @@ describe('', function () {
   // };
 
   beforeEach(function (done) {
-    const tablenames = ['Users', 'Recipes', 'Ingredients', 'Saved', 'Dislikes', 'RecipeOfTheDay', 'recipesIngredients'];
+  // const tablenames = ['Users', 'Recipes', 'Ingredients', 'Saved', 'Dislikes', 'RecipeOfTheDay', 'recipesIngredients'];
 
     db = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: 'mealmaker',
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
     });
 
     // db.connect((err) => {
@@ -57,40 +58,90 @@ describe('', function () {
   });
 
   describe('Database Schema:', function () {
-    it('contains a users table', function (done) {
+    it('contains a Users table', function (done) {
       const queryString = 'SELECT * FROM Users';
       db.query(queryString, (err, results) => {
         if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
 
-        expect(results).to.deep.equal([]);
+    // it('contains id, username, password columns', function (done) {
+    //   const newUser = {
+    //     username: 'Howard',
+    //     password: 'p@ssw0rd',
+    //   };
+    //   db.query('INSERT INTO Users SET ?', newUser, function (err, results) {
+    //     db.query('SELECT * FROM Users WHERE username = ?', newUser.username, function (err, results) {
+    //       const user = results[0];
+    //       expect(user.username).to.exist;
+    //       expect(user.password).to.exist;
+    //       expect(user.id).to.exist;
+    //       expect(user.salt).to.exist;
+    //       done();
+    //     });
+    //   });
+    // });
+
+
+    it('contains a Recipes table', function (done) {
+      const queryString = 'SELECT * FROM Recipes';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
+    it('contains a Saved table', function (done) {
+      const queryString = 'SELECT * FROM Saved';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
+    it('contains a Dislikes table', function (done) {
+      const queryString = 'SELECT * FROM Dislikes';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
+    it('contains a Ingredient table', function (done) {
+      const queryString = 'SELECT * FROM Ingredient';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
+    it('contains a RecipeOfTheDay table', function (done) {
+      const queryString = 'SELECT * FROM RecipeOfTheDay';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
+        done();
+      });
+    });
+    it('contains a recipesIngredients table', function (done) {
+      const queryString = 'SELECT * FROM recipesIngredients';
+      db.query(queryString, (err, results) => {
+        if (err) { return done(err); }
+        expect(results).to.be.an.instanceof(Array);
         done();
       });
     });
   });
 
 
-  describe('Server', () => {
-    describe('Endpoints', () => {
-      describe('/food', () => {
-        it('should give back an array of objects', () => {
-          axios.get('https://localhost:3001/').then((res) => {
-            console.log(res);
-          }).catch((err) => {
-            console.log(err);
-          });
-        });
-      });
-    });
-  });
-
-
   describe('Account Login:', function () {
-
     beforeEach(function (done) {
       const options = {
         method: 'POST',
-        uri: 'http://127.0.0.1:3001/signup',
-        json: {
+        uri: 'http://127.0.0.1:3001/api/users',
+        user: {
           username: 'Samantha',
           password: 'Samantha',
         },
@@ -104,18 +155,18 @@ describe('', function () {
     it('Logs in existing users', function (done) {
       const options = {
         method: 'POST',
-        uri: 'http://127.0.0.1:3001/login',
-        json: {
+        uri: 'http://127.0.0.1:3001/api/users/login',
+        user: {
           username: 'Samantha',
           password: 'Samantha',
         },
       };
 
-      request(options, (error, res, body) => {
-        if (error) { return done(error); }
-        expect(res.headers.location).to.equal('/');
-        done();
-      });
+      // request(options, (error, res, body) => {
+      //   if (error) { return done(error); }
+      //   expect(res.headers.location).to.equal('/');
+      //   done();
+      // });
     });
   });
 });
