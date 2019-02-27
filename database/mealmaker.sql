@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS mealmaker;
-CREATE DATABASE mealmaker;
+-- DROP DATABASE IF EXISTS mealmaker;
+-- CREATE DATABASE mealmaker;
 -- command for root user and no password
 -- mysql -u root < database/mealmaker.sql
--- DROP TABLE IF EXISTS Users;
 
 USE mealmaker;
+-- DROP TABLE IF EXISTS Users;
         
 -- USERS table to hold id, username, and hashed password
 CREATE TABLE Users (
@@ -12,7 +12,7 @@ CREATE TABLE Users (
   username VARCHAR(50) NOT NULL,
   password TEXT(4294967295) NOT NULL,
   salt VARCHAR(100) NOT NULL,
-  loggedIn VARCHAR(50) NOT NULL DEFAULT 'true',
+  loggedIn VARCHAR(50) NOT NULL DEFAULT true,
   PRIMARY KEY (id)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE Users (
 -- RECIPES TABLE that holds the recipe name and ID for query 
 CREATE TABLE Recipes (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  recipe TEXT NOT NULL,
+  recipe TEXT(255) NOT NULL,
   idRecipieFoodNutrition INTEGER NOT NULL,
   recipeImageLink VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
@@ -37,8 +37,10 @@ CREATE TABLE Ingredient (
 CREATE TABLE Dislikes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
-  idRecipes TEXT NOT NULL,
-  PRIMARY KEY (id)
+  idRecipes INTEGER (7) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idUsers) REFERENCES Users (id),
+  FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
 );
 -- ---
 -- Saved recipes, holds user's id and id recipe      
@@ -46,7 +48,9 @@ CREATE TABLE Saved (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
   idRecipes INTEGER NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (idUsers) REFERENCES Users (id),
+  FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
 );
 -- ---
 
@@ -60,7 +64,8 @@ CREATE TABLE RecipeOfTheDay (
   recipeImageLink VARCHAR(255) NOT NULL,
   cookTime INTEGER NOT NULL,
   date INTEGER NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (idRecipe) REFERENCES Recipes (id)
 );
 -- ---
 
@@ -68,44 +73,45 @@ CREATE TABLE RecipeOfTheDay (
 -- One recipe id may have multiple idIngredients     
 CREATE TABLE recipesIngredients (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  idRecipe INTEGER NOT NULL,
-  ingredients TEXT NOT NULL,
-  PRIMARY KEY (id)
+  idRecipes INTEGER NOT NULL,
+  idIngredients INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idRecipes) REFERENCES Recipes (id),
+  FOREIGN KEY (idIngredients) REFERENCES Ingredient (id)
 );
--- ---
+
+INSERT INTO `Users` (`id`,`username`,`password`) VALUES
+('','','');
+INSERT INTO `Recipes ` (`id`,`recipe`,`idRecipieFoodNutrition`) VALUES
+('','','');
+INSERT INTO `Ingredients` (`id`,`ingredient`) VALUES
+('','');
+INSERT INTO `Dislikes` (`id`,`idUsers`,`idRecipes`) VALUES
+('','','');
+INSERT INTO `Saved` (`id`,`idUsers`,`idRecipes`) VALUES
+('','','');
+INSERT INTO `RecipeOfTheDay` (`id`,`link`,`idRecipe`) VALUES
+('','','');
+INSERT INTO `recipesIngredients` (`id`,`idRecipes`,`idIngredients`) VALUES
+('','','');
+---
+
 -- Foreign Keys 
--- ---
--- ALTER TABLE `Dislikes` ADD FOREIGN KEY (idUsers) REFERENCES `Users` (`id`);
--- ALTER TABLE `Dislikes` ADD FOREIGN KEY (idRecipes) REFERENCES `Recipes ` (`id`);
--- ALTER TABLE `Saved` ADD FOREIGN KEY (idUsers) REFERENCES `Users` (`id`);
--- ALTER TABLE `Saved` ADD FOREIGN KEY (idRecipes) REFERENCES `Recipes ` (`id`);
--- ALTER TABLE `Recipe of the Day` ADD FOREIGN KEY (idRecipe) REFERENCES `Recipes ` (`id`);
--- ALTER TABLE `recipe's ingredients` ADD FOREIGN KEY (idRecipes) REFERENCES `Recipes ` (`id`);
--- ALTER TABLE `recipe's ingredients` ADD FOREIGN KEY (idIngredients) REFERENCES `Ingredients` (`id`);
--- ---
+---
+-- ALTER TABLE Dislikes ADD CONSTRAINT FOREIGN KEY (idUsers) REFERENCES Users (id);
+-- ALTER TABLE Dislikes ADD FOREIGN KEY (idRecipes) REFERENCES Recipes (id);
+-- ALTER TABLE Saved ADD FOREIGN KEY (idUsers) REFERENCES Users (id);
+-- ALTER TABLE Saved ADD FOREIGN KEY (idRecipes) REFERENCES Recipes (id);
+-- ALTER TABLE `Recipe of the Day` ADD FOREIGN KEY (idRecipe) REFERENCES Recipes (id);
+-- ALTER TABLE `recipe's` ingredients ADD FOREIGN KEY (idRecipes) REFERENCES Recipes (id);
+-- ALTER TABLE `recipe's` ingredients ADD FOREIGN KEY (idIngredients) REFERENCES Ingredients (id);
+---
 -- Table Properties
--- ---
+---
 -- ALTER TABLE `Users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Recipes ` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Recipes` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Ingredients` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Dislikes` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Saved` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Recipe of the Day` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `recipe's ingredients` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ---
--- Test Data
--- ---
--- INSERT INTO `Users` (`id`,`username`,`password`) VALUES
--- ('','','');
--- INSERT INTO `Recipes ` (`id`,`recipe`,`idRecipieFoodNutrition`) VALUES
--- ('','','');
--- INSERT INTO `Ingredients` (`id`,`ingredient`) VALUES
--- ('','');
--- INSERT INTO `Dislikes` (`id`,`idUsers`,`idRecipes`) VALUES
--- ('','','');
--- INSERT INTO `Saved` (`id`,`idUsers`,`idRecipes`) VALUES
--- ('','','');
--- INSERT INTO `Recipe of the Day` (`id`,`link`,`idRecipe`) VALUES
--- ('','','');
--- INSERT INTO `recipe's ingredients` (`id`,`idRecipes`,`idIngredients`) VALUES
--- ('','','');```
