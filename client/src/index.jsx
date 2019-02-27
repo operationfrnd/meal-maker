@@ -23,6 +23,7 @@ class App extends React.Component {
       authorized: false,
       show: 'login',
       userName: '',
+      buttonClicked: false,
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -147,6 +148,7 @@ class App extends React.Component {
 
 
   signUp(user, pw) {
+    this.setState({ buttonClicked: true });
     console.log(`thank you for signing up, ${user}`);
     console.log(`Hello, ${user}`);
     axios.post('/api/users', {
@@ -164,14 +166,17 @@ class App extends React.Component {
           userId: res.data.user.id,
           userName: res.data.user.username,
         });
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
       })
       .catch((bool) => {
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         console.log(bool, 'could not log in after signup');
       });
   }
 
   login(user, pw) {
+    this.setState({ buttonClicked: true });
     console.log('logged in');
     console.log(`Hello, ${user}`);
     axios.post('/api/users/login', {
@@ -187,9 +192,11 @@ class App extends React.Component {
           userId: res.data.user.id,
           userName: res.data.user.username,
         });
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
       })
       .catch(() => {
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         console.log('could not log in');
       });
   }
@@ -198,10 +205,10 @@ class App extends React.Component {
     const { show } = this.state;
     let mainComponent = 'login';
     const {
-      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName,
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, buttonClicked,
     } = this.state;
     if (show === 'login') {
-      mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
+      mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} buttonClicked={buttonClicked} />;
     } else if (show === 'home') {
       mainComponent = (
         <Main
