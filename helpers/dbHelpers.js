@@ -171,7 +171,7 @@ const selectAllIngredients = (callback) => {
 const selectAllUsers = (callback) => {
   connection.query('SELECT * FROM Users', (err, users) => {
     if (err) {
-      callback(err, null)
+      callback(err, null);
     } else {
       callback(null, users);
     }

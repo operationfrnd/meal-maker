@@ -181,23 +181,23 @@ app.post('/random', (req, res) => {
 
 // get the current recipe of the day and update if necessary
 app.get('/recipeoftheday', (req, res) => {
-  db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
-    if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
-      axios.post('/random').then((res) => {
-        res.status(204).send(res.data);
-      });
-    } else {
-      const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
-      db.getRecipeIngredients(recipeOfTheDay.idRecipe, (error, ingredients) => {
-        if (error) {
-          res.status(500).send('Something went wrong!');
-        }
-        ingredients = _.map(ingredients, ingredient => ingredient.ingredients);
-        recipeOfTheDay.ingredients = ingredients.join('\n');
-        res.status(200).send(recipeOfTheDay);
-      });
-    }
-  });
+  //db.selectAllRecipeOfTheDay((err, oldRecipeOfTheDays) => {
+    // if (oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1].date !== new Date().getDate()) {
+    //   axios.post('/random').then((res) => {
+    //     res.status(204).send(res.data);
+    //   });
+    // } else {
+      // const recipeOfTheDay = oldRecipeOfTheDays[oldRecipeOfTheDays.length - 1];
+      // db.getRecipeIngredients(recipeOfTheDay.idRecipe, (error, ingredients) => {
+      //   if (error) {
+      //     res.status(500).send('Something went wrong!');
+      //   }
+      //   ingredients = _.map(ingredients, ingredient => ingredient.ingredients);
+      //   recipeOfTheDay.ingredients = ingredients.join('\n');
+      //   res.status(200).send(recipeOfTheDay);
+      // });
+    // }
+  // });
 });
 
 // client requests a single youtube video from a search query
