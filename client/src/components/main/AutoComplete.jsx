@@ -29,7 +29,6 @@ class AutoComplete extends React.Component {
 
 
   addIngredient(ingredient) {
-
     const { selectedIngredients } = this.state;
     selectedIngredients.push(ingredient);
     this.setState({
