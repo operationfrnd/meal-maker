@@ -7,7 +7,7 @@ CREATE DATABASE mealmaker;
 USE mealmaker;
         
 -- USERS table to hold id, username, and hashed password
-CREATE TABLE Users (
+CREATE TABLE users (
   id INTEGER AUTO_INCREMENT NOT NULL,
   username VARCHAR(50) NOT NULL,
   password TEXT(4294967295) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE Users (
 
 -- 
 -- RECIPES TABLE that holds the recipe name and ID for query 
-CREATE TABLE Recipes (
+CREATE TABLE recipes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   recipe TEXT NOT NULL,
   idRecipieFoodNutrition INTEGER NOT NULL,
@@ -27,14 +27,14 @@ CREATE TABLE Recipes (
 );
 -- ---
 -- INGREDIENTS TABLE populated to auto complete query by user
-CREATE TABLE Ingredient (
+CREATE TABLE ingredient (
   id INTEGER AUTO_INCREMENT NOT NULL,
   ingredient VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 -- ---
 -- Dislikes table, holds user's disliked recipes 
-CREATE TABLE Dislikes (
+CREATE TABLE dislikes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
   idRecipes TEXT NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE Dislikes (
 );
 -- ---
 -- Saved recipes, holds user's id and id recipe      
-CREATE TABLE Saved (
+CREATE TABLE saved (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
   idRecipes INTEGER NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE Saved (
 -- ---
 
 -- RECIPE OF THE DAY, holds recipes so there are no repeats for recipe of the day
-CREATE TABLE RecipeOfTheDay (
+CREATE TABLE recipeOfTheDay (
   id INTEGER AUTO_INCREMENT NOT NULL,
   name VARCHAR(255) NOT NULL,
   link VARCHAR(255) NOT NULL,
