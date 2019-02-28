@@ -80,6 +80,7 @@ CREATE TABLE recipesIngredients (
   FOREIGN KEY (idIngredients) REFERENCES Ingredient (id)
 );
 
+
 CREATE TABLE originalRecipes (
   id_original INTEGER AUTO_INCREMENT NOT NULL,
   recipe_name TEXT (40),
