@@ -34,8 +34,10 @@ class Main extends React.Component {
   }
 
   render() {
-    const { selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes, 
-      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user, path } = this.props;
+    const {
+ selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes,
+      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user, path 
+} = this.props;
     const { view } = this.state;
 
     return (
@@ -74,8 +76,8 @@ class Main extends React.Component {
         </div>
 
         <div className="main">
-          { view === 'search' ? 
-            (
+          { view === 'search' 
+            ? (
               <Search
                 ingredients={ingredients}
                 recipes={recipes}
@@ -89,8 +91,8 @@ class Main extends React.Component {
                 path={path}
               />
             )
-              : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe}/>
-              :  <Recipe selectedRecipe={selectedRecipe} />
+            : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe} />
+              : <Recipe selectedRecipe={selectedRecipe} />
           }
         </div>
       </div>

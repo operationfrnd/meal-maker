@@ -2,38 +2,6 @@ import React, { Component } from 'react';
 import ChatBot from '../../../react-simple-chatbot';
 
 class GreetForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     opened: true
-  //   }
-  
-  //   this.toggleFloating = ({ opened }) => {
-  //     this.setState({ opened }); 
-  //   };
-  // }
-
-  //   render() {
-  //     const { opened } = this.state;
-  //     const steps = [
-  //       {
-  //         id: 'hello-world',
-  //         message: 'Hello World!',
-  //         end: true,
-  //       },
-  //     ];
-  
-  //     return (
-  //       <ChatBot
-  //       handleEnd={this.toggleFloating}
-  //         steps={steps}
-  //         floating={false}
-  //         opened={opened}
-  //         toggleFloating={this.toggleFloating}
-  //       />
-  //     )
-  //   }
-  // }
   constructor(props) {
     super(props);
 
@@ -41,6 +9,7 @@ class GreetForm extends Component {
       allergies: [],
       favFood: '',
       opened: true,
+      first: true,
     };
 
     this.toggleFloating = ({ opened }) => {
@@ -54,8 +23,8 @@ class GreetForm extends Component {
     let { user, path } = this.props;
     const voices = speechSynthesis.getVoices();
     const setVoice = () => speechSynthesis.voice = voices[4];
-    if (path === 'signup') {
-      path = '/';
+    if (path === 'signup' && this.state.first) {
+      this.setState({ first: false });
       return (
         <ChatBot
           headerTitle="C.A.I.N."
@@ -162,8 +131,9 @@ class GreetForm extends Component {
           toggleFloating={this.toggleFloating}
         />
       );
-    } if (path === 'login') {
-      path = '/';
+    } if (path === 'login' && this.state.first) {
+      this.setState({ first: false });
+      console.log(this.props);
       return (
         <ChatBot
           headerTitle="C.A.I.N."
