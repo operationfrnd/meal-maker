@@ -18,7 +18,7 @@ class Search extends React.Component {
 
   render() {
     const {
-      recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe, changeView, user,
+      recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe, changeView, user, path
     } = this.props;
     return (
       <div>
@@ -26,7 +26,7 @@ class Search extends React.Component {
           Welcome,
           {user}
         </h2>
-        <GreetBot user={user} />
+        <GreetBot user={user} path={path} />
         <h2 align="center">Search for a recipe</h2>
         <div className="Search-Comp">
           <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />

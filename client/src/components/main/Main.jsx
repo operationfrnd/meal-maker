@@ -35,7 +35,7 @@ class Main extends React.Component {
 
   render() {
     const { selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes, 
-      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user } = this.props;
+      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user, path } = this.props;
     const { view } = this.state;
 
     return (
@@ -86,6 +86,7 @@ class Main extends React.Component {
                 changeView={this.changeView}
                 user={user}
                 selectRecipe={selectRecipe}
+                path={path}
               />
             )
               : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe}/>

@@ -22,6 +22,7 @@ class App extends React.Component {
       authorized: false,
       show: 'login',
       userName: '',
+      path: '/',
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -162,6 +163,7 @@ class App extends React.Component {
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'signup',
         });
         this.componentDidMount();
       })
@@ -185,6 +187,7 @@ class App extends React.Component {
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'login',
         });
         this.componentDidMount();
       })
@@ -197,7 +200,7 @@ class App extends React.Component {
     const { show } = this.state;
     let mainComponent = 'login';
     const {
-      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName,
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path,
     } = this.state;
     if (show === 'login') {
       mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
@@ -215,6 +218,7 @@ class App extends React.Component {
           getSavedRecipes={this.getSavedRecipes}
           selectRecipe={this.selectRecipe}
           user={userName}
+          path={path}
         />
       );
     }
