@@ -25,6 +25,7 @@ class App extends React.Component {
       userName: '',
       buttonClicked: false,
       whichFailed: null,
+      searchInProgress: false,
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -50,6 +51,7 @@ class App extends React.Component {
 
   // function to retrieve recipes to display
   getRecipes(ingredients) {
+    this.setState({ searchInProgress: true });
     const { userId } = this.state;
     return axios.get('/food', {
       params: {
@@ -208,6 +210,7 @@ class App extends React.Component {
     let mainComponent = 'login';
     const {
       recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, buttonClicked, whichFailed,
+      searchInProgress,
     } = this.state;
     if (show === 'login') {
       mainComponent = (
@@ -233,6 +236,7 @@ class App extends React.Component {
           getSavedRecipes={this.getSavedRecipes}
           selectRecipe={this.selectRecipe}
           user={userName}
+          searchInProgress={searchInProgress}
         />
       );
     }
