@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatBot from 'react-simple-chatbot';
+import ChatBot from '../../../react-simple-chatbot';
 
 class GreetForm extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class GreetForm extends React.Component {
     return (
       <ChatBot
         headerTitle="C.A.I.N."
-        speechSynthesis={{ enable: true, lang: 'en' }}
+        speechSynthesis={{ enable: true, lang: 'en', voice: voices[4] }}
         steps={[
           {
             id: '1',
@@ -28,7 +28,7 @@ class GreetForm extends React.Component {
           },
           {
             id: '3',
-            message: 'Please tell me if you have any allergies!\nYou can list them below, separated by a space',
+            message: 'Please tell me if you have any allergies!\nYou can list them below, separated by a comma',
             trigger: 'allergies',
           },
           {
@@ -36,12 +36,17 @@ class GreetForm extends React.Component {
             user: true,
             validator: (value) => {
               if (value) {
-                const allergy = value.split(' ');
+                const allergy = value.split(',');
                 this.setState({ allergies: allergy });
-                return `The following allergies: ${allergies.join(',')} have been saved`;
+                return true;
               }
               return true;
             },
+            trigger: '4',
+          },
+          {
+            id: '4',
+            message: 'Thank you! The following allergies: {previousValue} have been saved.',
             trigger: '5',
           },
           {
@@ -52,18 +57,23 @@ class GreetForm extends React.Component {
           {
             id: 'favFood',
             user: true,
-            trigger: '7',
             validator: (value) => {
               if (value) {
                 this.setState({ favFood: value });
-                return `Fuck yeah, ${favFood}!!!`;
+                return true;
               }
               return true;
             },
+            trigger: '6',
+          },
+          {
+            id: '6',
+            message: 'Fuck yeah, {previousValue}!!!',
+            trigger: '7',
           },
           {
             id: '7',
-            message: 'Would you like to update some field?',
+            message: 'Would you like to update any of the previous fields?',
             trigger: 'update-question',
           },
           {
