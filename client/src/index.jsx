@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import ChatBot from 'react-simple-chatbot';
 import Login from './components/login/Login.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
