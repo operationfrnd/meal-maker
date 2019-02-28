@@ -156,6 +156,7 @@ class App extends React.Component {
       },
     })
       .then((res) => {
+        window.previous = 'signup';
         console.log('made to signup');
         console.log(res.data.user, res.data.user.id, 'RESPONSE');
         console.log('where is res');
@@ -182,6 +183,7 @@ class App extends React.Component {
       },
     })
       .then((res) => {
+        window.previous = 'login';
         console.log(res, 'LOGGING IN');
         this.setState({
           authorized: true,
