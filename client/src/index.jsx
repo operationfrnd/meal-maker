@@ -59,10 +59,12 @@ class App extends React.Component {
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
+        setTimeout(() => this.setState({ searchInProgress: false }), 500);
         this.setState({ // change the state
           recipes: results.data, // by making the data received back fron the server available
         });
       }).catch((err) => {
+        setTimeout(() => this.setState({ searchInProgress: false }), 500);
         console.log(err, 'error while retrieving data from server');
       });
   }
