@@ -25,6 +25,7 @@ class App extends React.Component {
       buttonClicked: false,
       whichFailed: null,
       searchInProgress: false,
+      path: '/',
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -165,6 +166,7 @@ class App extends React.Component {
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'signup',
         });
         setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
@@ -194,6 +196,7 @@ class App extends React.Component {
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'login',
         });
         setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
@@ -220,8 +223,8 @@ class App extends React.Component {
     const { show } = this.state;
     let mainComponent = 'login';
     const {
-      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, buttonClicked, whichFailed,
-      searchInProgress,
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path, 
+      buttonClicked, whichFailed, searchInProgress,
     } = this.state;
     if (show === 'login') {
       mainComponent = (
@@ -249,6 +252,7 @@ class App extends React.Component {
           user={userName}
           searchInProgress={searchInProgress}
           logout={this.logout}
+          path={path}
         />
       );
     }
