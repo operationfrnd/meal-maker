@@ -11,7 +11,7 @@ const _ = require('lodash');
 const connection = require('../database/index.js').connection;
 
 const selectSingleRecipeById = (idOriginalDB, callback) => {
-  connection.query(`SELECT * FROM Recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
+  connection.query(`SELECT * FROM Recipes WHERE idRecipeFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -44,7 +44,7 @@ const selectAllRecipes = (callback) => {
 
 const saveRecipe = (recipeName, idOriginalDB, recipeImageLink, callback) => {
   let q = [recipeName, idOriginalDB, recipeImageLink];
-  connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition, recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO Recipes (recipe, idRecipeFoodNutrition, recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {

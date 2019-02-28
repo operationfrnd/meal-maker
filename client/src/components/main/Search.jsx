@@ -1,8 +1,8 @@
 // component with an input form, a + button and a submit button
 
 import React, { Component, Fragment } from 'react';
-import VideoPlayer from '../VideoPlayer.jsx';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import VideoPlayer from '../VideoPlayer.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
 import RecipeList from './RecipeList.jsx';
 import AutoComplete from './AutoComplete.jsx';

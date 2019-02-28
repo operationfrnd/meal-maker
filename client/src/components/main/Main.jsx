@@ -13,7 +13,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
-import Recipe from '../Recipe.jsx';
+import Recipe from '../recipe.jsx';
 import logo from '../../../images/clearLogo.png';
 
 

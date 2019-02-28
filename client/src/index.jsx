@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
 import Login from './components/login/Login.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
@@ -26,6 +27,8 @@ class App extends React.Component {
       whichFailed: null,
       searchInProgress: false,
       path: '/',
+      open: false,
+      message: '',
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -118,14 +121,19 @@ class App extends React.Component {
   // sends a POST request to serve at endpoint '/toBeSaved'
   // eslint-disable-next-line class-methods-use-this
   saveRecipe(recipe) {
+    this.setState({ open: true, message: 'Saving...' });
     const { userId } = this.state;
     return axios.post('/toBeSaved', {
       userId,
       recipeId: recipe.recipeId,
     })
       .then((result) => {
+        this.setState({ message: 'Saved to your recipes!' });
+        setTimeout(() => this.setState({ open: false }), 1000);
         console.log(result);
       }).catch((err) => {
+        this.setState({ message: 'You\'ve already saved that recipe!' });
+        setTimeout(() => this.setState({ open: false }), 1000);
         console.log(err, 'error while trying to save recipe into DB');
       });
   }
@@ -223,8 +231,8 @@ class App extends React.Component {
     const { show } = this.state;
     let mainComponent = 'login';
     const {
-      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path, 
-      buttonClicked, whichFailed, searchInProgress,
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path,
+      buttonClicked, whichFailed, searchInProgress, open, message,
     } = this.state;
     if (show === 'login') {
       mainComponent = (
@@ -259,6 +267,10 @@ class App extends React.Component {
     return (
       <div>
         {mainComponent}
+        <Snackbar 
+          open={open}
+          message={message}
+        />
       </div>
     );
   }
