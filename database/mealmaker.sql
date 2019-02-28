@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS mealmaker;
-CREATE DATABASE mealmaker;
+-- DROP DATABASE IF EXISTS mealmaker;
+-- CREATE DATABASE mealmaker;
 -- command for root user and no password
 -- mysql -u root < database/mealmaker.sql
 
 USE mealmaker;
-DROP TABLE IF EXISTS Users;
+-- DROP TABLE IF EXISTS Users;
         
 -- USERS table to hold id, username, and hashed password
 CREATE TABLE Users (
