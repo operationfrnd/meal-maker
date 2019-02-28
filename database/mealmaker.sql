@@ -5,7 +5,8 @@ CREATE DATABASE mealmaker;
 -- DROP TABLE IF EXISTS Users;
 
 USE mealmaker;
-        
+        INSERT INTO users (username, password, salt, loggedIn)
+        VALUES ("dave", "mealmaker", "salt", )
 -- USERS table to hold id, username, and hashed password
 CREATE TABLE users (
   id INTEGER AUTO_INCREMENT NOT NULL,
@@ -49,7 +50,8 @@ CREATE TABLE saved (
   PRIMARY KEY (id)
 );
 -- ---
-
+-- INSERT INTO recipeOfTheDay (name, link, instructions, idRecipe, recipeImageLink, cookTime, date) 
+-- VALUES ("Quick Pepperoni Calzones", "gF5STeRxX7Q", "Preheat oven to 350\nIn a small bowl, mix pepperoni, pasta sauce and mozzarella cheese.\nOn a lightly floured surface, divide dough into four portions.\nRoll each into a 6-in. circle; top each with a scant 1/3 cup pepperoni mixture. Fold dough over filling; pinch edges to seal.\nPlace on a greased baking sheet.\nBrush milk over tops; sprinkle with Parmesan cheese and, if desired, Italian seasoning.\nBake 20-25 minutes or until golden brown.", 995521, "https://i.ytimg.com/vi/gF5STeRxX7Q/hqdefault.jpg", 30, 19);
 -- RECIPE OF THE DAY, holds recipes so there are no repeats for recipe of the day
 CREATE TABLE recipeOfTheDay (
   id INTEGER AUTO_INCREMENT NOT NULL,

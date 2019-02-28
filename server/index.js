@@ -17,7 +17,8 @@ const helper = require('../helpers/apiHelpers');
 const db = require('../helpers/dbHelpers');
 
 // Configure isProduction variable
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = true;
 
 const app = express();
 

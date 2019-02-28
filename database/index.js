@@ -16,6 +16,14 @@ const connection = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+// THIS IS FOR LOCAL USE ONLY!! NEED TO CHANGE BACK TO
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'mealmaker',
+// });
+
 connection.connect((err) => {
   if (!err) {
     console.log('Houston, we have a db connection');

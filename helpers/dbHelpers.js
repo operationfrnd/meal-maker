@@ -11,7 +11,7 @@ const _ = require('lodash');
 const connection = require('../database/index.js').connection;
 
 const selectSingleRecipeById = (idOriginalDB, callback) => {
-  connection.query(`SELECT * FROM Recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
+  connection.query(`SELECT * FROM recipes WHERE idRecipieFoodNutrition = ${idOriginalDB}`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -21,7 +21,7 @@ const selectSingleRecipeById = (idOriginalDB, callback) => {
 };
 
 const selectSingleRecipeByName = (recipeName, callback) => {
-  connection.query(`SELECT * FROM Recipes WHERE recipe = '${recipeName}'`, (err, recipe) => {
+  connection.query(`SELECT * FROM recipes WHERE recipe = '${recipeName}'`, (err, recipe) => {
     if (err) {
       callback(err, null);
     } else {
@@ -31,7 +31,7 @@ const selectSingleRecipeByName = (recipeName, callback) => {
 };
 
 const selectAllRecipes = (callback) => {
-  connection.query('SELECT * FROM Recipes', (err, results) => {
+  connection.query('SELECT * FROM recipes', (err, results) => {
     if (err) {
       console.log('error in retrieving all recipes');
       callback(err, null);
@@ -44,7 +44,7 @@ const selectAllRecipes = (callback) => {
 
 const saveRecipe = (recipeName, idOriginalDB, recipeImageLink, callback) => {
   let q = [recipeName, idOriginalDB, recipeImageLink];
-  connection.query('INSERT INTO Recipes (recipe, idRecipieFoodNutrition, recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO recipes (recipe, idRecipieFoodNutrition, recipeImageLink) VALUES (?, ?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -54,7 +54,7 @@ const saveRecipe = (recipeName, idOriginalDB, recipeImageLink, callback) => {
 };
 
 const selectLikedRecipes = (userId, callback) => {
-  connection.query(`SELECT * FROM Saved WHERE idUsers = ${userId}`, (err, recipes) => {
+  connection.query(`SELECT * FROM saved WHERE idUsers = ${userId}`, (err, recipes) => {
     if (err) {
       return callback(err, null);
     }
@@ -64,7 +64,7 @@ const selectLikedRecipes = (userId, callback) => {
 
 const saveLikedRecipe = (userId, recipeId, callback) => {
   let q = [userId, recipeId];
-  connection.query('INSERT INTO Saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO saved (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -74,7 +74,7 @@ const saveLikedRecipe = (userId, recipeId, callback) => {
 };
 
 const selectAllRecipeOfTheDay = (callback) => {
-  connection.query('SELECT * FROM RecipeOfTheDay', (err, recipes) => {
+  connection.query('SELECT * FROM recipeOfTheDay', (err, recipes) => {
     if (err) {
       callback(err, null);
     } else {
@@ -85,7 +85,7 @@ const selectAllRecipeOfTheDay = (callback) => {
 
 const saveRecipeOfTheDay = (revcipeName, videoLink, recipeInstructions, ourDbRecipeId, cooktime, recipeImageLink, currentDate) => {
   let q = [revcipeName, videoLink, recipeInstructions, ourDbRecipeId, cooktime, recipeImageLink, currentDate];
-  connection.query('INSERT INTO RecipeOfTheDay (name, link, instructions, idRecipe, cooktime, recipeImageLink, date) VALUES (?, ?, ?, ?, ?, ?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO recipeOfTheDay (name, link, instructions, idRecipe, cooktime, recipeImageLink, date) VALUES (?, ?, ?, ?, ?, ?, ?)', q, (err, results) => {
     if (err) {
       console.log('could not save recipe of the day to database');
     } else {
@@ -95,7 +95,7 @@ const saveRecipeOfTheDay = (revcipeName, videoLink, recipeInstructions, ourDbRec
 };
 
 const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
-  connection.query(`UPDATE RecipeOfTheDay SET link = '${videoLink}', idRecipe = ${ourDbRecipeId} WHERE date = ${currentDate}`, (err, results) => {
+  connection.query(`UPDATE recipeOfTheDay SET link = '${videoLink}', idRecipe = ${ourDbRecipeId} WHERE date = ${currentDate}`, (err, results) => {
     if (err) {
       console.log('could not update recipe of the day', err);
     } else {
@@ -105,7 +105,7 @@ const updateRecipeOfTheDay = (videoLink, ourDbRecipeId, currentDate) => {
 };
 
 const selectDislikedRecipes = (userId, callback) => {
-  connection.query(`SELECT * FROM Dislikes WHERE idUsers = ${userId}`, (err, recipes) => {
+  connection.query(`SELECT * FROM dislikes WHERE idUsers = ${userId}`, (err, recipes) => {
     if (err) {
       callback(err, null);
     } else {
@@ -116,7 +116,7 @@ const selectDislikedRecipes = (userId, callback) => {
 
 const dislikeRecipe = (userId, recipeName, callback) => {
   let q = [userId, recipeName];
-  connection.query('INSERT INTO Dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
+  connection.query('INSERT INTO dislikes (idUsers, idRecipes) VALUES (?, ?)', q, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -127,7 +127,7 @@ const dislikeRecipe = (userId, recipeName, callback) => {
 
 const saveIngredient = (ingredientItem) => {
   let q = [ingredientItem];
-  connection.query('INSERT INTO Ingredient (ingredient) VALUES (?)', q, (err, results) => {
+  connection.query('INSERT INTO ingredient (ingredient) VALUES (?)', q, (err, results) => {
     if (err) {
       console.log('error in saving ingredient to db');
     } else {
@@ -158,7 +158,7 @@ const getRecipeIngredients = (recipeId, callback) => {
 };
 
 const selectAllIngredients = (callback) => {
-  connection.query('SELECT * FROM Ingredient', (err, results) => {
+  connection.query('SELECT * FROM ingredient', (err, results) => {
     if (err) {
       console.log('error in retrieving all ingredients');
     } else {
@@ -169,7 +169,7 @@ const selectAllIngredients = (callback) => {
 };
 
 const selectAllUsers = (callback) => {
-  connection.query('SELECT * FROM Users', (err, users) => {
+  connection.query('SELECT * FROM users', (err, users) => {
     if (err) {
       callback(err, null)
     } else {
@@ -187,7 +187,7 @@ const saveUser = (username, password, loggedin, callback) => {
       return oldUser.username === username;
     }).length;
     if (previousInstance === 0) {
-      return connection.query('INSERT INTO Users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
+      return connection.query('INSERT INTO users (username, password, salt, loggedIn) VALUES (?, ?, ?, ?)', q, (err) => {
         if (err) {
           console.log('could not insert new user into Users table');
           callback(err);
@@ -206,7 +206,7 @@ const saveUser = (username, password, loggedin, callback) => {
 };
 
 const logoutUser = (username) => {
-  connection.query(`UPDATE Users SET loggedIn = 'false' WHERE username = ${username}`, (err, results) => {
+  connection.query(`UPDATE users SET loggedIn = 'false' WHERE username = ${username}`, (err, results) => {
     if (err) {
       console.log(err);
     } else {
@@ -256,7 +256,7 @@ const toAuthJSON = (username, callback) => {
 };
 
 const loginUser = (username) => {
-  connection.query(`UPDATE Users SET loggedIn = 'true' WHERE username = '${username}'`, (err) => {
+  connection.query(`UPDATE users SET loggedIn = 'true' WHERE username = '${username}'`, (err) => {
     if (err) {
       console.log(err);
     } else {
