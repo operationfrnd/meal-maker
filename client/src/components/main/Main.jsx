@@ -37,7 +37,7 @@ class Main extends React.Component {
     const {
       selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes,
       ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user,
-      searchInProgress,
+      searchInProgress, logout,
     } = this.props;
     const { view } = this.state;
 
@@ -71,7 +71,7 @@ class Main extends React.Component {
           >
             Saved Recipes
           </Button>
-          <Button variant="contained" color="primary" type="button">
+          <Button variant="contained" color="primary" type="button" onClick={logout}>
             Logout
           </Button>
         </div>

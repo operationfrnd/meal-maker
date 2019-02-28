@@ -35,6 +35,7 @@ class App extends React.Component {
     this.selectRecipe = this.selectRecipe.bind(this);
     this.signUp = this.signUp.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -206,6 +207,15 @@ class App extends React.Component {
       });
   }
 
+  logout() {
+    this.setState({
+      authorized: false,
+      userId: null,
+      userName: null,
+      show: 'login',
+    });
+  }
+
   render() {
     const { show } = this.state;
     let mainComponent = 'login';
@@ -238,6 +248,7 @@ class App extends React.Component {
           selectRecipe={this.selectRecipe}
           user={userName}
           searchInProgress={searchInProgress}
+          logout={this.logout}
         />
       );
     }
