@@ -157,7 +157,6 @@ class Main extends React.Component {
                 changeView={this.changeView}
                 user={user}
                 selectRecipe={selectRecipe}
-                path={path}
               />
             )
             : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe} />
