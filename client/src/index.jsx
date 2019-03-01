@@ -40,6 +40,7 @@ class App extends React.Component {
     this.signUp = this.signUp.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.autoIngredient = this.autoIngredient.bind(this);
   }
 
   componentDidMount() {
@@ -236,6 +237,19 @@ class App extends React.Component {
       });
   }
 
+  autoIngredient(term, cb) {
+    axios.get('/autoIngredient', {
+      params: term,
+    })
+      .then((res) => {
+        console.log(res);
+        cb(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   logout() {
     this.setState({
       authorized: false,
@@ -280,13 +294,14 @@ class App extends React.Component {
           logout={this.logout}
           path={path}
           addOriginal={this.addOriginal}
+          autoIngredient={this.autoIngredient}
         />
       );
     }
     return (
       <div>
         {mainComponent}
-        <Snackbar 
+        <Snackbar
           open={open}
           message={message}
         />

@@ -16,15 +16,30 @@ class AutoComplete extends React.Component {
     this.addIngredient = this.addIngredient.bind(this);
   }
 
+  // onTextChange(e) {
+  //   const { ingredients } = this.props;
+  //   const { value } = e.target;
+  //   let suggestions = [];
+  //   if (value.length > 0) {
+  //     const regex = new RegExp(`^${value}`, 'i');
+  //     suggestions = ingredients.sort().filter(v => regex.test(v));
+  //   }
+  //   this.setState({ suggestions, text: value });
+  // }
+
   onTextChange(e) {
-    const { ingredients } = this.props;
     const { value } = e.target;
-    let suggestions = [];
-    if (value.length > 0) {
-      const regex = new RegExp(`^${value}`, 'i');
-      suggestions = ingredients.sort().filter(v => regex.test(v));
-    }
-    this.setState({ suggestions, text: value });
+    const { text } = this.state;
+    const q = value + text;
+    this.setState({ text: value });
+    this.props.autoIngredient(text, (ingredients) => {
+      const sugg = ingredients.map(i => i.food_name);
+      console.log(sugg);
+      console.log(this.state.suggestions);
+      this.setState({
+        suggestions: sugg,
+      });
+    });
   }
 
 

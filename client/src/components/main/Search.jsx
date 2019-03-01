@@ -20,7 +20,7 @@ class Search extends React.Component {
   render() {
     const {
       recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe,
-      changeView, user, searchInProgress, path,
+      changeView, user, searchInProgress, path, autoIngredient,
     } = this.props;
     return (
       <div>
@@ -32,11 +32,22 @@ class Search extends React.Component {
         <h2 align="center">Search for a recipe</h2>
         <div className="Search-Comp">
           {searchInProgress ? <LinearProgress /> : ''}
-          <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
+          <AutoComplete
+            ingredients={ingredients}
+            addIngredient={this.addIngredient}
+            getRecipes={getRecipes}
+            autoIngredient={autoIngredient}
+          />
         </div>
 
         <div className="test">
-          <RecipeList recipes={recipes} saveRecipe={saveRecipe} saveDislikeRecipe={saveDislikeRecipe} selectRecipe={selectRecipe} changeView={changeView} />
+          <RecipeList
+            recipes={recipes}
+            saveRecipe={saveRecipe}
+            saveDislikeRecipe={saveDislikeRecipe}
+            selectRecipe={selectRecipe}
+            changeView={changeView}
+          />
         </div>
 
         <h3 id="recipeTitle">Recipe of the day</h3>

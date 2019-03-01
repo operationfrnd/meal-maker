@@ -104,6 +104,15 @@ app.get('/ingredients', (req, res) => {
   });
 });
 
+// GET for ingredient autocomplete list
+app.get('/autoIngredient', (req, res) => {
+  console.log(req.query);
+  const list = helper.autoComplete(req.query[0]);
+  list.then((ingList) => {
+    res.status(200).send(ingList.data.common);
+  });
+});
+
 // get a single recipe by its name
 app.get('/single', (req, res) => {
   db.selectSingleRecipeByName(req.body.recipeName, (err, singleRecipeArray) => {
