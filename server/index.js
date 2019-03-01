@@ -350,6 +350,16 @@ app.post('/toBeSavedDislike', (req, res) => {
   });
 });
 
+app.post('/originalRecipes', (req, res) => {
+  db.addOriginalRecipe(req.body.name, req.body.ingredients, req.body.instructions, req.body.cooktime, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(200);
+    }
+  });
+});
+
 // Able to set port and still work //
 const port = process.env.PORT || 3001;
 

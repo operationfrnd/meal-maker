@@ -161,6 +161,18 @@ class App extends React.Component {
     });
   }
 
+  // function to save original recipes
+  addOriginal(name, ingredients, instructions, cooktime) {
+    return axios.post('/originalRecipes', {
+      name, ingredients, instructions, cooktime,
+    })
+      .then((result) => {
+        console.log(result);
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
 
   signUp(user, pw) {
     this.setState({ buttonClicked: true });
@@ -267,6 +279,7 @@ class App extends React.Component {
           searchInProgress={searchInProgress}
           logout={this.logout}
           path={path}
+          addOriginal={this.addOriginal}
         />
       );
     }
