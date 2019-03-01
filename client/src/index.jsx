@@ -142,6 +142,7 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveDislikeRecipe(recipe) {
     const { userId } = this.state;
+    this.setState({ open: true, message: 'You won\'t be seeing that recipe any more!' });
     return axios.post('/toBeSavedDislike', {
       userId,
       recipeId: recipe.recipeId,
