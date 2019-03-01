@@ -1,6 +1,7 @@
 // component with an input form, a + button and a submit button
 
 import React, { Component, Fragment } from 'react';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import VideoPlayer from '../VideoPlayer.jsx';
 import RecipeInstructions from '../login/RecipeInstructions.jsx';
 import RecipeList from './RecipeList.jsx';
@@ -18,7 +19,8 @@ class Search extends React.Component {
 
   render() {
     const {
-      recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe, changeView, user, path
+      recipeOfTheDay, recipes, getRecipes, ingredients, saveRecipe, saveDislikeRecipe, selectRecipe,
+      changeView, user, searchInProgress, path,
     } = this.props;
     return (
       <div>
@@ -29,6 +31,7 @@ class Search extends React.Component {
         <GreetBot user={user} path={path} />
         <h2 align="center">Search for a recipe</h2>
         <div className="Search-Comp">
+          {searchInProgress ? <LinearProgress /> : ''}
           <AutoComplete ingredients={ingredients} addIngredient={this.addIngredient} getRecipes={getRecipes} />
         </div>
 

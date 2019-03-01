@@ -14,7 +14,7 @@ import Popup from 'reactjs-popup';
 import Button from '@material-ui/core/Button';
 import SavedRecipes from './SavedRecipes.jsx';
 import Search from './Search.jsx';
-import Recipe from '../Recipe.jsx';
+import Recipe from '../recipe.jsx';
 import logo from '../../../images/clearLogo.png';
 
 
@@ -36,8 +36,11 @@ class Main extends React.Component {
   }
 
   render() {
-    const { addOriginal, selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes,
-      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user } = this.props;
+    const {
+      selectedRecipe, selectRecipe, recipeOfTheDay, recipes, savedRecipes,
+      ingredients, getRecipes, saveRecipe, saveDislikeRecipe, getSavedRecipes, user,
+      searchInProgress, logout, path,
+    } = this.props;
     const { view } = this.state;
     return (
       <div>
@@ -139,7 +142,7 @@ class Main extends React.Component {
               </div>
             )}
           </Popup>
-          <Button variant="contained" color="primary" type="button">
+          <Button variant="contained" color="primary" type="button" onClick={logout}>
             Logout
           </Button>
         </div>
@@ -156,6 +159,7 @@ class Main extends React.Component {
                 saveDislikeRecipe={saveDislikeRecipe}
                 changeView={this.changeView}
                 user={user}
+                searchInProgress={searchInProgress}
                 selectRecipe={selectRecipe}
               />
             )

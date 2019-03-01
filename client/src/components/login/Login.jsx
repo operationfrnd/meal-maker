@@ -23,7 +23,7 @@ class Login extends React.Component {
 
   render() {
     const {
-      recipe, signUp, login,
+      recipe, signUp, login, buttonClicked, whichFailed,
     } = this.props;
     return (
       <div className="background" style={sectionStyle}>
@@ -35,7 +35,7 @@ class Login extends React.Component {
         <br />
         <br />
         <div className="credentials">
-          <Credentials signUp={signUp} login={login} />
+          <Credentials signUp={signUp} login={login} buttonClicked={buttonClicked} whichFailed={whichFailed} />
         </div>
         <div className="appName">
           <div>

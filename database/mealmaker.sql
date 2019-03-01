@@ -1,5 +1,5 @@
--- DROP DATABASE IF EXISTS mealmaker;
--- CREATE DATABASE mealmaker;
+DROP DATABASE IF EXISTS mealmaker;
+CREATE DATABASE mealmaker;
 -- command for root user and no password
 -- mysql -u root < database/mealmaker.sql
 
@@ -18,7 +18,7 @@ CREATE TABLE Users (
 CREATE TABLE Recipes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   recipe TEXT(255) NOT NULL,
-  idRecipieFoodNutrition INTEGER NOT NULL,
+  idRecipeFoodNutrition INTEGER NOT NULL,
   recipeImageLink VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -36,8 +36,7 @@ CREATE TABLE Dislikes (
   idUsers INTEGER NOT NULL,
   idRecipes INTEGER (7) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (idUsers) REFERENCES Users (id),
-  FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
+  FOREIGN KEY (idUsers) REFERENCES Users (id)
 );
 
 
@@ -46,8 +45,7 @@ CREATE TABLE Saved (
   idUsers INTEGER NOT NULL,
   idRecipes INTEGER NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (idUsers) REFERENCES Users (id),
-  FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
+  FOREIGN KEY (idUsers) REFERENCES Users (id)
 );
 
 
@@ -60,8 +58,7 @@ CREATE TABLE RecipeOfTheDay (
   recipeImageLink VARCHAR(255) NOT NULL,
   cookTime INTEGER NOT NULL,
   date INTEGER NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (idRecipe) REFERENCES Recipes (id)
+  PRIMARY KEY (id)
 );
 
 
@@ -70,8 +67,7 @@ CREATE TABLE recipesIngredients (
   idRecipes INTEGER NOT NULL,
   idIngredients INTEGER NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (idRecipes) REFERENCES Recipes (id),
-  FOREIGN KEY (idIngredients) REFERENCES Ingredient (id)
+  FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
 );
 
 
@@ -99,7 +95,7 @@ CREATE TABLE originalRecipes (
 -- ('','','');
 -- INSERT INTO `recipesIngredients` (`id`,`idRecipes`,`idIngredients`) VALUES
 -- ('','','');
----
+--
 
 -- Foreign Keys 
 -- ALTER TABLE Dislikes ADD CONSTRAINT FOREIGN KEY (idUsers) REFERENCES Users (id);

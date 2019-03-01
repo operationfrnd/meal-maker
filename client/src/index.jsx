@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
 import Login from './components/login/Login.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
@@ -22,7 +23,12 @@ class App extends React.Component {
       authorized: false,
       show: 'login',
       userName: '',
+      buttonClicked: false,
+      whichFailed: null,
+      searchInProgress: false,
       path: '/',
+      open: false,
+      message: '',
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -33,6 +39,7 @@ class App extends React.Component {
     this.selectRecipe = this.selectRecipe.bind(this);
     this.signUp = this.signUp.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -48,6 +55,7 @@ class App extends React.Component {
 
   // function to retrieve recipes to display
   getRecipes(ingredients) {
+    this.setState({ searchInProgress: true });
     const { userId } = this.state;
     return axios.get('/food', {
       params: {
@@ -56,10 +64,12 @@ class App extends React.Component {
       },
     }) // sends a GET request to serve at endpoint '/food'
       .then((results) => {
+        setTimeout(() => this.setState({ searchInProgress: false }), 500);
         this.setState({ // change the state
           recipes: results.data, // by making the data received back fron the server available
         });
       }).catch((err) => {
+        setTimeout(() => this.setState({ searchInProgress: false }), 500);
         console.log(err, 'error while retrieving data from server');
       });
   }
@@ -111,14 +121,19 @@ class App extends React.Component {
   // sends a POST request to serve at endpoint '/toBeSaved'
   // eslint-disable-next-line class-methods-use-this
   saveRecipe(recipe) {
+    this.setState({ open: true, message: 'Saving...' });
     const { userId } = this.state;
     return axios.post('/toBeSaved', {
       userId,
       recipeId: recipe.recipeId,
     })
       .then((result) => {
+        this.setState({ message: 'Saved to your recipes!' });
+        setTimeout(() => this.setState({ open: false }), 1000);
         console.log(result);
       }).catch((err) => {
+        this.setState({ message: 'You\'ve already saved that recipe!' });
+        setTimeout(() => this.setState({ open: false }), 1000);
         console.log(err, 'error while trying to save recipe into DB');
       });
   }
@@ -127,6 +142,7 @@ class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   saveDislikeRecipe(recipe) {
     const { userId } = this.state;
+    this.setState({ open: true, message: 'You won\'t be seeing that recipe any more!' });
     return axios.post('/toBeSavedDislike', {
       userId,
       recipeId: recipe.recipeId,
@@ -159,8 +175,7 @@ class App extends React.Component {
 
 
   signUp(user, pw) {
-    console.log(`thank you for signing up, ${user}`);
-    console.log(`Hello, ${user}`);
+    this.setState({ buttonClicked: true });
     axios.post('/api/users', {
       user: {
         username: user,
@@ -178,14 +193,20 @@ class App extends React.Component {
           userName: res.data.user.username,
           path: 'signup',
         });
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
       })
-      .catch((bool) => {
-        console.log(bool, 'could not log in after signup');
+      .catch((err) => {
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
+        this.setState({
+          whichFailed: 'signup',
+        });
+        console.error(err, 'could not log in after signup');
       });
   }
 
   login(user, pw) {
+    this.setState({ buttonClicked: true });
     console.log('logged in');
     console.log(`Hello, ${user}`);
     axios.post('/api/users/login', {
@@ -203,11 +224,25 @@ class App extends React.Component {
           userName: res.data.user.username,
           path: 'login',
         });
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
         this.componentDidMount();
       })
       .catch(() => {
+        setTimeout(() => this.setState({ buttonClicked: false }), 500);
+        this.setState({
+          whichFailed: 'login',
+        });
         console.log('could not log in');
       });
+  }
+
+  logout() {
+    this.setState({
+      authorized: false,
+      userId: null,
+      userName: null,
+      show: 'login',
+    });
   }
 
   render() {
@@ -215,9 +250,18 @@ class App extends React.Component {
     let mainComponent = 'login';
     const {
       recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path,
+      buttonClicked, whichFailed, searchInProgress, open, message,
     } = this.state;
     if (show === 'login') {
-      mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
+      mainComponent = (
+        <Login
+          recipe={recipeOfTheDay}
+          signUp={this.signUp}
+          login={this.login}
+          buttonClicked={buttonClicked}
+          whichFailed={whichFailed}
+        />
+      );
     } else if (show === 'home') {
       mainComponent = (
         <Main
@@ -232,14 +276,20 @@ class App extends React.Component {
           getSavedRecipes={this.getSavedRecipes}
           selectRecipe={this.selectRecipe}
           user={userName}
-          addOriginal={this.addOriginal}
+          searchInProgress={searchInProgress}
+          logout={this.logout}
           path={path}
+          addOriginal={this.addOriginal}
         />
       );
     }
     return (
       <div>
         {mainComponent}
+        <Snackbar 
+          open={open}
+          message={message}
+        />
       </div>
     );
   }
