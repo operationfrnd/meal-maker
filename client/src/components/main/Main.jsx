@@ -84,9 +84,6 @@ class Main extends React.Component {
           >
             {close => (
               <div className="modal">
-                {/* <a className="close" onClick={close}>
-                  &times;
-                </a> */}
                 <div className="header">Add Your Own Recipe</div>
                 <br />
                 <br />
@@ -101,7 +98,7 @@ class Main extends React.Component {
                     <br />
                     <label>
                       Ingredients:    
-                      <input type="text" name="ingredients" ref={input => this.ingredients = input} />
+                      <input type="text" name="ingredients" display="center" ref={input => this.ingredients = input} />
                     </label>
                     <br />
                     <br />
@@ -117,22 +114,26 @@ class Main extends React.Component {
                     </label>
                     <br />
                     <br />
-                    <input type="button" value="Submit Recipe" onClick={() => {
-                      addOriginal(this.name.value, this.ingredients.value, this.instructions.value, this.cooktime.value);
-                      close();
-                    }} 
-                    />
+                    <Button
+                      type="button"
+                      variant="contained" color="primary" value="Submit Recipe" onClick={() => {
+                        addOriginal(this.name.value, this.ingredients.value, this.instructions.value, this.cooktime.value);
+                        close();
+                      }}
+                    >
+                    Submit Recipe
+                    </Button>
                   </form>
-                  <button
-                    type="button"
-                    className="button"
+                  {/* <Button type="button"
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                       console.log('window closed');
                       close();
                     }}
                   >
                     Close Window
-                  </button>
+                  </Button> */}
                 </div>
               </div>
             )}
