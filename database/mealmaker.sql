@@ -74,6 +74,17 @@ CREATE TABLE recipesIngredients (
   FOREIGN KEY (idIngredients) REFERENCES Ingredient (id)
 );
 
+
+CREATE TABLE originalRecipes (
+  id_original INTEGER AUTO_INCREMENT NOT NULL,
+  recipe_name TEXT (40),
+  ingredients TEXT NOT NULL,
+  instructions TEXT NOT NULL,
+  cookTime INTEGER NOT NULL,
+  PRIMARY KEY (id_original)
+
+)
+
 -- INSERT INTO `Users` (`id`,`username`,`password`) VALUES
 -- ('','','');
 -- INSERT INTO `Recipes ` (`id`,`recipe`,`idRecipieFoodNutrition`) VALUES
@@ -91,7 +102,6 @@ CREATE TABLE recipesIngredients (
 ---
 
 -- Foreign Keys 
----
 -- ALTER TABLE Dislikes ADD CONSTRAINT FOREIGN KEY (idUsers) REFERENCES Users (id);
 -- ALTER TABLE Dislikes ADD FOREIGN KEY (idRecipes) REFERENCES Recipes (id);
 -- ALTER TABLE Saved ADD FOREIGN KEY (idUsers) REFERENCES Users (id);
@@ -99,9 +109,7 @@ CREATE TABLE recipesIngredients (
 -- ALTER TABLE `Recipe of the Day` ADD FOREIGN KEY (idRecipe) REFERENCES Recipes (id);
 -- ALTER TABLE `recipe's` ingredients ADD FOREIGN KEY (idRecipes) REFERENCES Recipes (id);
 -- ALTER TABLE `recipe's` ingredients ADD FOREIGN KEY (idIngredients) REFERENCES Ingredients (id);
----
 -- Table Properties
----
 -- ALTER TABLE `Users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Recipes` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Ingredients` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

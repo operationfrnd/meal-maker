@@ -167,7 +167,14 @@ body {
 	content:url("5716c092ba1e5123616100c397defc91.png");
 }
 
-
+.modal {
+  background-color: rgb(172, 202, 241);
+  font-family: 'Jeju Gothic', sans-serif;
+  font-size: 1.2em;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
 
 
 /* button {
