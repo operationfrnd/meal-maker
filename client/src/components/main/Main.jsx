@@ -29,6 +29,7 @@ class Main extends React.Component {
 
   // function to change between views
   changeView(option) {
+    window.previous = option;
     this.setState({
       view: option,
     });
@@ -144,27 +145,24 @@ class Main extends React.Component {
         </div>
 
         <div className="main">
-          {view === "search" ? (
-            <Search
-              ingredients={ingredients}
-              recipes={recipes}
-              recipeOfTheDay={recipeOfTheDay}
-              getRecipes={getRecipes}
-              saveRecipe={saveRecipe}
-              saveDislikeRecipe={saveDislikeRecipe}
-              changeView={this.changeView}
-              user={user}
-              selectRecipe={selectRecipe}
-            />
-          ) : view === "saved" ? (
-            <SavedRecipes
-              savedRecipes={savedRecipes}
-              changeView={this.changeView}
-              selectRecipe={selectRecipe}
-            />
-          ) : (
-            <Recipe selectedRecipe={selectedRecipe} />
-          )}
+          { view === 'search' 
+            ? (
+              <Search
+                ingredients={ingredients}
+                recipes={recipes}
+                recipeOfTheDay={recipeOfTheDay}
+                getRecipes={getRecipes}
+                saveRecipe={saveRecipe}
+                saveDislikeRecipe={saveDislikeRecipe}
+                changeView={this.changeView}
+                user={user}
+                selectRecipe={selectRecipe}
+                path={path}
+              />
+            )
+            : view === 'saved' ? <SavedRecipes savedRecipes={savedRecipes} changeView={this.changeView} selectRecipe={selectRecipe} />
+              : <Recipe selectedRecipe={selectedRecipe} />
+          }
         </div>
       </div>
     );

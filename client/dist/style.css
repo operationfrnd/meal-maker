@@ -1,23 +1,22 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 @import url('https://fonts.googleapis.com/css?family=Lobster');
-@import url('../images/white-kitchen.jpg');
 @import url(https://fonts.googleapis.com/css?family=Lobster);
 
 
 
 body {
-  font-family: 'Jeju Gothic', sans-serif;
+  /* font-family: 'Jeju Gothic', sans-serif;
   margin: 0px;
-  color: #292929;
+  color: #292929; */
   /* background-color: #F3F3F3; */
-  background-image: url('../src/images/backgroundlight.jpg')
+  /* background-image: url('../images/backgroundlight.jpg'); */
 }
 
 .background {
   /* background-image: url('../images/white-kitchen.jpg'); */
   /* background-repeat: no-repeat;
-  height: 500px; 
+  height: 100% 
   background-position: center;
   background-size: cover; */
 }

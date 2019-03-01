@@ -5,8 +5,7 @@
 
 USE mealmaker;
 -- DROP TABLE IF EXISTS Users;
-        
--- USERS table to hold id, username, and hashed password
+
 CREATE TABLE Users (
   id INTEGER AUTO_INCREMENT NOT NULL,
   username VARCHAR(50) NOT NULL,
@@ -16,8 +15,6 @@ CREATE TABLE Users (
   PRIMARY KEY (id)
 );
 
--- 
--- RECIPES TABLE that holds the recipe name and ID for query 
 CREATE TABLE Recipes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   recipe TEXT(255) NOT NULL,
@@ -25,15 +22,15 @@ CREATE TABLE Recipes (
   recipeImageLink VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
--- ---
--- INGREDIENTS TABLE populated to auto complete query by user
+
+
 CREATE TABLE Ingredient (
   id INTEGER AUTO_INCREMENT NOT NULL,
   ingredient VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
--- ---
--- Dislikes table, holds user's disliked recipes 
+
+
 CREATE TABLE Dislikes (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
@@ -42,8 +39,8 @@ CREATE TABLE Dislikes (
   FOREIGN KEY (idUsers) REFERENCES Users (id),
   FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
 );
--- ---
--- Saved recipes, holds user's id and id recipe      
+
+
 CREATE TABLE Saved (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idUsers INTEGER NOT NULL,
@@ -52,9 +49,8 @@ CREATE TABLE Saved (
   FOREIGN KEY (idUsers) REFERENCES Users (id),
   FOREIGN KEY (idRecipes) REFERENCES Recipes (id)
 );
--- ---
 
--- RECIPE OF THE DAY, holds recipes so there are no repeats for recipe of the day
+
 CREATE TABLE RecipeOfTheDay (
   id INTEGER AUTO_INCREMENT NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -67,10 +63,8 @@ CREATE TABLE RecipeOfTheDay (
   PRIMARY KEY (id),
   FOREIGN KEY (idRecipe) REFERENCES Recipes (id)
 );
--- ---
 
--- RECIPE'S INGREDIENTS use to keep record for comparison    
--- One recipe id may have multiple idIngredients     
+
 CREATE TABLE recipesIngredients (
   id INTEGER AUTO_INCREMENT NOT NULL,
   idRecipes INTEGER NOT NULL,
@@ -105,6 +99,7 @@ CREATE TABLE originalRecipes (
 -- ('','','');
 -- INSERT INTO `recipesIngredients` (`id`,`idRecipes`,`idIngredients`) VALUES
 -- ('','','');
+---
 
 -- Foreign Keys 
 -- ALTER TABLE Dislikes ADD CONSTRAINT FOREIGN KEY (idUsers) REFERENCES Users (id);

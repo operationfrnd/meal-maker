@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import ChatBot from 'react-simple-chatbot';
 import Login from './components/login/Login.jsx';
 import randomRecipe from '../example_random.js';
 import Main from './components/main/Main.jsx';
@@ -23,6 +22,7 @@ class App extends React.Component {
       authorized: false,
       show: 'login',
       userName: '',
+      path: '/',
     };
     // binding all functions to the index component
     this.getRandomRecipe = this.getRandomRecipe.bind(this);
@@ -168,6 +168,7 @@ class App extends React.Component {
       },
     })
       .then((res) => {
+        window.previous = 'signup';
         console.log('made to signup');
         console.log(res.data.user, res.data.user.id, 'RESPONSE');
         console.log('where is res');
@@ -175,6 +176,7 @@ class App extends React.Component {
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'signup',
         });
         this.componentDidMount();
       })
@@ -193,11 +195,13 @@ class App extends React.Component {
       },
     })
       .then((res) => {
+        window.previous = 'login';
         console.log(res, 'LOGGING IN');
         this.setState({
           authorized: true,
           userId: res.data.user.id,
           userName: res.data.user.username,
+          path: 'login',
         });
         this.componentDidMount();
       })
@@ -210,7 +214,7 @@ class App extends React.Component {
     const { show } = this.state;
     let mainComponent = 'login';
     const {
-      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName,
+      recipeOfTheDay, selectedRecipe, savedRecipes, recipes, ingredients, userName, path,
     } = this.state;
     if (show === 'login') {
       mainComponent = <Login recipe={recipeOfTheDay} signUp={this.signUp} login={this.login} />;
@@ -229,6 +233,7 @@ class App extends React.Component {
           selectRecipe={this.selectRecipe}
           user={userName}
           addOriginal={this.addOriginal}
+          path={path}
         />
       );
     }

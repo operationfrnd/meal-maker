@@ -1,0 +1,122 @@
+{
+  "_from": "react-simple-chatbot",
+  "_id": "react-simple-chatbot@0.4.5",
+  "_inBundle": false,
+  "_integrity": "sha512-oPUQw/AYOaphBiIuVtW/zVcnjbpb9j7NkVzx//+UGPsRb24JWVBxs1JiBxOjXgUehmAFf215OscBlywseBogsg==",
+  "_location": "/react-simple-chatbot",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-simple-chatbot",
+    "name": "react-simple-chatbot",
+    "escapedName": "react-simple-chatbot",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-simple-chatbot/-/react-simple-chatbot-0.4.5.tgz",
+  "_shasum": "661bfc229770aed3a972ef6557ae54a76f161b10",
+  "_spec": "react-simple-chatbot",
+  "_where": "/mnt/c/Users/JMOHO/Desktop/immersion/legacy",
+  "bugs": {
+    "url": "https://github.com/LucasBassetti/react-simple-chatbot/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "circular-json": "^0.3.1",
+    "prop-types": "^15.6.0",
+    "random-id": "0.0.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "deprecated": false,
+  "description": "React Simple Chatbot",
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "chai": "^4.0.2",
+    "clean-webpack-plugin": "^0.1.16",
+    "codecov": "^3.1.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^0.13.3",
+    "jsdom": "^9.12.0",
+    "mocha": "^5.2.0",
+    "nyc": "^11.0.2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.0.0",
+    "sinon": "^7.1.0",
+    "styled-components": "^3.4.10",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^4.23.1",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/LucasBassetti/react-simple-chatbot#readme",
+  "keywords": [
+    "react",
+    "chat",
+    "chatbot",
+    "conversational-ui"
+  ],
+  "license": "MIT",
+  "main": "dist/react-simple-chatbot.js",
+  "name": "react-simple-chatbot",
+  "nyc": {
+    "function": 80,
+    "lines": 80,
+    "check-coverage": true,
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ],
+    "extension": [
+      ".jsx"
+    ]
+  },
+  "peerDependencies": {
+    "styled-components": ">= 2.0.0 < 4",
+    "react": "^16.x",
+    "react-dom": "^16.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasBassetti/react-simple-chatbot.git"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.prod.js -p",
+    "lint": "eslint lib/*.jsx",
+    "prepublish": "npm run build",
+    "prepush": "npm run lint && npm run test:coverage",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "start": "webpack-dev-server --inline --content-base build/",
+    "test": "mocha tests/helpers/setup.js tests/**/*.spec.js --require @babel/register",
+    "test:coverage": "nyc npm test",
+    "test:watch": "npm test -- --watch"
+  },
+  "version": "0.4.5"
+}
